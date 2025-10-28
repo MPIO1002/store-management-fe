@@ -2,7 +2,6 @@
 
 import React, { useEffect, useMemo, useState } from "react";
 import TableProp from "@/components/table-prop";
-import { getCategories, deleteCategory } from "@/services/category.service";
 import CreateCategoryModal from "./components/create-category.modal";
 import UpdateCategoryModal from "./components/update-category.modal";
 import SearchInput from "@/components/search-input";
@@ -12,54 +11,24 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import { faTrash } from "@fortawesome/free-solid-svg-icons/faTrash";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons/faPenToSquare";
+import { useGetAllCategoryQuery } from "./hooks/category-hooks";
 
 type ApiCategory = { categoryId: number; categoryName: string };
 
 export default function Page() {
-  const [data, setData] = useState<ApiCategory[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<boolean | string>(false);
+  const { data, isLoading, isError } = useGetAllCategoryQuery();
+
   const [query, setQuery] = useState("");
-  const [selectedKeys, setSelectedKeys] = useState<Array<string | number>>([]);
-  const [deleting, setDeleting] = useState(false);
+  // const [selectedKeys, setSelectedKeys] = useState<Array<string | number>>([]);
+  // const [deleting, setDeleting] = useState(false);
   const [showCreate, setShowCreate] = useState(false);
-  const [showUpdate, setShowUpdate] = useState(false);
-  const [editingCategory, setEditingCategory] = useState<ApiCategory | null>(null);
-  const router = useRouter();
+  // const [showUpdate, setShowUpdate] = useState(false);
+  // const [editingCategory, setEditingCategory] = useState<ApiCategory | null>(null);
+  // const router = useRouter();
 
-  useEffect(() => {
-    const controller = new AbortController();
-    let mounted = true;
-
-    async function load() {
-      try {
-        setLoading(true);
-        setError(false);
-        const res = await getCategories(controller.signal);
-        if (!mounted) return;
-        // normalize possible shapes: if backend returns categoryId/categoryName
-        const mapped: ApiCategory[] = (res || []).map((c: any) => ({
-          categoryId: c.categoryId ?? c.id ?? c.categoryId,
-          categoryName: c.categoryName ?? c.name ?? c.categoryName,
-        }));
-        setData(mapped);
-      } catch (err) {
-        console.error(err);
-        if (mounted) {
-          setData([]);
-          setError((err as any)?.message ?? true);
-        }
-      } finally {
-        if (mounted) setLoading(false);
-      }
-    }
-
-    load();
-    return () => {
-      mounted = false;
-      controller.abort();
-    };
-  }, []);
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
 
   const columns = [
     { header: "TÊN", accessor: "categoryName" },
@@ -71,8 +40,8 @@ export default function Page() {
             type="button"
             className="text-blue-600 hover:underline"
             onClick={() => {
-              setEditingCategory(row);
-              setShowUpdate(true);
+              // setEditingCategory(row);
+              // setShowUpdate(true);
             }}
           >
             <FontAwesomeIcon icon={faPenToSquare} />
@@ -100,7 +69,7 @@ export default function Page() {
           </div>
 
           <div className="flex items-center gap-2">
-            <Button
+            {/* <Button
               variant="secondary"
               onClick={async () => {
                 if (selectedKeys.length === 0) return;
@@ -124,7 +93,7 @@ export default function Page() {
             >
               <FontAwesomeIcon icon={faTrash} />
               <span className="ml-2">Xóa ({selectedKeys.length})</span>
-            </Button>
+            </Button> */}
 
             <Button variant="primary" onClick={() => setShowCreate(true)}>
               <FontAwesomeIcon icon={faPlus} />
@@ -135,17 +104,9 @@ export default function Page() {
 
         <CreateCategoryModal
           open={showCreate}
-          onClose={() => setShowCreate(false)}
-          onCreated={(created) => {
-            const mapped: ApiCategory = {
-              categoryId: created.categoryId ?? created.id ?? created.categoryId ?? created.id,
-              categoryName: created.categoryName ?? created.name ?? created.categoryName ?? created.name,
-            };
-            setData((prev) => [mapped, ...prev]);
-          }}
-        />
+          onClose={() => setShowCreate(false)}/>
 
-        <UpdateCategoryModal
+        {/* <UpdateCategoryModal
           open={showUpdate}
           category={editingCategory}
           onClose={() => {
@@ -159,21 +120,17 @@ export default function Page() {
               categoryName: updated.categoryName ?? updated.name ?? d.categoryName,
             } : d)));
           }}
-        />
+        /> */}
 
         <TableProp
           columns={columns}
-          data={useMemo(() => {
-            const q = query.trim().toLowerCase();
-            if (!q) return data;
-            return data.filter((d) => String(d.categoryName).toLowerCase().includes(q));
-          }, [data, query])}
-          loading={loading}
-          error={error}
+          data={data || []}
+          loading={isLoading}
+          error={isError}
           skeletonRows={5}
           rowKey={(r) => r.categoryId}
           selectable={true}
-          onSelectionChange={(sel) => setSelectedKeys(sel)}
+          // onSelectionChange={(sel) => setSelectedKeys(sel)}
         />
       </div>
     </div>
