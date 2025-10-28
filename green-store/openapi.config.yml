@@ -1,0 +1,15 @@
+generatorName: typescript-axios
+inputSpec: openapi.json
+outputDir: app/lib/api
+
+additionalProperties:
+  apiPackage: apis
+  modelPackage: models
+  supportsES6: true
+  withSeparateModelsAndApi: true
+  modelSuffix: Model
+  apiSuffix: Api
+  useSingleRequestParameter: true
+  stringEnums: true
+  modelPropertyNaming: camelCase
+  parameterNaming: camelCase
