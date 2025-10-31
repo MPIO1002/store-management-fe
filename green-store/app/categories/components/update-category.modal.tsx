@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { updateCategory } from "@/services/category.service";
+import { useUpdateCategoryMutation } from "../hooks/category-hooks";
 
 type Category = { categoryId: number; categoryName: string };
 
@@ -14,8 +14,9 @@ type Props = {
 
 export default function UpdateCategoryModal({ open, category, onClose, onUpdated }: Props) {
   const [name, setName] = useState("");
-  const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const { mutate, isPending } = useUpdateCategoryMutation();
 
   useEffect(() => {
     setName(category?.categoryName ?? "");
@@ -25,25 +26,28 @@ export default function UpdateCategoryModal({ open, category, onClose, onUpdated
   if (!open || !category) return null;
   const id = category.categoryId;
 
-  async function handleSubmit(e: React.FormEvent) {
+  function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError(null);
     if (!name.trim()) {
       setError("Vui lòng nhập tên loại sản phẩm");
       return;
     }
-    try {
-      setSaving(true);
-      const payload = { name: name.trim(), categoryName: name.trim() };
-      const updated = await updateCategory(id, payload as any);
-      onUpdated?.(updated);
-      onClose();
-    } catch (err) {
-      console.error(err);
-      setError((err as any)?.message ?? "Lỗi khi cập nhật loại sản phẩm");
-    } finally {
-      setSaving(false);
-    }
+
+    // mirror CreateCategoryModal behaviour: call mutate and close modal immediately
+    mutate({ id, data: { categoryName: name.trim() } }, {
+      onError: (err: any) => {
+        console.log(err?.message || "Đã có lỗi xảy ra");
+        setError((err as any)?.message ?? "Lỗi khi cập nhật loại sản phẩm");
+      },
+      onSuccess: (res: any) => {
+        try {
+          onUpdated?.(res?.data ?? res);
+        } catch (_) {}
+      }
+    });
+
+    onClose();
   }
 
   return (
@@ -62,11 +66,8 @@ export default function UpdateCategoryModal({ open, category, onClose, onUpdated
         {error ? <div className="text-sm text-red-600 mb-2">{error}</div> : null}
 
         <div className="flex justify-end gap-2">
-          <button type="button" className="px-3 py-2 rounded-md bg-gray-100" onClick={onClose} disabled={saving}>
-            Hủy
-          </button>
-          <button type="submit" className="px-4 py-2 rounded-md bg-green-600 text-white" disabled={saving}>
-            {saving ? "Đang lưu..." : "Lưu"}
+          <button type="submit" className="px-4 py-2 rounded-md bg-green-600 text-white" disabled={isPending}>
+            {isPending ? "Đang lưu..." : "Lưu"}
           </button>
         </div>
       </form>
