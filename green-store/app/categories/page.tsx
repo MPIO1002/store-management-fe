@@ -109,7 +109,7 @@ export default function Page() {
 
         <UpdateCategoryModal
           open={showUpdate}
-          category={editingCategory}
+          id={editingCategory ? editingCategory.categoryId : null}
           onClose={() => {
             setShowUpdate(false);
             setEditingCategory(null);

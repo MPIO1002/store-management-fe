@@ -1,30 +1,34 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { useUpdateCategoryMutation } from "../hooks/category-hooks";
+import { useUpdateCategoryMutation, useGetCategoryQuery } from "../hooks/category-hooks";
 
 type Category = { categoryId: number; categoryName: string };
 
 type Props = {
   open: boolean;
-  category: Category | null;
+  id: number | null;
   onClose: () => void;
-  onUpdated?: (cat: any) => void;
 };
 
-export default function UpdateCategoryModal({ open, category, onClose, onUpdated }: Props) {
+export default function UpdateCategoryModal({ open, id, onClose }: Props) {
   const [name, setName] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   const { mutate, isPending } = useUpdateCategoryMutation();
+  const _catQuery = useGetCategoryQuery(id as any) as any;
+  const category = _catQuery?.data as Category | undefined;
+  const isLoading = _catQuery?.isLoading;
+  const isError = _catQuery?.isError;
 
   useEffect(() => {
     setName(category?.categoryName ?? "");
     setError(null);
   }, [category]);
 
-  if (!open || !category) return null;
-  const id = category.categoryId;
+  if (!open || !id) return null;
+  if (isLoading) return null;
+  if (isError) return null;
 
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -34,17 +38,11 @@ export default function UpdateCategoryModal({ open, category, onClose, onUpdated
       return;
     }
 
-    // mirror CreateCategoryModal behaviour: call mutate and close modal immediately
-    mutate({ id, data: { categoryName: name.trim() } }, {
+  mutate({ id: id!, data: { categoryName: name.trim() } }, {
       onError: (err: any) => {
         console.log(err?.message || "Đã có lỗi xảy ra");
         setError((err as any)?.message ?? "Lỗi khi cập nhật loại sản phẩm");
       },
-      onSuccess: (res: any) => {
-        try {
-          onUpdated?.(res?.data ?? res);
-        } catch (_) {}
-      }
     });
 
     onClose();
@@ -54,7 +52,7 @@ export default function UpdateCategoryModal({ open, category, onClose, onUpdated
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
       <form onSubmit={handleSubmit} className="relative bg-white rounded-lg shadow-lg w-full max-w-md p-6">
-  <h2 className="text-lg font-semibold mb-4">Cập nhật loại sản phẩm</h2>
+        <h2 className="text-lg font-semibold mb-4">Cập nhật loại sản phẩm</h2>
 
         <label className="block mb-2 text-sm font-medium text-gray-700">Tên</label>
         <input
