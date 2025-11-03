@@ -11,7 +11,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import { faTrash } from "@fortawesome/free-solid-svg-icons/faTrash";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons/faPenToSquare";
-import { useGetAllCategoryQuery } from "./hooks/category-hooks";
+import { useGetAllCategoryQuery, useDeleteCategoryMutation } from "./hooks/category-hooks";
 
 type ApiCategory = { categoryId: number; categoryName: string };
 
@@ -19,12 +19,13 @@ export default function Page() {
   const { data, isLoading, isError } = useGetAllCategoryQuery();
 
   const [query, setQuery] = useState("");
-  // const [selectedKeys, setSelectedKeys] = useState<Array<string | number>>([]);
-  // const [deleting, setDeleting] = useState(false);
   const [showCreate, setShowCreate] = useState(false);
-  // const [showUpdate, setShowUpdate] = useState(false);
-  // const [editingCategory, setEditingCategory] = useState<ApiCategory | null>(null);
-  // const router = useRouter();
+  const [showUpdate, setShowUpdate] = useState(false);
+  const [editingCategory, setEditingCategory] = useState<ApiCategory | null>(null);
+  const [selectedKeys, setSelectedKeys] = useState<Array<string | number>>([]);
+  const [deleting, setDeleting] = useState(false);
+
+  const { mutateAsync: deleteCategoryAsync } = useDeleteCategoryMutation();
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -40,8 +41,8 @@ export default function Page() {
             type="button"
             className="text-blue-600 hover:underline"
             onClick={() => {
-              // setEditingCategory(row);
-              // setShowUpdate(true);
+              setEditingCategory(row);
+              setShowUpdate(true);
             }}
           >
             <FontAwesomeIcon icon={faPenToSquare} />
@@ -69,7 +70,7 @@ export default function Page() {
           </div>
 
           <div className="flex items-center gap-2">
-            {/* <Button
+            <Button
               variant="secondary"
               onClick={async () => {
                 if (selectedKeys.length === 0) return;
@@ -77,12 +78,12 @@ export default function Page() {
                 if (!ok) return;
                 try {
                   setDeleting(true);
-                  await Promise.all(selectedKeys.map((id) => deleteCategory(id)));
-                  setData((prev) => prev.filter((d) => !selectedKeys.includes(d.categoryId)));
+                  await Promise.all(selectedKeys.map((id) => deleteCategoryAsync(id as number)));
                   setSelectedKeys([]);
                 } catch (err) {
                   console.error(err);
-                  setError((err as any)?.message ?? true);
+                  // optional: show a user-facing message
+                  alert((err as any)?.message ?? "Lỗi khi xóa");
                 } finally {
                   setDeleting(false);
                 }
@@ -93,7 +94,7 @@ export default function Page() {
             >
               <FontAwesomeIcon icon={faTrash} />
               <span className="ml-2">Xóa ({selectedKeys.length})</span>
-            </Button> */}
+            </Button>
 
             <Button variant="primary" onClick={() => setShowCreate(true)}>
               <FontAwesomeIcon icon={faPlus} />
@@ -104,23 +105,16 @@ export default function Page() {
 
         <CreateCategoryModal
           open={showCreate}
-          onClose={() => setShowCreate(false)}/>
+          onClose={() => setShowCreate(false)} />
 
-        {/* <UpdateCategoryModal
+        <UpdateCategoryModal
           open={showUpdate}
-          category={editingCategory}
+          id={editingCategory ? editingCategory.categoryId : null}
           onClose={() => {
             setShowUpdate(false);
             setEditingCategory(null);
           }}
-          onUpdated={(updated) => {
-            const id = updated.categoryId ?? updated.id;
-            setData((prev) => prev.map((d) => (d.categoryId === id ? {
-              categoryId: updated.categoryId ?? updated.id ?? d.categoryId,
-              categoryName: updated.categoryName ?? updated.name ?? d.categoryName,
-            } : d)));
-          }}
-        /> */}
+        />
 
         <TableProp
           columns={columns}
@@ -130,7 +124,7 @@ export default function Page() {
           skeletonRows={5}
           rowKey={(r) => r.categoryId}
           selectable={true}
-          // onSelectionChange={(sel) => setSelectedKeys(sel)}
+          onSelectionChange={(sel) => setSelectedKeys(sel)}
         />
       </div>
     </div>
