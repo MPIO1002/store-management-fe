@@ -15,43 +15,65 @@ export default function UpdateCategoryModal({ open, id, onClose }: Props) {
   const [name, setName] = useState("");
   const [error, setError] = useState<string | null>(null);
 
+  const { data: category, isLoading, isError } = useGetCategoryQuery(id ?? undefined);
   const { mutate, isPending } = useUpdateCategoryMutation();
-  const _catQuery = useGetCategoryQuery(id as any) as any;
-  const category = _catQuery?.data as Category | undefined;
-  const isLoading = _catQuery?.isLoading;
-  const isError = _catQuery?.isError;
 
   useEffect(() => {
-    setName(category?.categoryName ?? "");
+    if (category && open) setName((category as Category).categoryName);
     setError(null);
-  }, [category]);
+  }, [category, open]);
 
   if (!open || !id) return null;
-  if (isLoading) return null;
-  if (isError) return null;
 
-  function handleSubmit(e: React.FormEvent) {
+  if (isLoading) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
+        <div className="bg-white rounded-lg shadow p-6">Đang tải...</div>
+      </div>
+    );
+  }
+
+  if (isError) {
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-black/40 z-50">
+        <div className="bg-white rounded-lg shadow p-6 text-red-600">
+          Không thể tải dữ liệu loại sản phẩm.
+        </div>
+      </div>
+    );
+  }
+
+  const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     setError(null);
-    if (!name.trim()) {
+
+    const trimmed = name.trim();
+    if (!trimmed) {
       setError("Vui lòng nhập tên loại sản phẩm");
       return;
     }
 
-  mutate({ id: id!, data: { categoryName: name.trim() } }, {
-      onError: (err: any) => {
-        console.log(err?.message || "Đã có lỗi xảy ra");
-        setError((err as any)?.message ?? "Lỗi khi cập nhật loại sản phẩm");
-      },
-    });
-
-    onClose();
-  }
+    mutate(
+      { id: id!, data: { categoryName: trimmed } },
+      {
+        onSuccess: () => {
+          onClose();
+        },
+        onError: (err: any) => {
+          console.error(err);
+          setError(err?.message ?? "Lỗi khi cập nhật loại sản phẩm");
+        },
+      }
+    );
+  };
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
-      <form onSubmit={handleSubmit} className="relative bg-white rounded-lg shadow-lg w-full max-w-md p-6">
+      <form
+        onSubmit={handleSubmit}
+        className="relative bg-white rounded-lg shadow-lg w-full max-w-md p-6"
+      >
         <h2 className="text-lg font-semibold mb-4">Cập nhật loại sản phẩm</h2>
 
         <label className="block mb-2 text-sm font-medium text-gray-700">Tên</label>
@@ -59,12 +81,26 @@ export default function UpdateCategoryModal({ open, id, onClose }: Props) {
           className="w-full border border-gray-300 rounded px-3 py-2 mb-2"
           value={name}
           onChange={(e) => setName(e.target.value)}
+          disabled={isPending}
           autoFocus
         />
-        {error ? <div className="text-sm text-red-600 mb-2">{error}</div> : null}
+
+        {error && <div className="text-sm text-red-600 mb-2">{error}</div>}
 
         <div className="flex justify-end gap-2">
-          <button type="submit" className="px-4 py-2 rounded-md bg-green-600 text-white" disabled={isPending}>
+          <button
+            type="button"
+            className="px-4 py-2 rounded-md bg-gray-300"
+            onClick={onClose}
+            disabled={isPending}
+          >
+            Hủy
+          </button>
+          <button
+            type="submit"
+            className="px-4 py-2 rounded-md bg-green-600 text-white disabled:opacity-50"
+            disabled={isPending}
+          >
             {isPending ? "Đang lưu..." : "Lưu"}
           </button>
         </div>
