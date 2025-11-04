@@ -35,11 +35,6 @@ export default function UpdateCategoryModal({ open, id, onClose }: Props) {
     }
   }, [category, reset]);
 
-  const handleClose = () => {
-    reset(defaultValue);
-    onClose();
-  };
-
   if (!open || !id) return null;
 
   if (isLoading) {
