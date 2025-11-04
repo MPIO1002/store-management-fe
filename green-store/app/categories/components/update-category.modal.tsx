@@ -1,17 +1,10 @@
 "use client";
-
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
-import {
-  useUpdateCategoryMutation,
-  useGetCategoryQuery,
-} from "../hooks/category-hooks";
+import { useUpdateCategoryMutation, useGetCategoryQuery } from "../hooks/category-hooks";
+import { CategoryRequest } from "@/app/lib/api";
 
-type Category = { categoryId: number; categoryName: string };
-
-type FormValues = {
-  categoryName: string;
-};
+type FormValues = CategoryRequest;
 
 type Props = {
   open: boolean;
@@ -19,12 +12,13 @@ type Props = {
   onClose: () => void;
 };
 
+
 export default function UpdateCategoryModal({ open, id, onClose }: Props) {
-  const { data: category, isLoading, isError } = useGetCategoryQuery(id, {
-    enabled: !!id,
-    queryKey: []
-  });
+  const { data: category, isLoading, isError } = useGetCategoryQuery(id);
   const { mutate, isPending } = useUpdateCategoryMutation();
+
+  const defaultValue: CategoryRequest = { categoryName: "" };
+  const initialData = (category as CategoryRequest) ?? defaultValue;
 
   const {
     register,
@@ -32,15 +26,19 @@ export default function UpdateCategoryModal({ open, id, onClose }: Props) {
     reset,
     formState: { errors },
   } = useForm<FormValues>({
-    defaultValues: { categoryName: "" },
+    defaultValues: initialData,
   });
 
-  // Reset dữ liệu khi mở modal và category có sẵn
   useEffect(() => {
-    if (open && category) {
-      reset({ categoryName: (category as Category).categoryName });
+    if (category) {
+      reset(category);
     }
-  }, [category, open, reset]);
+  }, [category, reset]);
+
+  const handleClose = () => {
+    reset(defaultValue);
+    onClose();
+  };
 
   if (!open || !id) return null;
 
@@ -63,11 +61,11 @@ export default function UpdateCategoryModal({ open, id, onClose }: Props) {
   }
 
   const onSubmit = (data: FormValues) => {
-    const trimmed = data.categoryName.trim();
-    if (!trimmed) return;
+    const payload: CategoryRequest = { ...data, categoryName: (data.categoryName ?? "").trim() };
+    if (!payload.categoryName) return;
 
     mutate(
-      { id: id!, data: { categoryName: trimmed } },
+      { id: id!, data: payload },
       {
         onSuccess: () => {
           onClose();
