@@ -1,9 +1,17 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useUpdateCategoryMutation, useGetCategoryQuery } from "../hooks/category-hooks";
+import React, { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import {
+  useUpdateCategoryMutation,
+  useGetCategoryQuery,
+} from "../hooks/category-hooks";
 
 type Category = { categoryId: number; categoryName: string };
+
+type FormValues = {
+  categoryName: string;
+};
 
 type Props = {
   open: boolean;
@@ -12,16 +20,27 @@ type Props = {
 };
 
 export default function UpdateCategoryModal({ open, id, onClose }: Props) {
-  const [name, setName] = useState("");
-  const [error, setError] = useState<string | null>(null);
-
-  const { data: category, isLoading, isError } = useGetCategoryQuery(id ?? undefined);
+  const { data: category, isLoading, isError } = useGetCategoryQuery(id, {
+    enabled: !!id,
+    queryKey: []
+  });
   const { mutate, isPending } = useUpdateCategoryMutation();
 
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors },
+  } = useForm<FormValues>({
+    defaultValues: { categoryName: "" },
+  });
+
+  // Reset dữ liệu khi mở modal và category có sẵn
   useEffect(() => {
-    if (category && open) setName((category as Category).categoryName);
-    setError(null);
-  }, [category, open]);
+    if (open && category) {
+      reset({ categoryName: (category as Category).categoryName });
+    }
+  }, [category, open, reset]);
 
   if (!open || !id) return null;
 
@@ -43,15 +62,9 @@ export default function UpdateCategoryModal({ open, id, onClose }: Props) {
     );
   }
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    setError(null);
-
-    const trimmed = name.trim();
-    if (!trimmed) {
-      setError("Vui lòng nhập tên loại sản phẩm");
-      return;
-    }
+  const onSubmit = (data: FormValues) => {
+    const trimmed = data.categoryName.trim();
+    if (!trimmed) return;
 
     mutate(
       { id: id!, data: { categoryName: trimmed } },
@@ -61,7 +74,6 @@ export default function UpdateCategoryModal({ open, id, onClose }: Props) {
         },
         onError: (err: any) => {
           console.error(err);
-          setError(err?.message ?? "Lỗi khi cập nhật loại sản phẩm");
         },
       }
     );
@@ -71,21 +83,22 @@ export default function UpdateCategoryModal({ open, id, onClose }: Props) {
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
       <form
-        onSubmit={handleSubmit}
+        onSubmit={handleSubmit(onSubmit)}
         className="relative bg-white rounded-lg shadow-lg w-full max-w-md p-6"
       >
         <h2 className="text-lg font-semibold mb-4">Cập nhật loại sản phẩm</h2>
 
         <label className="block mb-2 text-sm font-medium text-gray-700">Tên</label>
         <input
+          {...register("categoryName", { required: "Vui lòng nhập tên loại sản phẩm" })}
           className="w-full border border-gray-300 rounded px-3 py-2 mb-2"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
           disabled={isPending}
           autoFocus
         />
 
-        {error && <div className="text-sm text-red-600 mb-2">{error}</div>}
+        {errors.categoryName && (
+          <div className="text-sm text-red-600 mb-2">{errors.categoryName.message}</div>
+        )}
 
         <div className="flex justify-end gap-2">
           <button
