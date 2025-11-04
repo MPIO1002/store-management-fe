@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { useCreateCategoryMutation } from "../hooks/category-hooks";
+import { CategoryRequest } from "@/app/lib/api";
 
 type Props = {
   open: boolean;
@@ -25,7 +26,9 @@ export default function CreateCategoryModal({ open, onClose }: Props) {
       return;
     }
 
-    mutate({ categoryName: name.trim() }, {
+    const payload: CategoryRequest = { categoryName: name.trim() };
+
+    mutate(payload, {
       onError: (err: any) => {
         console.log(err?.message || "Đã có lỗi xảy ra");
       }

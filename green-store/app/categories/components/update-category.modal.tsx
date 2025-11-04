@@ -4,8 +4,6 @@ import { useForm } from "react-hook-form";
 import { useUpdateCategoryMutation, useGetCategoryQuery } from "../hooks/category-hooks";
 import { CategoryRequest } from "@/app/lib/api";
 
-type FormValues = CategoryRequest;
-
 type Props = {
   open: boolean;
   id: number | null;
@@ -25,7 +23,7 @@ export default function UpdateCategoryModal({ open, id, onClose }: Props) {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm<FormValues>({
+  } = useForm<CategoryRequest>({
     defaultValues: initialData,
   });
 
@@ -55,7 +53,7 @@ export default function UpdateCategoryModal({ open, id, onClose }: Props) {
     );
   }
 
-  const onSubmit = (data: FormValues) => {
+  const onSubmit = (data: CategoryRequest) => {
     const payload: CategoryRequest = { ...data, categoryName: (data.categoryName ?? "").trim() };
     if (!payload.categoryName) return;
 
