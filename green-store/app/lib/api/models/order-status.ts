@@ -14,13 +14,12 @@
 
 
 
-export * from './apis/auth-api';
-export * from './apis/category-api';
-export * from './apis/customer-api';
-export * from './apis/inventory-api';
-export * from './apis/order-api';
-export * from './apis/payment-api';
-export * from './apis/product-api';
-export * from './apis/supplier-api';
-export * from './apis/users-api';
+
+export enum OrderStatus {
+    NUMBER_0 = 0,
+    NUMBER_1 = 1,
+    NUMBER_2 = 2
+}
+
+
 

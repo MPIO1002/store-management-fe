@@ -6,8 +6,9 @@ All URIs are relative to *http://localhost*
 |------------- | ------------- | -------------|
 |[**createCategory**](#createcategory) | **POST** /api/Category | |
 |[**deleteCategory**](#deletecategory) | **DELETE** /api/Category/{id} | |
-|[**getCategories**](#getcategories) | **GET** /api/Category | |
+|[**filterCategories**](#filtercategories) | **GET** /api/Category/filter | |
 |[**getCategoryById**](#getcategorybyid) | **GET** /api/Category/{id} | |
+|[**searchCategories**](#searchcategories) | **GET** /api/Category/search | |
 |[**updateCategory**](#updatecategory) | **PUT** /api/Category/{id} | |
 
 # **createCategory**
@@ -111,8 +112,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **getCategories**
-> getCategories()
+# **filterCategories**
+> filterCategories()
 
 
 ### Example
@@ -126,11 +127,24 @@ import {
 const configuration = new Configuration();
 const apiInstance = new CategoryApi(configuration);
 
-const { status, data } = await apiInstance.getCategories();
+let categoryName: string; // (optional) (default to undefined)
+let pageNumber: number; // (optional) (default to undefined)
+let pageSize: number; // (optional) (default to undefined)
+
+const { status, data } = await apiInstance.filterCategories(
+    categoryName,
+    pageNumber,
+    pageSize
+);
 ```
 
 ### Parameters
-This endpoint does not have any parameters.
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **categoryName** | [**string**] |  | (optional) defaults to undefined|
+| **pageNumber** | [**number**] |  | (optional) defaults to undefined|
+| **pageSize** | [**number**] |  | (optional) defaults to undefined|
 
 
 ### Return type
@@ -181,6 +195,56 @@ const { status, data } = await apiInstance.getCategoryById(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **id** | [**number**] |  | defaults to undefined|
+
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **searchCategories**
+> searchCategories()
+
+
+### Example
+
+```typescript
+import {
+    CategoryApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new CategoryApi(configuration);
+
+let categoryName: string; // (optional) (default to undefined)
+
+const { status, data } = await apiInstance.searchCategories(
+    categoryName
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **categoryName** | [**string**] |  | (optional) defaults to undefined|
 
 
 ### Return type

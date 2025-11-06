@@ -4,11 +4,11 @@ All URIs are relative to *http://localhost*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**loginUser**](#loginuser) | **POST** /api/Auth/login | |
-|[**registerUser**](#registeruser) | **POST** /api/Auth/register | |
+|[**login**](#login) | **POST** /api/auth/login | |
+|[**logout**](#logout) | **POST** /api/auth/logout | |
 
-# **loginUser**
-> AuthResponseDto loginUser()
+# **login**
+> login()
 
 
 ### Example
@@ -17,16 +17,16 @@ All URIs are relative to *http://localhost*
 import {
     AuthApi,
     Configuration,
-    LoginDto
+    LoginRequest
 } from './api';
 
 const configuration = new Configuration();
 const apiInstance = new AuthApi(configuration);
 
-let loginDto: LoginDto; // (optional)
+let loginRequest: LoginRequest; // (optional)
 
-const { status, data } = await apiInstance.loginUser(
-    loginDto
+const { status, data } = await apiInstance.login(
+    loginRequest
 );
 ```
 
@@ -34,12 +34,12 @@ const { status, data } = await apiInstance.loginUser(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **loginDto** | **LoginDto**|  | |
+| **loginRequest** | **LoginRequest**|  | |
 
 
 ### Return type
 
-**AuthResponseDto**
+void (empty response body)
 
 ### Authorization
 
@@ -48,7 +48,7 @@ const { status, data } = await apiInstance.loginUser(
 ### HTTP request headers
 
  - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: text/plain, application/json, text/json
+ - **Accept**: Not defined
 
 
 ### HTTP response details
@@ -58,8 +58,8 @@ const { status, data } = await apiInstance.loginUser(
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **registerUser**
-> AuthResponseDto registerUser()
+# **logout**
+> logout()
 
 
 ### Example
@@ -67,30 +67,22 @@ const { status, data } = await apiInstance.loginUser(
 ```typescript
 import {
     AuthApi,
-    Configuration,
-    RegisterDto
+    Configuration
 } from './api';
 
 const configuration = new Configuration();
 const apiInstance = new AuthApi(configuration);
 
-let registerDto: RegisterDto; // (optional)
-
-const { status, data } = await apiInstance.registerUser(
-    registerDto
-);
+const { status, data } = await apiInstance.logout();
 ```
 
 ### Parameters
-
-|Name | Type | Description  | Notes|
-|------------- | ------------- | ------------- | -------------|
-| **registerDto** | **RegisterDto**|  | |
+This endpoint does not have any parameters.
 
 
 ### Return type
 
-**AuthResponseDto**
+void (empty response body)
 
 ### Authorization
 
@@ -98,8 +90,8 @@ const { status, data } = await apiInstance.registerUser(
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: text/plain, application/json, text/json
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
 
 
 ### HTTP response details

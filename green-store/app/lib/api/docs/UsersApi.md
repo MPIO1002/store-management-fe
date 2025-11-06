@@ -1,35 +1,36 @@
-# OrderApi
+# UsersApi
 
 All URIs are relative to *http://localhost*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**createOrder**](#createorder) | **POST** /api/Order | |
-|[**createOrderVnpay**](#createordervnpay) | **POST** /api/Order/vnpay | |
-|[**filterOrders**](#filterorders) | **GET** /api/Order/filter | |
-|[**getOrders**](#getorders) | **GET** /api/Order | |
-|[**vnpayCallback**](#vnpaycallback) | **GET** /api/vnpay/check-result/callback | |
+|[**createUser**](#createuser) | **POST** /api/Users | |
+|[**deleteUser**](#deleteuser) | **DELETE** /api/Users/{id} | |
+|[**filterUsers**](#filterusers) | **GET** /api/Users/filter | |
+|[**getUserById**](#getuserbyid) | **GET** /api/Users/{id} | |
+|[**getUsers**](#getusers) | **GET** /api/Users | |
+|[**updateUser**](#updateuser) | **PUT** /api/Users/{id} | |
 
-# **createOrder**
-> createOrder()
+# **createUser**
+> createUser()
 
 
 ### Example
 
 ```typescript
 import {
-    OrderApi,
+    UsersApi,
     Configuration,
-    OrderRequest
+    UserCreateRequest
 } from './api';
 
 const configuration = new Configuration();
-const apiInstance = new OrderApi(configuration);
+const apiInstance = new UsersApi(configuration);
 
-let orderRequest: OrderRequest; // (optional)
+let userCreateRequest: UserCreateRequest; // (optional)
 
-const { status, data } = await apiInstance.createOrder(
-    orderRequest
+const { status, data } = await apiInstance.createUser(
+    userCreateRequest
 );
 ```
 
@@ -37,7 +38,7 @@ const { status, data } = await apiInstance.createOrder(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **orderRequest** | **OrderRequest**|  | |
+| **userCreateRequest** | **UserCreateRequest**|  | |
 
 
 ### Return type
@@ -61,90 +62,81 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **createOrderVnpay**
-> createOrderVnpay()
+# **deleteUser**
+> deleteUser()
 
 
 ### Example
 
 ```typescript
 import {
-    OrderApi,
-    Configuration,
-    OrderRequest
-} from './api';
-
-const configuration = new Configuration();
-const apiInstance = new OrderApi(configuration);
-
-let orderRequest: OrderRequest; // (optional)
-
-const { status, data } = await apiInstance.createOrderVnpay(
-    orderRequest
-);
-```
-
-### Parameters
-
-|Name | Type | Description  | Notes|
-|------------- | ------------- | ------------- | -------------|
-| **orderRequest** | **OrderRequest**|  | |
-
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[Bearer](../README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: Not defined
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-|**200** | OK |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **filterOrders**
-> filterOrders()
-
-
-### Example
-
-```typescript
-import {
-    OrderApi,
+    UsersApi,
     Configuration
 } from './api';
 
 const configuration = new Configuration();
-const apiInstance = new OrderApi(configuration);
+const apiInstance = new UsersApi(configuration);
 
-let customerName: string; // (optional) (default to undefined)
-let employeeName: string; // (optional) (default to undefined)
-let minTotalAmount: number; // (optional) (default to undefined)
-let maxTotalAmount: number; // (optional) (default to undefined)
-let status: string; // (optional) (default to undefined)
-let startDate: string; // (optional) (default to undefined)
-let endDate: string; // (optional) (default to undefined)
+let id: number; // (default to undefined)
+
+const { status, data } = await apiInstance.deleteUser(
+    id
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **id** | [**number**] |  | defaults to undefined|
+
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **filterUsers**
+> filterUsers()
+
+
+### Example
+
+```typescript
+import {
+    UsersApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new UsersApi(configuration);
+
+let username: string; // (optional) (default to undefined)
+let fullName: string; // (optional) (default to undefined)
+let role: string; // (optional) (default to undefined)
 let pageNumber: number; // (optional) (default to undefined)
 let pageSize: number; // (optional) (default to undefined)
 
-const { status, data } = await apiInstance.filterOrders(
-    customerName,
-    employeeName,
-    minTotalAmount,
-    maxTotalAmount,
-    status,
-    startDate,
-    endDate,
+const { status, data } = await apiInstance.filterUsers(
+    username,
+    fullName,
+    role,
     pageNumber,
     pageSize
 );
@@ -154,13 +146,9 @@ const { status, data } = await apiInstance.filterOrders(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **customerName** | [**string**] |  | (optional) defaults to undefined|
-| **employeeName** | [**string**] |  | (optional) defaults to undefined|
-| **minTotalAmount** | [**number**] |  | (optional) defaults to undefined|
-| **maxTotalAmount** | [**number**] |  | (optional) defaults to undefined|
-| **status** | [**string**] |  | (optional) defaults to undefined|
-| **startDate** | [**string**] |  | (optional) defaults to undefined|
-| **endDate** | [**string**] |  | (optional) defaults to undefined|
+| **username** | [**string**] |  | (optional) defaults to undefined|
+| **fullName** | [**string**] |  | (optional) defaults to undefined|
+| **role** | [**string**] |  | (optional) defaults to undefined|
 | **pageNumber** | [**number**] |  | (optional) defaults to undefined|
 | **pageSize** | [**number**] |  | (optional) defaults to undefined|
 
@@ -186,25 +174,75 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **getOrders**
-> getOrders()
+# **getUserById**
+> getUserById()
 
 
 ### Example
 
 ```typescript
 import {
-    OrderApi,
+    UsersApi,
     Configuration
 } from './api';
 
 const configuration = new Configuration();
-const apiInstance = new OrderApi(configuration);
+const apiInstance = new UsersApi(configuration);
+
+let id: number; // (default to undefined)
+
+const { status, data } = await apiInstance.getUserById(
+    id
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **id** | [**number**] |  | defaults to undefined|
+
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getUsers**
+> getUsers()
+
+
+### Example
+
+```typescript
+import {
+    UsersApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new UsersApi(configuration);
 
 let pageNumber: number; // (optional) (default to 1)
 let pageSize: number; // (optional) (default to 10)
 
-const { status, data } = await apiInstance.getOrders(
+const { status, data } = await apiInstance.getUsers(
     pageNumber,
     pageSize
 );
@@ -239,26 +277,37 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **vnpayCallback**
-> vnpayCallback()
+# **updateUser**
+> updateUser()
 
 
 ### Example
 
 ```typescript
 import {
-    OrderApi,
-    Configuration
+    UsersApi,
+    Configuration,
+    UserUpdateRequest
 } from './api';
 
 const configuration = new Configuration();
-const apiInstance = new OrderApi(configuration);
+const apiInstance = new UsersApi(configuration);
 
-const { status, data } = await apiInstance.vnpayCallback();
+let id: number; // (default to undefined)
+let userUpdateRequest: UserUpdateRequest; // (optional)
+
+const { status, data } = await apiInstance.updateUser(
+    id,
+    userUpdateRequest
+);
 ```
 
 ### Parameters
-This endpoint does not have any parameters.
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **userUpdateRequest** | **UserUpdateRequest**|  | |
+| **id** | [**number**] |  | defaults to undefined|
 
 
 ### Return type
@@ -271,7 +320,7 @@ void (empty response body)
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json, text/json, application/*+json
  - **Accept**: Not defined
 
 
