@@ -1,37 +1,39 @@
-# ProductApi
+# CustomerApi
 
 All URIs are relative to *http://localhost*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**createProduct**](#createproduct) | **POST** /api/Product | |
-|[**deleteProduct**](#deleteproduct) | **DELETE** /api/Product/{id} | |
-|[**filterProducts**](#filterproducts) | **GET** /api/Product/filter | |
-|[**getProductByBarcode**](#getproductbybarcode) | **GET** /api/Product/barcode/{barcode} | |
-|[**getProductById**](#getproductbyid) | **GET** /api/Product/{id} | |
-|[**getProducts**](#getproducts) | **GET** /api/Product | |
-|[**updateProduct**](#updateproduct) | **PUT** /api/Product/{id} | |
+|[**createCustomer**](#createcustomer) | **POST** /api/Customer | |
+|[**deleteCustomer**](#deletecustomer) | **DELETE** /api/Customer/{id} | |
+|[**filterCustomers**](#filtercustomers) | **GET** /api/Customer/filter | |
+|[**getCustomerByEmail**](#getcustomerbyemail) | **GET** /api/Customer/email/{email} | |
+|[**getCustomerById**](#getcustomerbyid) | **GET** /api/Customer/{id} | |
+|[**getCustomerByPhone**](#getcustomerbyphone) | **GET** /api/Customer/phone/{phone} | |
+|[**getCustomers**](#getcustomers) | **GET** /api/Customer | |
+|[**searchCustomers**](#searchcustomers) | **GET** /api/Customer/search | |
+|[**updateCustomer**](#updatecustomer) | **PUT** /api/Customer/{id} | |
 
-# **createProduct**
-> createProduct()
+# **createCustomer**
+> createCustomer()
 
 
 ### Example
 
 ```typescript
 import {
-    ProductApi,
+    CustomerApi,
     Configuration,
-    ProductCreateRequest
+    CustomerCreateRequest
 } from './api';
 
 const configuration = new Configuration();
-const apiInstance = new ProductApi(configuration);
+const apiInstance = new CustomerApi(configuration);
 
-let productCreateRequest: ProductCreateRequest; // (optional)
+let customerCreateRequest: CustomerCreateRequest; // (optional)
 
-const { status, data } = await apiInstance.createProduct(
-    productCreateRequest
+const { status, data } = await apiInstance.createCustomer(
+    customerCreateRequest
 );
 ```
 
@@ -39,7 +41,7 @@ const { status, data } = await apiInstance.createProduct(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **productCreateRequest** | **ProductCreateRequest**|  | |
+| **customerCreateRequest** | **CustomerCreateRequest**|  | |
 
 
 ### Return type
@@ -63,24 +65,24 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **deleteProduct**
-> deleteProduct()
+# **deleteCustomer**
+> deleteCustomer()
 
 
 ### Example
 
 ```typescript
 import {
-    ProductApi,
+    CustomerApi,
     Configuration
 } from './api';
 
 const configuration = new Configuration();
-const apiInstance = new ProductApi(configuration);
+const apiInstance = new CustomerApi(configuration);
 
 let id: number; // (default to undefined)
 
-const { status, data } = await apiInstance.deleteProduct(
+const { status, data } = await apiInstance.deleteCustomer(
     id
 );
 ```
@@ -113,39 +115,31 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **filterProducts**
-> filterProducts()
+# **filterCustomers**
+> filterCustomers()
 
 
 ### Example
 
 ```typescript
 import {
-    ProductApi,
+    CustomerApi,
     Configuration
 } from './api';
 
 const configuration = new Configuration();
-const apiInstance = new ProductApi(configuration);
+const apiInstance = new CustomerApi(configuration);
 
-let productName: string; // (optional) (default to undefined)
-let barcode: string; // (optional) (default to undefined)
-let categoryIds: Array<number>; // (optional) (default to undefined)
-let supplierIds: Array<number>; // (optional) (default to undefined)
-let minPrice: number; // (optional) (default to undefined)
-let maxPrice: number; // (optional) (default to undefined)
-let inStock: boolean; // (optional) (default to undefined)
+let fullName: string; // (optional) (default to undefined)
+let email: string; // (optional) (default to undefined)
+let phoneNumber: string; // (optional) (default to undefined)
 let pageNumber: number; // (optional) (default to undefined)
 let pageSize: number; // (optional) (default to undefined)
 
-const { status, data } = await apiInstance.filterProducts(
-    productName,
-    barcode,
-    categoryIds,
-    supplierIds,
-    minPrice,
-    maxPrice,
-    inStock,
+const { status, data } = await apiInstance.filterCustomers(
+    fullName,
+    email,
+    phoneNumber,
     pageNumber,
     pageSize
 );
@@ -155,13 +149,9 @@ const { status, data } = await apiInstance.filterProducts(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **productName** | [**string**] |  | (optional) defaults to undefined|
-| **barcode** | [**string**] |  | (optional) defaults to undefined|
-| **categoryIds** | **Array&lt;number&gt;** |  | (optional) defaults to undefined|
-| **supplierIds** | **Array&lt;number&gt;** |  | (optional) defaults to undefined|
-| **minPrice** | [**number**] |  | (optional) defaults to undefined|
-| **maxPrice** | [**number**] |  | (optional) defaults to undefined|
-| **inStock** | [**boolean**] |  | (optional) defaults to undefined|
+| **fullName** | [**string**] |  | (optional) defaults to undefined|
+| **email** | [**string**] |  | (optional) defaults to undefined|
+| **phoneNumber** | [**string**] |  | (optional) defaults to undefined|
 | **pageNumber** | [**number**] |  | (optional) defaults to undefined|
 | **pageSize** | [**number**] |  | (optional) defaults to undefined|
 
@@ -187,25 +177,25 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **getProductByBarcode**
-> getProductByBarcode()
+# **getCustomerByEmail**
+> getCustomerByEmail()
 
 
 ### Example
 
 ```typescript
 import {
-    ProductApi,
+    CustomerApi,
     Configuration
 } from './api';
 
 const configuration = new Configuration();
-const apiInstance = new ProductApi(configuration);
+const apiInstance = new CustomerApi(configuration);
 
-let barcode: string; // (default to undefined)
+let email: string; // (default to undefined)
 
-const { status, data } = await apiInstance.getProductByBarcode(
-    barcode
+const { status, data } = await apiInstance.getCustomerByEmail(
+    email
 );
 ```
 
@@ -213,7 +203,7 @@ const { status, data } = await apiInstance.getProductByBarcode(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **barcode** | [**string**] |  | defaults to undefined|
+| **email** | [**string**] |  | defaults to undefined|
 
 
 ### Return type
@@ -237,24 +227,24 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **getProductById**
-> getProductById()
+# **getCustomerById**
+> getCustomerById()
 
 
 ### Example
 
 ```typescript
 import {
-    ProductApi,
+    CustomerApi,
     Configuration
 } from './api';
 
 const configuration = new Configuration();
-const apiInstance = new ProductApi(configuration);
+const apiInstance = new CustomerApi(configuration);
 
 let id: number; // (default to undefined)
 
-const { status, data } = await apiInstance.getProductById(
+const { status, data } = await apiInstance.getCustomerById(
     id
 );
 ```
@@ -287,25 +277,75 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **getProducts**
-> getProducts()
+# **getCustomerByPhone**
+> getCustomerByPhone()
 
 
 ### Example
 
 ```typescript
 import {
-    ProductApi,
+    CustomerApi,
     Configuration
 } from './api';
 
 const configuration = new Configuration();
-const apiInstance = new ProductApi(configuration);
+const apiInstance = new CustomerApi(configuration);
+
+let phone: string; // (default to undefined)
+
+const { status, data } = await apiInstance.getCustomerByPhone(
+    phone
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **phone** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getCustomers**
+> getCustomers()
+
+
+### Example
+
+```typescript
+import {
+    CustomerApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new CustomerApi(configuration);
 
 let pageNumber: number; // (optional) (default to 1)
 let pageSize: number; // (optional) (default to 10)
 
-const { status, data } = await apiInstance.getProducts(
+const { status, data } = await apiInstance.getCustomers(
     pageNumber,
     pageSize
 );
@@ -340,28 +380,25 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **updateProduct**
-> updateProduct()
+# **searchCustomers**
+> searchCustomers()
 
 
 ### Example
 
 ```typescript
 import {
-    ProductApi,
-    Configuration,
-    ProductUpdateRequest
+    CustomerApi,
+    Configuration
 } from './api';
 
 const configuration = new Configuration();
-const apiInstance = new ProductApi(configuration);
+const apiInstance = new CustomerApi(configuration);
 
-let id: number; // (default to undefined)
-let productUpdateRequest: ProductUpdateRequest; // (optional)
+let name: string; // (optional) (default to undefined)
 
-const { status, data } = await apiInstance.updateProduct(
-    id,
-    productUpdateRequest
+const { status, data } = await apiInstance.searchCustomers(
+    name
 );
 ```
 
@@ -369,7 +406,60 @@ const { status, data } = await apiInstance.updateProduct(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **productUpdateRequest** | **ProductUpdateRequest**|  | |
+| **name** | [**string**] |  | (optional) defaults to undefined|
+
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **updateCustomer**
+> updateCustomer()
+
+
+### Example
+
+```typescript
+import {
+    CustomerApi,
+    Configuration,
+    CustomerCreateRequest
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new CustomerApi(configuration);
+
+let id: number; // (default to undefined)
+let customerCreateRequest: CustomerCreateRequest; // (optional)
+
+const { status, data } = await apiInstance.updateCustomer(
+    id,
+    customerCreateRequest
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **customerCreateRequest** | **CustomerCreateRequest**|  | |
 | **id** | [**number**] |  | defaults to undefined|
 
 

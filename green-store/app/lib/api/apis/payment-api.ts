@@ -28,6 +28,53 @@ export const PaymentApiAxiosParamCreator = function (configuration?: Configurati
     return {
         /**
          * 
+         * @param {string} [paymentMethod] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        filterPayments: async (paymentMethod?: string, pageNumber?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Payment/filter`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (paymentMethod !== undefined) {
+                localVarQueryParameter['PaymentMethod'] = paymentMethod;
+            }
+
+            if (pageNumber !== undefined) {
+                localVarQueryParameter['PageNumber'] = pageNumber;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['PageSize'] = pageSize;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {number} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -64,10 +111,12 @@ export const PaymentApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPayments: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getPayments: async (pageNumber?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/Payment`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -82,6 +131,14 @@ export const PaymentApiAxiosParamCreator = function (configuration?: Configurati
 
             // authentication Bearer required
             await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (pageNumber !== undefined) {
+                localVarQueryParameter['pageNumber'] = pageNumber;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
 
 
     
@@ -105,6 +162,20 @@ export const PaymentApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @param {string} [paymentMethod] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async filterPayments(paymentMethod?: string, pageNumber?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.filterPayments(paymentMethod, pageNumber, pageSize, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['PaymentApi.filterPayments']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {number} id 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -117,11 +188,13 @@ export const PaymentApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getPayments(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getPayments(options);
+        async getPayments(pageNumber?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getPayments(pageNumber, pageSize, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['PaymentApi.getPayments']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -137,6 +210,15 @@ export const PaymentApiFactory = function (configuration?: Configuration, basePa
     return {
         /**
          * 
+         * @param {PaymentApiFilterPaymentsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        filterPayments(requestParameters: PaymentApiFilterPaymentsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.filterPayments(requestParameters.paymentMethod, requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {PaymentApiGetPaymentByIdRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -146,14 +228,26 @@ export const PaymentApiFactory = function (configuration?: Configuration, basePa
         },
         /**
          * 
+         * @param {PaymentApiGetPaymentsRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getPayments(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getPayments(options).then((request) => request(axios, basePath));
+        getPayments(requestParameters: PaymentApiGetPaymentsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getPayments(requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(axios, basePath));
         },
     };
 };
+
+/**
+ * Request parameters for filterPayments operation in PaymentApi.
+ */
+export interface PaymentApiFilterPaymentsRequest {
+    readonly paymentMethod?: string
+
+    readonly pageNumber?: number
+
+    readonly pageSize?: number
+}
 
 /**
  * Request parameters for getPaymentById operation in PaymentApi.
@@ -163,9 +257,28 @@ export interface PaymentApiGetPaymentByIdRequest {
 }
 
 /**
+ * Request parameters for getPayments operation in PaymentApi.
+ */
+export interface PaymentApiGetPaymentsRequest {
+    readonly pageNumber?: number
+
+    readonly pageSize?: number
+}
+
+/**
  * PaymentApi - object-oriented interface
  */
 export class PaymentApi extends BaseAPI {
+    /**
+     * 
+     * @param {PaymentApiFilterPaymentsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public filterPayments(requestParameters: PaymentApiFilterPaymentsRequest = {}, options?: RawAxiosRequestConfig) {
+        return PaymentApiFp(this.configuration).filterPayments(requestParameters.paymentMethod, requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(this.axios, this.basePath));
+    }
+
     /**
      * 
      * @param {PaymentApiGetPaymentByIdRequest} requestParameters Request parameters.
@@ -178,11 +291,12 @@ export class PaymentApi extends BaseAPI {
 
     /**
      * 
+     * @param {PaymentApiGetPaymentsRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public getPayments(options?: RawAxiosRequestConfig) {
-        return PaymentApiFp(this.configuration).getPayments(options).then((request) => request(this.axios, this.basePath));
+    public getPayments(requestParameters: PaymentApiGetPaymentsRequest = {}, options?: RawAxiosRequestConfig) {
+        return PaymentApiFp(this.configuration).getPayments(requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

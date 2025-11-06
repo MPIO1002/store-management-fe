@@ -6,8 +6,9 @@ All URIs are relative to *http://localhost*
 |------------- | ------------- | -------------|
 |[**createInventory**](#createinventory) | **POST** /api/Inventory | |
 |[**deleteInventory**](#deleteinventory) | **DELETE** /api/Inventory/{id} | |
-|[**getInventories**](#getinventories) | **GET** /api/Inventory | |
+|[**filterInventories**](#filterinventories) | **GET** /api/Inventory/filter | |
 |[**getInventoryById**](#getinventorybyid) | **GET** /api/Inventory/{id} | |
+|[**searchInventories**](#searchinventories) | **GET** /api/Inventory/search | |
 |[**updateInventory**](#updateinventory) | **PUT** /api/Inventory/{id} | |
 
 # **createInventory**
@@ -111,8 +112,8 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **getInventories**
-> getInventories()
+# **filterInventories**
+> filterInventories()
 
 
 ### Example
@@ -126,11 +127,24 @@ import {
 const configuration = new Configuration();
 const apiInstance = new InventoryApi(configuration);
 
-const { status, data } = await apiInstance.getInventories();
+let productName: string; // (optional) (default to undefined)
+let pageNumber: number; // (optional) (default to undefined)
+let pageSize: number; // (optional) (default to undefined)
+
+const { status, data } = await apiInstance.filterInventories(
+    productName,
+    pageNumber,
+    pageSize
+);
 ```
 
 ### Parameters
-This endpoint does not have any parameters.
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **productName** | [**string**] |  | (optional) defaults to undefined|
+| **pageNumber** | [**number**] |  | (optional) defaults to undefined|
+| **pageSize** | [**number**] |  | (optional) defaults to undefined|
 
 
 ### Return type
@@ -181,6 +195,56 @@ const { status, data } = await apiInstance.getInventoryById(
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
 | **id** | [**number**] |  | defaults to undefined|
+
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **searchInventories**
+> searchInventories()
+
+
+### Example
+
+```typescript
+import {
+    InventoryApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new InventoryApi(configuration);
+
+let productName: string; // (optional) (default to undefined)
+
+const { status, data } = await apiInstance.searchInventories(
+    productName
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **productName** | [**string**] |  | (optional) defaults to undefined|
 
 
 ### Return type
