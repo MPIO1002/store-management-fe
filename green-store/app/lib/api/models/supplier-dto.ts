@@ -15,6 +15,7 @@
 
 
 export interface SupplierDto {
+    'supplierId'?: number;
     'name': string;
     'phone'?: string | null;
     'email'?: string | null;

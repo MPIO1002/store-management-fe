@@ -22,11 +22,7 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { AuthResponseDto } from '../models';
-// @ts-ignore
-import type { LoginDto } from '../models';
-// @ts-ignore
-import type { RegisterDto } from '../models';
+import type { LoginRequest } from '../models';
 /**
  * AuthApi - axios parameter creator
  */
@@ -34,12 +30,12 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
     return {
         /**
          * 
-         * @param {LoginDto} [loginDto] 
+         * @param {LoginRequest} [loginRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        loginUser: async (loginDto?: LoginDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/Auth/login`;
+        login: async (loginRequest?: LoginRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/auth/login`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -61,7 +57,7 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(loginDto, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = serializeDataIfNeeded(loginRequest, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -70,12 +66,11 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
         },
         /**
          * 
-         * @param {RegisterDto} [registerDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        registerUser: async (registerDto?: RegisterDto, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/Auth/register`;
+        logout: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/auth/logout`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -92,12 +87,9 @@ export const AuthApiAxiosParamCreator = function (configuration?: Configuration)
 
 
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(registerDto, localVarRequestOptions, configuration)
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -115,26 +107,25 @@ export const AuthApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {LoginDto} [loginDto] 
+         * @param {LoginRequest} [loginRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async loginUser(loginDto?: LoginDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthResponseDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.loginUser(loginDto, options);
+        async login(loginRequest?: LoginRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.login(loginRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AuthApi.loginUser']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AuthApi.login']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
          * 
-         * @param {RegisterDto} [registerDto] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async registerUser(registerDto?: RegisterDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<AuthResponseDto>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.registerUser(registerDto, options);
+        async logout(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.logout(options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['AuthApi.registerUser']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['AuthApi.logout']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -148,37 +139,29 @@ export const AuthApiFactory = function (configuration?: Configuration, basePath?
     return {
         /**
          * 
-         * @param {AuthApiLoginUserRequest} requestParameters Request parameters.
+         * @param {AuthApiLoginRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        loginUser(requestParameters: AuthApiLoginUserRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AuthResponseDto> {
-            return localVarFp.loginUser(requestParameters.loginDto, options).then((request) => request(axios, basePath));
+        login(requestParameters: AuthApiLoginRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.login(requestParameters.loginRequest, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {AuthApiRegisterUserRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        registerUser(requestParameters: AuthApiRegisterUserRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<AuthResponseDto> {
-            return localVarFp.registerUser(requestParameters.registerDto, options).then((request) => request(axios, basePath));
+        logout(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.logout(options).then((request) => request(axios, basePath));
         },
     };
 };
 
 /**
- * Request parameters for loginUser operation in AuthApi.
+ * Request parameters for login operation in AuthApi.
  */
-export interface AuthApiLoginUserRequest {
-    readonly loginDto?: LoginDto
-}
-
-/**
- * Request parameters for registerUser operation in AuthApi.
- */
-export interface AuthApiRegisterUserRequest {
-    readonly registerDto?: RegisterDto
+export interface AuthApiLoginRequest {
+    readonly loginRequest?: LoginRequest
 }
 
 /**
@@ -187,22 +170,21 @@ export interface AuthApiRegisterUserRequest {
 export class AuthApi extends BaseAPI {
     /**
      * 
-     * @param {AuthApiLoginUserRequest} requestParameters Request parameters.
+     * @param {AuthApiLoginRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public loginUser(requestParameters: AuthApiLoginUserRequest = {}, options?: RawAxiosRequestConfig) {
-        return AuthApiFp(this.configuration).loginUser(requestParameters.loginDto, options).then((request) => request(this.axios, this.basePath));
+    public login(requestParameters: AuthApiLoginRequest = {}, options?: RawAxiosRequestConfig) {
+        return AuthApiFp(this.configuration).login(requestParameters.loginRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
      * 
-     * @param {AuthApiRegisterUserRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public registerUser(requestParameters: AuthApiRegisterUserRequest = {}, options?: RawAxiosRequestConfig) {
-        return AuthApiFp(this.configuration).registerUser(requestParameters.registerDto, options).then((request) => request(this.axios, this.basePath));
+    public logout(options?: RawAxiosRequestConfig) {
+        return AuthApiFp(this.configuration).logout(options).then((request) => request(this.axios, this.basePath));
     }
 }
 

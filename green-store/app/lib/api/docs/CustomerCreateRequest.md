@@ -1,11 +1,10 @@
-# SupplierDto
+# CustomerCreateRequest
 
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**supplierId** | **number** |  | [optional] [default to undefined]
 **name** | **string** |  | [default to undefined]
 **phone** | **string** |  | [optional] [default to undefined]
 **email** | **string** |  | [optional] [default to undefined]
@@ -14,10 +13,9 @@ Name | Type | Description | Notes
 ## Example
 
 ```typescript
-import { SupplierDto } from './api';
+import { CustomerCreateRequest } from './api';
 
-const instance: SupplierDto = {
-    supplierId,
+const instance: CustomerCreateRequest = {
     name,
     phone,
     email,

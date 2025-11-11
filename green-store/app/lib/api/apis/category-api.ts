@@ -102,10 +102,59 @@ export const CategoryApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @param {string} [categoryName] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCategories: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        filterCategories: async (categoryName?: string, pageNumber?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Category/filter`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (categoryName !== undefined) {
+                localVarQueryParameter['CategoryName'] = categoryName;
+            }
+
+            if (pageNumber !== undefined) {
+                localVarQueryParameter['PageNumber'] = pageNumber;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['PageSize'] = pageSize;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCategories: async (pageNumber?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/Category`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -120,6 +169,14 @@ export const CategoryApiAxiosParamCreator = function (configuration?: Configurat
 
             // authentication Bearer required
             await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (pageNumber !== undefined) {
+                localVarQueryParameter['pageNumber'] = pageNumber;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
 
 
     
@@ -156,6 +213,43 @@ export const CategoryApiAxiosParamCreator = function (configuration?: Configurat
 
             // authentication Bearer required
             await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} [categoryName] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        searchCategories: async (categoryName?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Category/search`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (categoryName !== undefined) {
+                localVarQueryParameter['categoryName'] = categoryName;
+            }
 
 
     
@@ -243,11 +337,27 @@ export const CategoryApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {string} [categoryName] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCategories(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getCategories(options);
+        async filterCategories(categoryName?: string, pageNumber?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.filterCategories(categoryName, pageNumber, pageSize, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CategoryApi.filterCategories']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getCategories(pageNumber?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getCategories(pageNumber, pageSize, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CategoryApi.getCategories']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -262,6 +372,18 @@ export const CategoryApiFp = function(configuration?: Configuration) {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCategoryById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CategoryApi.getCategoryById']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} [categoryName] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async searchCategories(categoryName?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.searchCategories(categoryName, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CategoryApi.searchCategories']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -306,11 +428,21 @@ export const CategoryApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @param {CategoryApiFilterCategoriesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCategories(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getCategories(options).then((request) => request(axios, basePath));
+        filterCategories(requestParameters: CategoryApiFilterCategoriesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.filterCategories(requestParameters.categoryName, requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {CategoryApiGetCategoriesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getCategories(requestParameters: CategoryApiGetCategoriesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getCategories(requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -320,6 +452,15 @@ export const CategoryApiFactory = function (configuration?: Configuration, baseP
          */
         getCategoryById(requestParameters: CategoryApiGetCategoryByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
             return localVarFp.getCategoryById(requestParameters.id, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {CategoryApiSearchCategoriesRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        searchCategories(requestParameters: CategoryApiSearchCategoriesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.searchCategories(requestParameters.categoryName, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -348,10 +489,37 @@ export interface CategoryApiDeleteCategoryRequest {
 }
 
 /**
+ * Request parameters for filterCategories operation in CategoryApi.
+ */
+export interface CategoryApiFilterCategoriesRequest {
+    readonly categoryName?: string
+
+    readonly pageNumber?: number
+
+    readonly pageSize?: number
+}
+
+/**
+ * Request parameters for getCategories operation in CategoryApi.
+ */
+export interface CategoryApiGetCategoriesRequest {
+    readonly pageNumber?: number
+
+    readonly pageSize?: number
+}
+
+/**
  * Request parameters for getCategoryById operation in CategoryApi.
  */
 export interface CategoryApiGetCategoryByIdRequest {
     readonly id: number
+}
+
+/**
+ * Request parameters for searchCategories operation in CategoryApi.
+ */
+export interface CategoryApiSearchCategoriesRequest {
+    readonly categoryName?: string
 }
 
 /**
@@ -389,11 +557,22 @@ export class CategoryApi extends BaseAPI {
 
     /**
      * 
+     * @param {CategoryApiFilterCategoriesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public getCategories(options?: RawAxiosRequestConfig) {
-        return CategoryApiFp(this.configuration).getCategories(options).then((request) => request(this.axios, this.basePath));
+    public filterCategories(requestParameters: CategoryApiFilterCategoriesRequest = {}, options?: RawAxiosRequestConfig) {
+        return CategoryApiFp(this.configuration).filterCategories(requestParameters.categoryName, requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {CategoryApiGetCategoriesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public getCategories(requestParameters: CategoryApiGetCategoriesRequest = {}, options?: RawAxiosRequestConfig) {
+        return CategoryApiFp(this.configuration).getCategories(requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -404,6 +583,16 @@ export class CategoryApi extends BaseAPI {
      */
     public getCategoryById(requestParameters: CategoryApiGetCategoryByIdRequest, options?: RawAxiosRequestConfig) {
         return CategoryApiFp(this.configuration).getCategoryById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {CategoryApiSearchCategoriesRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public searchCategories(requestParameters: CategoryApiSearchCategoriesRequest = {}, options?: RawAxiosRequestConfig) {
+        return CategoryApiFp(this.configuration).searchCategories(requestParameters.categoryName, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
