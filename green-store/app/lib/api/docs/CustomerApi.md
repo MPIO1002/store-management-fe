@@ -1,37 +1,39 @@
-# CategoryApi
+# CustomerApi
 
 All URIs are relative to *http://localhost*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
-|[**createCategory**](#createcategory) | **POST** /api/Category | |
-|[**deleteCategory**](#deletecategory) | **DELETE** /api/Category/{id} | |
-|[**filterCategories**](#filtercategories) | **GET** /api/Category/filter | |
-|[**getCategories**](#getcategories) | **GET** /api/Category | |
-|[**getCategoryById**](#getcategorybyid) | **GET** /api/Category/{id} | |
-|[**searchCategories**](#searchcategories) | **GET** /api/Category/search | |
-|[**updateCategory**](#updatecategory) | **PUT** /api/Category/{id} | |
+|[**createCustomer**](#createcustomer) | **POST** /api/Customer | |
+|[**deleteCustomer**](#deletecustomer) | **DELETE** /api/Customer/{id} | |
+|[**filterCustomers**](#filtercustomers) | **GET** /api/Customer/filter | |
+|[**getCustomerByEmail**](#getcustomerbyemail) | **GET** /api/Customer/email/{email} | |
+|[**getCustomerById**](#getcustomerbyid) | **GET** /api/Customer/{id} | |
+|[**getCustomerByPhone**](#getcustomerbyphone) | **GET** /api/Customer/phone/{phone} | |
+|[**getCustomers**](#getcustomers) | **GET** /api/Customer | |
+|[**searchCustomers**](#searchcustomers) | **GET** /api/Customer/search | |
+|[**updateCustomer**](#updatecustomer) | **PUT** /api/Customer/{id} | |
 
-# **createCategory**
-> createCategory()
+# **createCustomer**
+> createCustomer()
 
 
 ### Example
 
 ```typescript
 import {
-    CategoryApi,
+    CustomerApi,
     Configuration,
-    CategoryRequest
+    CustomerCreateRequest
 } from './api';
 
 const configuration = new Configuration();
-const apiInstance = new CategoryApi(configuration);
+const apiInstance = new CustomerApi(configuration);
 
-let categoryRequest: CategoryRequest; // (optional)
+let customerCreateRequest: CustomerCreateRequest; // (optional)
 
-const { status, data } = await apiInstance.createCategory(
-    categoryRequest
+const { status, data } = await apiInstance.createCustomer(
+    customerCreateRequest
 );
 ```
 
@@ -39,7 +41,7 @@ const { status, data } = await apiInstance.createCategory(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **categoryRequest** | **CategoryRequest**|  | |
+| **customerCreateRequest** | **CustomerCreateRequest**|  | |
 
 
 ### Return type
@@ -63,24 +65,24 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **deleteCategory**
-> deleteCategory()
+# **deleteCustomer**
+> deleteCustomer()
 
 
 ### Example
 
 ```typescript
 import {
-    CategoryApi,
+    CustomerApi,
     Configuration
 } from './api';
 
 const configuration = new Configuration();
-const apiInstance = new CategoryApi(configuration);
+const apiInstance = new CustomerApi(configuration);
 
 let id: number; // (default to undefined)
 
-const { status, data } = await apiInstance.deleteCategory(
+const { status, data } = await apiInstance.deleteCustomer(
     id
 );
 ```
@@ -113,27 +115,31 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **filterCategories**
-> filterCategories()
+# **filterCustomers**
+> filterCustomers()
 
 
 ### Example
 
 ```typescript
 import {
-    CategoryApi,
+    CustomerApi,
     Configuration
 } from './api';
 
 const configuration = new Configuration();
-const apiInstance = new CategoryApi(configuration);
+const apiInstance = new CustomerApi(configuration);
 
-let categoryName: string; // (optional) (default to undefined)
+let fullName: string; // (optional) (default to undefined)
+let email: string; // (optional) (default to undefined)
+let phoneNumber: string; // (optional) (default to undefined)
 let pageNumber: number; // (optional) (default to undefined)
 let pageSize: number; // (optional) (default to undefined)
 
-const { status, data } = await apiInstance.filterCategories(
-    categoryName,
+const { status, data } = await apiInstance.filterCustomers(
+    fullName,
+    email,
+    phoneNumber,
     pageNumber,
     pageSize
 );
@@ -143,7 +149,9 @@ const { status, data } = await apiInstance.filterCategories(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **categoryName** | [**string**] |  | (optional) defaults to undefined|
+| **fullName** | [**string**] |  | (optional) defaults to undefined|
+| **email** | [**string**] |  | (optional) defaults to undefined|
+| **phoneNumber** | [**string**] |  | (optional) defaults to undefined|
 | **pageNumber** | [**number**] |  | (optional) defaults to undefined|
 | **pageSize** | [**number**] |  | (optional) defaults to undefined|
 
@@ -169,25 +177,175 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **getCategories**
-> getCategories()
+# **getCustomerByEmail**
+> getCustomerByEmail()
 
 
 ### Example
 
 ```typescript
 import {
-    CategoryApi,
+    CustomerApi,
     Configuration
 } from './api';
 
 const configuration = new Configuration();
-const apiInstance = new CategoryApi(configuration);
+const apiInstance = new CustomerApi(configuration);
+
+let email: string; // (default to undefined)
+
+const { status, data } = await apiInstance.getCustomerByEmail(
+    email
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **email** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getCustomerById**
+> getCustomerById()
+
+
+### Example
+
+```typescript
+import {
+    CustomerApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new CustomerApi(configuration);
+
+let id: number; // (default to undefined)
+
+const { status, data } = await apiInstance.getCustomerById(
+    id
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **id** | [**number**] |  | defaults to undefined|
+
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getCustomerByPhone**
+> getCustomerByPhone()
+
+
+### Example
+
+```typescript
+import {
+    CustomerApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new CustomerApi(configuration);
+
+let phone: string; // (default to undefined)
+
+const { status, data } = await apiInstance.getCustomerByPhone(
+    phone
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **phone** | [**string**] |  | defaults to undefined|
+
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getCustomers**
+> getCustomers()
+
+
+### Example
+
+```typescript
+import {
+    CustomerApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new CustomerApi(configuration);
 
 let pageNumber: number; // (optional) (default to 1)
 let pageSize: number; // (optional) (default to 10)
 
-const { status, data } = await apiInstance.getCategories(
+const { status, data } = await apiInstance.getCustomers(
     pageNumber,
     pageSize
 );
@@ -222,25 +380,25 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **getCategoryById**
-> getCategoryById()
+# **searchCustomers**
+> searchCustomers()
 
 
 ### Example
 
 ```typescript
 import {
-    CategoryApi,
+    CustomerApi,
     Configuration
 } from './api';
 
 const configuration = new Configuration();
-const apiInstance = new CategoryApi(configuration);
+const apiInstance = new CustomerApi(configuration);
 
-let id: number; // (default to undefined)
+let name: string; // (optional) (default to undefined)
 
-const { status, data } = await apiInstance.getCategoryById(
-    id
+const { status, data } = await apiInstance.searchCustomers(
+    name
 );
 ```
 
@@ -248,7 +406,7 @@ const { status, data } = await apiInstance.getCategoryById(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **id** | [**number**] |  | defaults to undefined|
+| **name** | [**string**] |  | (optional) defaults to undefined|
 
 
 ### Return type
@@ -272,78 +430,28 @@ void (empty response body)
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **searchCategories**
-> searchCategories()
+# **updateCustomer**
+> updateCustomer()
 
 
 ### Example
 
 ```typescript
 import {
-    CategoryApi,
-    Configuration
-} from './api';
-
-const configuration = new Configuration();
-const apiInstance = new CategoryApi(configuration);
-
-let categoryName: string; // (optional) (default to undefined)
-
-const { status, data } = await apiInstance.searchCategories(
-    categoryName
-);
-```
-
-### Parameters
-
-|Name | Type | Description  | Notes|
-|------------- | ------------- | ------------- | -------------|
-| **categoryName** | [**string**] |  | (optional) defaults to undefined|
-
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[Bearer](../README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-|**200** | OK |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **updateCategory**
-> updateCategory()
-
-
-### Example
-
-```typescript
-import {
-    CategoryApi,
+    CustomerApi,
     Configuration,
-    CategoryRequest
+    CustomerCreateRequest
 } from './api';
 
 const configuration = new Configuration();
-const apiInstance = new CategoryApi(configuration);
+const apiInstance = new CustomerApi(configuration);
 
 let id: number; // (default to undefined)
-let categoryRequest: CategoryRequest; // (optional)
+let customerCreateRequest: CustomerCreateRequest; // (optional)
 
-const { status, data } = await apiInstance.updateCategory(
+const { status, data } = await apiInstance.updateCustomer(
     id,
-    categoryRequest
+    customerCreateRequest
 );
 ```
 
@@ -351,7 +459,7 @@ const { status, data } = await apiInstance.updateCategory(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **categoryRequest** | **CategoryRequest**|  | |
+| **customerCreateRequest** | **CustomerCreateRequest**|  | |
 | **id** | [**number**] |  | defaults to undefined|
 
 

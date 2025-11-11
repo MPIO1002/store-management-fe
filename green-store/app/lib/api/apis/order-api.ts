@@ -21,6 +21,8 @@ import globalAxios from 'axios';
 import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObject, setBearerAuthToObject, setOAuthToObject, setSearchParams, serializeDataIfNeeded, toPathString, createRequestFunction } from '../common';
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
+// @ts-ignore
+import type { OrderRequest } from '../models';
 /**
  * OrderApi - axios parameter creator
  */
@@ -28,11 +30,206 @@ export const OrderApiAxiosParamCreator = function (configuration?: Configuration
     return {
         /**
          * 
+         * @param {OrderRequest} [orderRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrders: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createOrder: async (orderRequest?: OrderRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/Order`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(orderRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {OrderRequest} [orderRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createOrderVnpay: async (orderRequest?: OrderRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Order/vnpay`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(orderRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {string} [customerName] 
+         * @param {string} [employeeName] 
+         * @param {number} [minTotalAmount] 
+         * @param {number} [maxTotalAmount] 
+         * @param {string} [status] 
+         * @param {string} [startDate] 
+         * @param {string} [endDate] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        filterOrders: async (customerName?: string, employeeName?: string, minTotalAmount?: number, maxTotalAmount?: number, status?: string, startDate?: string, endDate?: string, pageNumber?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Order/filter`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (customerName !== undefined) {
+                localVarQueryParameter['customerName'] = customerName;
+            }
+
+            if (employeeName !== undefined) {
+                localVarQueryParameter['employeeName'] = employeeName;
+            }
+
+            if (minTotalAmount !== undefined) {
+                localVarQueryParameter['minTotalAmount'] = minTotalAmount;
+            }
+
+            if (maxTotalAmount !== undefined) {
+                localVarQueryParameter['maxTotalAmount'] = maxTotalAmount;
+            }
+
+            if (status !== undefined) {
+                localVarQueryParameter['status'] = status;
+            }
+
+            if (startDate !== undefined) {
+                localVarQueryParameter['startDate'] = (startDate as any instanceof Date) ?
+                    (startDate as any).toISOString() :
+                    startDate;
+            }
+
+            if (endDate !== undefined) {
+                localVarQueryParameter['endDate'] = (endDate as any instanceof Date) ?
+                    (endDate as any).toISOString() :
+                    endDate;
+            }
+
+            if (pageNumber !== undefined) {
+                localVarQueryParameter['PageNumber'] = pageNumber;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['PageSize'] = pageSize;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrders: async (pageNumber?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Order`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (pageNumber !== undefined) {
+                localVarQueryParameter['pageNumber'] = pageNumber;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        vnpayCallback: async (options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/vnpay/check-result/callback`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
             let baseOptions;
@@ -69,13 +266,70 @@ export const OrderApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
+         * @param {OrderRequest} [orderRequest] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getOrders(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrders(options);
+        async createOrder(orderRequest?: OrderRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createOrder(orderRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrderApi.createOrder']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {OrderRequest} [orderRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async createOrderVnpay(orderRequest?: OrderRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createOrderVnpay(orderRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrderApi.createOrderVnpay']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {string} [customerName] 
+         * @param {string} [employeeName] 
+         * @param {number} [minTotalAmount] 
+         * @param {number} [maxTotalAmount] 
+         * @param {string} [status] 
+         * @param {string} [startDate] 
+         * @param {string} [endDate] 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async filterOrders(customerName?: string, employeeName?: string, minTotalAmount?: number, maxTotalAmount?: number, status?: string, startDate?: string, endDate?: string, pageNumber?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.filterOrders(customerName, employeeName, minTotalAmount, maxTotalAmount, status, startDate, endDate, pageNumber, pageSize, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrderApi.filterOrders']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getOrders(pageNumber?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getOrders(pageNumber, pageSize, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['OrderApi.getOrders']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async vnpayCallback(options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.vnpayCallback(options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrderApi.vnpayCallback']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
     }
@@ -89,14 +343,96 @@ export const OrderApiFactory = function (configuration?: Configuration, basePath
     return {
         /**
          * 
+         * @param {OrderApiCreateOrderRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getOrders(options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getOrders(options).then((request) => request(axios, basePath));
+        createOrder(requestParameters: OrderApiCreateOrderRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.createOrder(requestParameters.orderRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {OrderApiCreateOrderVnpayRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createOrderVnpay(requestParameters: OrderApiCreateOrderVnpayRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.createOrderVnpay(requestParameters.orderRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {OrderApiFilterOrdersRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        filterOrders(requestParameters: OrderApiFilterOrdersRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.filterOrders(requestParameters.customerName, requestParameters.employeeName, requestParameters.minTotalAmount, requestParameters.maxTotalAmount, requestParameters.status, requestParameters.startDate, requestParameters.endDate, requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {OrderApiGetOrdersRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getOrders(requestParameters: OrderApiGetOrdersRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getOrders(requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        vnpayCallback(options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.vnpayCallback(options).then((request) => request(axios, basePath));
         },
     };
 };
+
+/**
+ * Request parameters for createOrder operation in OrderApi.
+ */
+export interface OrderApiCreateOrderRequest {
+    readonly orderRequest?: OrderRequest
+}
+
+/**
+ * Request parameters for createOrderVnpay operation in OrderApi.
+ */
+export interface OrderApiCreateOrderVnpayRequest {
+    readonly orderRequest?: OrderRequest
+}
+
+/**
+ * Request parameters for filterOrders operation in OrderApi.
+ */
+export interface OrderApiFilterOrdersRequest {
+    readonly customerName?: string
+
+    readonly employeeName?: string
+
+    readonly minTotalAmount?: number
+
+    readonly maxTotalAmount?: number
+
+    readonly status?: string
+
+    readonly startDate?: string
+
+    readonly endDate?: string
+
+    readonly pageNumber?: number
+
+    readonly pageSize?: number
+}
+
+/**
+ * Request parameters for getOrders operation in OrderApi.
+ */
+export interface OrderApiGetOrdersRequest {
+    readonly pageNumber?: number
+
+    readonly pageSize?: number
+}
 
 /**
  * OrderApi - object-oriented interface
@@ -104,11 +440,51 @@ export const OrderApiFactory = function (configuration?: Configuration, basePath
 export class OrderApi extends BaseAPI {
     /**
      * 
+     * @param {OrderApiCreateOrderRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public getOrders(options?: RawAxiosRequestConfig) {
-        return OrderApiFp(this.configuration).getOrders(options).then((request) => request(this.axios, this.basePath));
+    public createOrder(requestParameters: OrderApiCreateOrderRequest = {}, options?: RawAxiosRequestConfig) {
+        return OrderApiFp(this.configuration).createOrder(requestParameters.orderRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {OrderApiCreateOrderVnpayRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public createOrderVnpay(requestParameters: OrderApiCreateOrderVnpayRequest = {}, options?: RawAxiosRequestConfig) {
+        return OrderApiFp(this.configuration).createOrderVnpay(requestParameters.orderRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {OrderApiFilterOrdersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public filterOrders(requestParameters: OrderApiFilterOrdersRequest = {}, options?: RawAxiosRequestConfig) {
+        return OrderApiFp(this.configuration).filterOrders(requestParameters.customerName, requestParameters.employeeName, requestParameters.minTotalAmount, requestParameters.maxTotalAmount, requestParameters.status, requestParameters.startDate, requestParameters.endDate, requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {OrderApiGetOrdersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public getOrders(requestParameters: OrderApiGetOrdersRequest = {}, options?: RawAxiosRequestConfig) {
+        return OrderApiFp(this.configuration).getOrders(requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public vnpayCallback(options?: RawAxiosRequestConfig) {
+        return OrderApiFp(this.configuration).vnpayCallback(options).then((request) => request(this.axios, this.basePath));
     }
 }
 
