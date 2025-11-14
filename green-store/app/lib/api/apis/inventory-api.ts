@@ -108,7 +108,7 @@ export const InventoryApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        filterInventories: async (productName?: string, pageNumber?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        filterInventory: async (productName?: string, pageNumber?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/Inventory/filter`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -134,6 +134,48 @@ export const InventoryApiAxiosParamCreator = function (configuration?: Configura
 
             if (pageSize !== undefined) {
                 localVarQueryParameter['PageSize'] = pageSize;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getInventory: async (pageNumber?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Inventory`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (pageNumber !== undefined) {
+                localVarQueryParameter['pageNumber'] = pageNumber;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
             }
 
 
@@ -189,7 +231,7 @@ export const InventoryApiAxiosParamCreator = function (configuration?: Configura
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchInventories: async (productName?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        searchInventory: async (productName?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/Inventory/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -301,10 +343,23 @@ export const InventoryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async filterInventories(productName?: string, pageNumber?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.filterInventories(productName, pageNumber, pageSize, options);
+        async filterInventory(productName?: string, pageNumber?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.filterInventory(productName, pageNumber, pageSize, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['InventoryApi.filterInventories']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['InventoryApi.filterInventory']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getInventory(pageNumber?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getInventory(pageNumber, pageSize, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['InventoryApi.getInventory']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -325,10 +380,10 @@ export const InventoryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async searchInventories(productName?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.searchInventories(productName, options);
+        async searchInventory(productName?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.searchInventory(productName, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['InventoryApi.searchInventories']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['InventoryApi.searchInventory']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -373,12 +428,21 @@ export const InventoryApiFactory = function (configuration?: Configuration, base
         },
         /**
          * 
-         * @param {InventoryApiFilterInventoriesRequest} requestParameters Request parameters.
+         * @param {InventoryApiFilterInventoryRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        filterInventories(requestParameters: InventoryApiFilterInventoriesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.filterInventories(requestParameters.productName, requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(axios, basePath));
+        filterInventory(requestParameters: InventoryApiFilterInventoryRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.filterInventory(requestParameters.productName, requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {InventoryApiGetInventoryRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getInventory(requestParameters: InventoryApiGetInventoryRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.getInventory(requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -391,12 +455,12 @@ export const InventoryApiFactory = function (configuration?: Configuration, base
         },
         /**
          * 
-         * @param {InventoryApiSearchInventoriesRequest} requestParameters Request parameters.
+         * @param {InventoryApiSearchInventoryRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchInventories(requestParameters: InventoryApiSearchInventoriesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.searchInventories(requestParameters.productName, options).then((request) => request(axios, basePath));
+        searchInventory(requestParameters: InventoryApiSearchInventoryRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.searchInventory(requestParameters.productName, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -425,11 +489,20 @@ export interface InventoryApiDeleteInventoryRequest {
 }
 
 /**
- * Request parameters for filterInventories operation in InventoryApi.
+ * Request parameters for filterInventory operation in InventoryApi.
  */
-export interface InventoryApiFilterInventoriesRequest {
+export interface InventoryApiFilterInventoryRequest {
     readonly productName?: string
 
+    readonly pageNumber?: number
+
+    readonly pageSize?: number
+}
+
+/**
+ * Request parameters for getInventory operation in InventoryApi.
+ */
+export interface InventoryApiGetInventoryRequest {
     readonly pageNumber?: number
 
     readonly pageSize?: number
@@ -443,9 +516,9 @@ export interface InventoryApiGetInventoryByIdRequest {
 }
 
 /**
- * Request parameters for searchInventories operation in InventoryApi.
+ * Request parameters for searchInventory operation in InventoryApi.
  */
-export interface InventoryApiSearchInventoriesRequest {
+export interface InventoryApiSearchInventoryRequest {
     readonly productName?: string
 }
 
@@ -484,12 +557,22 @@ export class InventoryApi extends BaseAPI {
 
     /**
      * 
-     * @param {InventoryApiFilterInventoriesRequest} requestParameters Request parameters.
+     * @param {InventoryApiFilterInventoryRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public filterInventories(requestParameters: InventoryApiFilterInventoriesRequest = {}, options?: RawAxiosRequestConfig) {
-        return InventoryApiFp(this.configuration).filterInventories(requestParameters.productName, requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(this.axios, this.basePath));
+    public filterInventory(requestParameters: InventoryApiFilterInventoryRequest = {}, options?: RawAxiosRequestConfig) {
+        return InventoryApiFp(this.configuration).filterInventory(requestParameters.productName, requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {InventoryApiGetInventoryRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public getInventory(requestParameters: InventoryApiGetInventoryRequest = {}, options?: RawAxiosRequestConfig) {
+        return InventoryApiFp(this.configuration).getInventory(requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -504,12 +587,12 @@ export class InventoryApi extends BaseAPI {
 
     /**
      * 
-     * @param {InventoryApiSearchInventoriesRequest} requestParameters Request parameters.
+     * @param {InventoryApiSearchInventoryRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public searchInventories(requestParameters: InventoryApiSearchInventoriesRequest = {}, options?: RawAxiosRequestConfig) {
-        return InventoryApiFp(this.configuration).searchInventories(requestParameters.productName, options).then((request) => request(this.axios, this.basePath));
+    public searchInventory(requestParameters: InventoryApiSearchInventoryRequest = {}, options?: RawAxiosRequestConfig) {
+        return InventoryApiFp(this.configuration).searchInventory(requestParameters.productName, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
