@@ -7,12 +7,12 @@ All URIs are relative to *http://localhost*
 |[**createSupplier**](#createsupplier) | **POST** /api/Supplier | |
 |[**deleteSupplier**](#deletesupplier) | **DELETE** /api/Supplier/{id} | |
 |[**filterSuppliers**](#filtersuppliers) | **GET** /api/Supplier/filter | |
+|[**getAllSuppliers**](#getallsuppliers) | **GET** /api/Supplier | |
 |[**getSupplierById**](#getsupplierbyid) | **GET** /api/Supplier/{id} | |
-|[**getSuppliers**](#getsuppliers) | **GET** /api/Supplier | |
 |[**updateSupplier**](#updatesupplier) | **PUT** /api/Supplier/{id} | |
 
 # **createSupplier**
-> createSupplier()
+> ResponseSupplierResponse createSupplier()
 
 
 ### Example
@@ -43,7 +43,7 @@ const { status, data } = await apiInstance.createSupplier(
 
 ### Return type
 
-void (empty response body)
+**ResponseSupplierResponse**
 
 ### Authorization
 
@@ -52,18 +52,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **deleteSupplier**
-> deleteSupplier()
+> ResponseObject deleteSupplier()
 
 
 ### Example
@@ -93,7 +93,7 @@ const { status, data } = await apiInstance.deleteSupplier(
 
 ### Return type
 
-void (empty response body)
+**ResponseObject**
 
 ### Authorization
 
@@ -102,18 +102,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **filterSuppliers**
-> filterSuppliers()
+> ResponsePagedResponseSupplierResponse filterSuppliers()
 
 
 ### Example
@@ -152,7 +152,7 @@ const { status, data } = await apiInstance.filterSuppliers(
 
 ### Return type
 
-void (empty response body)
+**ResponsePagedResponseSupplierResponse**
 
 ### Authorization
 
@@ -161,18 +161,71 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getAllSuppliers**
+> ResponsePagedResponseSupplierResponse getAllSuppliers()
+
+
+### Example
+
+```typescript
+import {
+    SupplierApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new SupplierApi(configuration);
+
+let pageNumber: number; // (optional) (default to 1)
+let pageSize: number; // (optional) (default to 10)
+
+const { status, data } = await apiInstance.getAllSuppliers(
+    pageNumber,
+    pageSize
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **pageNumber** | [**number**] |  | (optional) defaults to 1|
+| **pageSize** | [**number**] |  | (optional) defaults to 10|
+
+
+### Return type
+
+**ResponsePagedResponseSupplierResponse**
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getSupplierById**
-> getSupplierById()
+> ResponseSupplierResponse getSupplierById()
 
 
 ### Example
@@ -202,7 +255,7 @@ const { status, data } = await apiInstance.getSupplierById(
 
 ### Return type
 
-void (empty response body)
+**ResponseSupplierResponse**
 
 ### Authorization
 
@@ -211,71 +264,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **getSuppliers**
-> getSuppliers()
-
-
-### Example
-
-```typescript
-import {
-    SupplierApi,
-    Configuration
-} from './api';
-
-const configuration = new Configuration();
-const apiInstance = new SupplierApi(configuration);
-
-let pageNumber: number; // (optional) (default to 1)
-let pageSize: number; // (optional) (default to 10)
-
-const { status, data } = await apiInstance.getSuppliers(
-    pageNumber,
-    pageSize
-);
-```
-
-### Parameters
-
-|Name | Type | Description  | Notes|
-|------------- | ------------- | ------------- | -------------|
-| **pageNumber** | [**number**] |  | (optional) defaults to 1|
-| **pageSize** | [**number**] |  | (optional) defaults to 10|
-
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[Bearer](../README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **updateSupplier**
-> updateSupplier()
+> ResponseSupplierResponse updateSupplier()
 
 
 ### Example
@@ -309,7 +309,7 @@ const { status, data } = await apiInstance.updateSupplier(
 
 ### Return type
 
-void (empty response body)
+**ResponseSupplierResponse**
 
 ### Authorization
 
@@ -318,13 +318,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

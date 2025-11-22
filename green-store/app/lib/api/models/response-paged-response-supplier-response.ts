@@ -13,11 +13,12 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { PagedResponseSupplierResponse } from './paged-response-supplier-response';
 
-export interface RegisterDto {
-    'username': string;
-    'password': string;
-    'fullName'?: string | null;
-    'role': string;
+export interface ResponsePagedResponseSupplierResponse {
+    'message'?: string | null;
+    'data'?: PagedResponseSupplierResponse;
 }
 

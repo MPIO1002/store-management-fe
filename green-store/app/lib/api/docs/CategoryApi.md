@@ -7,13 +7,13 @@ All URIs are relative to *http://localhost*
 |[**createCategory**](#createcategory) | **POST** /api/Category | |
 |[**deleteCategory**](#deletecategory) | **DELETE** /api/Category/{id} | |
 |[**filterCategories**](#filtercategories) | **GET** /api/Category/filter | |
-|[**getCategories**](#getcategories) | **GET** /api/Category | |
+|[**getAllCategories**](#getallcategories) | **GET** /api/Category | |
 |[**getCategoryById**](#getcategorybyid) | **GET** /api/Category/{id} | |
-|[**searchCategories**](#searchcategories) | **GET** /api/Category/search | |
+|[**searchByCategoryName**](#searchbycategoryname) | **GET** /api/Category/search | |
 |[**updateCategory**](#updatecategory) | **PUT** /api/Category/{id} | |
 
 # **createCategory**
-> createCategory()
+> ResponseCategoryResponse createCategory()
 
 
 ### Example
@@ -44,7 +44,7 @@ const { status, data } = await apiInstance.createCategory(
 
 ### Return type
 
-void (empty response body)
+**ResponseCategoryResponse**
 
 ### Authorization
 
@@ -53,18 +53,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **deleteCategory**
-> deleteCategory()
+> ResponseObject deleteCategory()
 
 
 ### Example
@@ -94,7 +94,7 @@ const { status, data } = await apiInstance.deleteCategory(
 
 ### Return type
 
-void (empty response body)
+**ResponseObject**
 
 ### Authorization
 
@@ -103,18 +103,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **filterCategories**
-> filterCategories()
+> ResponsePagedResponseCategoryResponse filterCategories()
 
 
 ### Example
@@ -150,7 +150,7 @@ const { status, data } = await apiInstance.filterCategories(
 
 ### Return type
 
-void (empty response body)
+**ResponsePagedResponseCategoryResponse**
 
 ### Authorization
 
@@ -159,18 +159,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **getCategories**
-> getCategories()
+# **getAllCategories**
+> ResponsePagedResponseCategoryResponse getAllCategories()
 
 
 ### Example
@@ -187,7 +187,7 @@ const apiInstance = new CategoryApi(configuration);
 let pageNumber: number; // (optional) (default to 1)
 let pageSize: number; // (optional) (default to 10)
 
-const { status, data } = await apiInstance.getCategories(
+const { status, data } = await apiInstance.getAllCategories(
     pageNumber,
     pageSize
 );
@@ -203,7 +203,7 @@ const { status, data } = await apiInstance.getCategories(
 
 ### Return type
 
-void (empty response body)
+**ResponsePagedResponseCategoryResponse**
 
 ### Authorization
 
@@ -212,18 +212,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getCategoryById**
-> getCategoryById()
+> ResponseCategoryResponse getCategoryById()
 
 
 ### Example
@@ -253,7 +253,7 @@ const { status, data } = await apiInstance.getCategoryById(
 
 ### Return type
 
-void (empty response body)
+**ResponseCategoryResponse**
 
 ### Authorization
 
@@ -262,18 +262,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **searchCategories**
-> searchCategories()
+# **searchByCategoryName**
+> searchByCategoryName()
 
 
 ### Example
@@ -289,7 +289,7 @@ const apiInstance = new CategoryApi(configuration);
 
 let categoryName: string; // (optional) (default to undefined)
 
-const { status, data } = await apiInstance.searchCategories(
+const { status, data } = await apiInstance.searchByCategoryName(
     categoryName
 );
 ```
@@ -323,7 +323,7 @@ void (empty response body)
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **updateCategory**
-> updateCategory()
+> ResponseCategoryResponse updateCategory()
 
 
 ### Example
@@ -357,7 +357,7 @@ const { status, data } = await apiInstance.updateCategory(
 
 ### Return type
 
-void (empty response body)
+**ResponseCategoryResponse**
 
 ### Authorization
 
@@ -366,13 +366,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

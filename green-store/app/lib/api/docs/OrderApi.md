@@ -4,14 +4,57 @@ All URIs are relative to *http://localhost*
 
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
+|[**callback**](#callback) | **GET** /api/vnpay/check-result/callback | |
 |[**createOrder**](#createorder) | **POST** /api/Order | |
-|[**createOrderVnpay**](#createordervnpay) | **POST** /api/Order/vnpay | |
+|[**createVnpayOrder**](#createvnpayorder) | **POST** /api/Order/vnpay | |
 |[**filterOrders**](#filterorders) | **GET** /api/Order/filter | |
-|[**getOrders**](#getorders) | **GET** /api/Order | |
-|[**vnpayCallback**](#vnpaycallback) | **GET** /api/vnpay/check-result/callback | |
+|[**getAllOrders**](#getallorders) | **GET** /api/Order | |
+
+# **callback**
+> callback()
+
+
+### Example
+
+```typescript
+import {
+    OrderApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new OrderApi(configuration);
+
+const { status, data } = await apiInstance.callback();
+```
+
+### Parameters
+This endpoint does not have any parameters.
+
+
+### Return type
+
+void (empty response body)
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: Not defined
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**200** | OK |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **createOrder**
-> createOrder()
+> ResponseObject createOrder()
 
 
 ### Example
@@ -42,7 +85,7 @@ const { status, data } = await apiInstance.createOrder(
 
 ### Return type
 
-void (empty response body)
+**ResponseObject**
 
 ### Authorization
 
@@ -51,18 +94,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **createOrderVnpay**
-> createOrderVnpay()
+# **createVnpayOrder**
+> ResponseOrderRedirectResponse createVnpayOrder()
 
 
 ### Example
@@ -79,7 +122,7 @@ const apiInstance = new OrderApi(configuration);
 
 let orderRequest: OrderRequest; // (optional)
 
-const { status, data } = await apiInstance.createOrderVnpay(
+const { status, data } = await apiInstance.createVnpayOrder(
     orderRequest
 );
 ```
@@ -93,7 +136,7 @@ const { status, data } = await apiInstance.createOrderVnpay(
 
 ### Return type
 
-void (empty response body)
+**ResponseOrderRedirectResponse**
 
 ### Authorization
 
@@ -102,18 +145,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **filterOrders**
-> filterOrders()
+> ResponsePagedResponseOrderResponse filterOrders()
 
 
 ### Example
@@ -167,7 +210,7 @@ const { status, data } = await apiInstance.filterOrders(
 
 ### Return type
 
-void (empty response body)
+**ResponsePagedResponseOrderResponse**
 
 ### Authorization
 
@@ -176,18 +219,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **getOrders**
-> getOrders()
+# **getAllOrders**
+> ResponsePagedResponseOrderResponse getAllOrders()
 
 
 ### Example
@@ -204,7 +247,7 @@ const apiInstance = new OrderApi(configuration);
 let pageNumber: number; // (optional) (default to 1)
 let pageSize: number; // (optional) (default to 10)
 
-const { status, data } = await apiInstance.getOrders(
+const { status, data } = await apiInstance.getAllOrders(
     pageNumber,
     pageSize
 );
@@ -220,7 +263,7 @@ const { status, data } = await apiInstance.getOrders(
 
 ### Return type
 
-void (empty response body)
+**ResponsePagedResponseOrderResponse**
 
 ### Authorization
 
@@ -229,56 +272,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **vnpayCallback**
-> vnpayCallback()
-
-
-### Example
-
-```typescript
-import {
-    OrderApi,
-    Configuration
-} from './api';
-
-const configuration = new Configuration();
-const apiInstance = new OrderApi(configuration);
-
-const { status, data } = await apiInstance.vnpayCallback();
-```
-
-### Parameters
-This endpoint does not have any parameters.
-
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[Bearer](../README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

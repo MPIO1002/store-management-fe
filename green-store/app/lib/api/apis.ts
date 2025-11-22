@@ -5,7 +5,7 @@ import { AuthApi,
          PaymentApi,
          ProductApi,
          SupplierApi,
-         UserApi } from "./api";
+         UsersApi } from "./api";
 import { createApiConfiguration } from "./configuration-builder";
 
 let apiInstance: {
@@ -16,7 +16,7 @@ let apiInstance: {
     payments?: PaymentApi;
     products?: ProductApi;
     suppliers?: SupplierApi;
-    users?: UserApi;
+    users?: UsersApi;
 } = {}
 
 function getOrCreateAPI<T>(
@@ -53,6 +53,6 @@ export const apis = {
       return getOrCreateAPI('suppliers', SupplierApi);
     },
     get users() {
-      return getOrCreateAPI('users', UserApi);
+      return getOrCreateAPI('users', UsersApi);
     },
 } as const;

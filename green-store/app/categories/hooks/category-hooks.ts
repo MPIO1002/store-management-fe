@@ -1,6 +1,6 @@
-import { CategoryApiCreateCategoryRequest, CategoryRequest } from "@/app/lib/api";
+import { CategoryRequest } from "@/app/lib/api";
 import { apis } from "@/app/lib/api/apis";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient, UseQueryOptions } from "@tanstack/react-query";
 
 export const categoryKeys = {
     all: ['categories'] as const,
@@ -13,29 +13,33 @@ export const categoryKeys = {
 export const useGetAllCategoryQuery = (params?: any) => {
     return useQuery({
         queryKey: categoryKeys.list(params),
-        queryFn: () => apis.categories.getCategories(),
+        queryFn: () => apis.categories.getAllCategories(params),
         select: (response) => response.data,
         staleTime: 1 * 60 * 1000 // refetch every 1 min
     })
 }
 
-export const useGetCategoryQuery = (id: any) => {
+export const useGetCategoryQuery = (
+    id: number | null,
+    options?: UseQueryOptions<any>
+) => {
     return useQuery({
-        queryKey: categoryKeys.detail(id),
-        queryFn: () => apis.categories.getCategoryById({ id: id }),
+        queryKey: categoryKeys.detail(id!),
+        queryFn: () => apis.categories.getCategoryById({ id: id! }),
         select: (response) => response.data,
-        enabled: !!id // only run if id is provided
+        enabled: !!id,
+        ...options,
     });
-}
+};
 
 export const useCreateCategoryMutation = () => {
     const queryClient = useQueryClient();
 
     return useMutation({
-        mutationFn: (data: CategoryRequest) => 
+        mutationFn: (data: CategoryRequest) =>
             apis.categories.createCategory({ categoryRequest: data }),
         onSuccess: () => {
-            queryClient.invalidateQueries( { queryKey: categoryKeys.lists() })
+            queryClient.invalidateQueries({ queryKey: categoryKeys.lists() })
             queryClient.invalidateQueries({ queryKey: categoryKeys.details() }) // refetch list
         }
     })
@@ -48,7 +52,7 @@ export const useUpdateCategoryMutation = () => {
         mutationFn: ({ id, data }: { id: number, data: CategoryRequest }) =>
             apis.categories.updateCategory({ id: id, categoryRequest: data }),
         onSuccess: (_, variables) => {
-            queryClient.invalidateQueries( { queryKey: categoryKeys.lists() })
+            queryClient.invalidateQueries({ queryKey: categoryKeys.lists() })
             queryClient.invalidateQueries({ queryKey: categoryKeys.detail(variables.id) })
         }
     });

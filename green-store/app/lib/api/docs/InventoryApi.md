@@ -6,14 +6,14 @@ All URIs are relative to *http://localhost*
 |------------- | ------------- | -------------|
 |[**createInventory**](#createinventory) | **POST** /api/Inventory | |
 |[**deleteInventory**](#deleteinventory) | **DELETE** /api/Inventory/{id} | |
-|[**filterInventory**](#filterinventory) | **GET** /api/Inventory/filter | |
-|[**getInventory**](#getinventory) | **GET** /api/Inventory | |
+|[**filterInventories**](#filterinventories) | **GET** /api/Inventory/filter | |
+|[**getAllInventories**](#getallinventories) | **GET** /api/Inventory | |
 |[**getInventoryById**](#getinventorybyid) | **GET** /api/Inventory/{id} | |
-|[**searchInventory**](#searchinventory) | **GET** /api/Inventory/search | |
+|[**searchInventoryByProductName**](#searchinventorybyproductname) | **GET** /api/Inventory/search | |
 |[**updateInventory**](#updateinventory) | **PUT** /api/Inventory/{id} | |
 
 # **createInventory**
-> createInventory()
+> ResponseInventoryResponse createInventory()
 
 
 ### Example
@@ -44,7 +44,7 @@ const { status, data } = await apiInstance.createInventory(
 
 ### Return type
 
-void (empty response body)
+**ResponseInventoryResponse**
 
 ### Authorization
 
@@ -53,18 +53,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **deleteInventory**
-> deleteInventory()
+> ResponseObject deleteInventory()
 
 
 ### Example
@@ -94,7 +94,7 @@ const { status, data } = await apiInstance.deleteInventory(
 
 ### Return type
 
-void (empty response body)
+**ResponseObject**
 
 ### Authorization
 
@@ -103,18 +103,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **filterInventory**
-> filterInventory()
+# **filterInventories**
+> ResponsePagedResponseInventoryResponse filterInventories()
 
 
 ### Example
@@ -132,7 +132,7 @@ let productName: string; // (optional) (default to undefined)
 let pageNumber: number; // (optional) (default to undefined)
 let pageSize: number; // (optional) (default to undefined)
 
-const { status, data } = await apiInstance.filterInventory(
+const { status, data } = await apiInstance.filterInventories(
     productName,
     pageNumber,
     pageSize
@@ -150,7 +150,7 @@ const { status, data } = await apiInstance.filterInventory(
 
 ### Return type
 
-void (empty response body)
+**ResponsePagedResponseInventoryResponse**
 
 ### Authorization
 
@@ -159,18 +159,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **getInventory**
-> getInventory()
+# **getAllInventories**
+> ResponsePagedResponseInventoryResponse getAllInventories()
 
 
 ### Example
@@ -187,7 +187,7 @@ const apiInstance = new InventoryApi(configuration);
 let pageNumber: number; // (optional) (default to 1)
 let pageSize: number; // (optional) (default to 10)
 
-const { status, data } = await apiInstance.getInventory(
+const { status, data } = await apiInstance.getAllInventories(
     pageNumber,
     pageSize
 );
@@ -203,7 +203,7 @@ const { status, data } = await apiInstance.getInventory(
 
 ### Return type
 
-void (empty response body)
+**ResponsePagedResponseInventoryResponse**
 
 ### Authorization
 
@@ -212,18 +212,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getInventoryById**
-> getInventoryById()
+> ResponseInventoryResponse getInventoryById()
 
 
 ### Example
@@ -253,7 +253,7 @@ const { status, data } = await apiInstance.getInventoryById(
 
 ### Return type
 
-void (empty response body)
+**ResponseInventoryResponse**
 
 ### Authorization
 
@@ -262,18 +262,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **searchInventory**
-> searchInventory()
+# **searchInventoryByProductName**
+> ResponseIEnumerableInventoryResponse searchInventoryByProductName()
 
 
 ### Example
@@ -289,7 +289,7 @@ const apiInstance = new InventoryApi(configuration);
 
 let productName: string; // (optional) (default to undefined)
 
-const { status, data } = await apiInstance.searchInventory(
+const { status, data } = await apiInstance.searchInventoryByProductName(
     productName
 );
 ```
@@ -303,7 +303,7 @@ const { status, data } = await apiInstance.searchInventory(
 
 ### Return type
 
-void (empty response body)
+**ResponseIEnumerableInventoryResponse**
 
 ### Authorization
 
@@ -312,18 +312,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **updateInventory**
-> updateInventory()
+> ResponseInventoryResponse updateInventory()
 
 
 ### Example
@@ -357,7 +357,7 @@ const { status, data } = await apiInstance.updateInventory(
 
 ### Return type
 
-void (empty response body)
+**ResponseInventoryResponse**
 
 ### Authorization
 
@@ -366,13 +366,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
