@@ -1,25 +1,27 @@
-# RegisterDto
+# UserResponse
 
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**username** | **string** |  | [default to undefined]
-**password** | **string** |  | [default to undefined]
+**userId** | **number** |  | [optional] [default to undefined]
+**username** | **string** |  | [optional] [default to undefined]
 **fullName** | **string** |  | [optional] [default to undefined]
-**role** | **string** |  | [default to undefined]
+**role** | **string** |  | [optional] [default to undefined]
+**createdAt** | **string** |  | [optional] [default to undefined]
 
 ## Example
 
 ```typescript
-import { RegisterDto } from './api';
+import { UserResponse } from './api';
 
-const instance: RegisterDto = {
+const instance: UserResponse = {
+    userId,
     username,
-    password,
     fullName,
     role,
+    createdAt,
 };
 ```
 

@@ -25,6 +25,12 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 import type { ProductCreateRequest } from '../models';
 // @ts-ignore
 import type { ProductUpdateRequest } from '../models';
+// @ts-ignore
+import type { ResponseObject } from '../models';
+// @ts-ignore
+import type { ResponsePagedResponseProductResponse } from '../models';
+// @ts-ignore
+import type { ResponseProductResponse } from '../models';
 /**
  * ProductApi - axios parameter creator
  */
@@ -181,6 +187,48 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllProducts: async (pageNumber?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Product`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (pageNumber !== undefined) {
+                localVarQueryParameter['pageNumber'] = pageNumber;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} barcode 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -253,48 +301,6 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
         },
         /**
          * 
-         * @param {number} [pageNumber] 
-         * @param {number} [pageSize] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getProducts: async (pageNumber?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/Product`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            if (pageNumber !== undefined) {
-                localVarQueryParameter['pageNumber'] = pageNumber;
-            }
-
-            if (pageSize !== undefined) {
-                localVarQueryParameter['pageSize'] = pageSize;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @param {number} id 
          * @param {ProductUpdateRequest} [productUpdateRequest] 
          * @param {*} [options] Override http request option.
@@ -348,7 +354,7 @@ export const ProductApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createProduct(productCreateRequest?: ProductCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async createProduct(productCreateRequest?: ProductCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseProductResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createProduct(productCreateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProductApi.createProduct']?.[localVarOperationServerIndex]?.url;
@@ -360,7 +366,7 @@ export const ProductApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteProduct(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteProduct(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseObject>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteProduct(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProductApi.deleteProduct']?.[localVarOperationServerIndex]?.url;
@@ -380,10 +386,23 @@ export const ProductApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async filterProducts(productName?: string, barcode?: string, categoryIds?: Array<number>, supplierIds?: Array<number>, minPrice?: number, maxPrice?: number, inStock?: boolean, pageNumber?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async filterProducts(productName?: string, barcode?: string, categoryIds?: Array<number>, supplierIds?: Array<number>, minPrice?: number, maxPrice?: number, inStock?: boolean, pageNumber?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponsePagedResponseProductResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.filterProducts(productName, barcode, categoryIds, supplierIds, minPrice, maxPrice, inStock, pageNumber, pageSize, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProductApi.filterProducts']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllProducts(pageNumber?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponsePagedResponseProductResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllProducts(pageNumber, pageSize, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['ProductApi.getAllProducts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -392,7 +411,7 @@ export const ProductApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProductByBarcode(barcode: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getProductByBarcode(barcode: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseProductResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProductByBarcode(barcode, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProductApi.getProductByBarcode']?.[localVarOperationServerIndex]?.url;
@@ -404,23 +423,10 @@ export const ProductApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getProductById(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getProductById(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseProductResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getProductById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProductApi.getProductById']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {number} [pageNumber] 
-         * @param {number} [pageSize] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getProducts(pageNumber?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getProducts(pageNumber, pageSize, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['ProductApi.getProducts']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -430,7 +436,7 @@ export const ProductApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateProduct(id: number, productUpdateRequest?: ProductUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateProduct(id: number, productUpdateRequest?: ProductUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseProductResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateProduct(id, productUpdateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProductApi.updateProduct']?.[localVarOperationServerIndex]?.url;
@@ -451,7 +457,7 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createProduct(requestParameters: ProductApiCreateProductRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        createProduct(requestParameters: ProductApiCreateProductRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ResponseProductResponse> {
             return localVarFp.createProduct(requestParameters.productCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -460,7 +466,7 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteProduct(requestParameters: ProductApiDeleteProductRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteProduct(requestParameters: ProductApiDeleteProductRequest, options?: RawAxiosRequestConfig): AxiosPromise<ResponseObject> {
             return localVarFp.deleteProduct(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -469,8 +475,17 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        filterProducts(requestParameters: ProductApiFilterProductsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        filterProducts(requestParameters: ProductApiFilterProductsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ResponsePagedResponseProductResponse> {
             return localVarFp.filterProducts(requestParameters.productName, requestParameters.barcode, requestParameters.categoryIds, requestParameters.supplierIds, requestParameters.minPrice, requestParameters.maxPrice, requestParameters.inStock, requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {ProductApiGetAllProductsRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllProducts(requestParameters: ProductApiGetAllProductsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ResponsePagedResponseProductResponse> {
+            return localVarFp.getAllProducts(requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -478,7 +493,7 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProductByBarcode(requestParameters: ProductApiGetProductByBarcodeRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getProductByBarcode(requestParameters: ProductApiGetProductByBarcodeRequest, options?: RawAxiosRequestConfig): AxiosPromise<ResponseProductResponse> {
             return localVarFp.getProductByBarcode(requestParameters.barcode, options).then((request) => request(axios, basePath));
         },
         /**
@@ -487,17 +502,8 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getProductById(requestParameters: ProductApiGetProductByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getProductById(requestParameters: ProductApiGetProductByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<ResponseProductResponse> {
             return localVarFp.getProductById(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {ProductApiGetProductsRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getProducts(requestParameters: ProductApiGetProductsRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getProducts(requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -505,7 +511,7 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateProduct(requestParameters: ProductApiUpdateProductRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        updateProduct(requestParameters: ProductApiUpdateProductRequest, options?: RawAxiosRequestConfig): AxiosPromise<ResponseProductResponse> {
             return localVarFp.updateProduct(requestParameters.id, requestParameters.productUpdateRequest, options).then((request) => request(axios, basePath));
         },
     };
@@ -549,6 +555,15 @@ export interface ProductApiFilterProductsRequest {
 }
 
 /**
+ * Request parameters for getAllProducts operation in ProductApi.
+ */
+export interface ProductApiGetAllProductsRequest {
+    readonly pageNumber?: number
+
+    readonly pageSize?: number
+}
+
+/**
  * Request parameters for getProductByBarcode operation in ProductApi.
  */
 export interface ProductApiGetProductByBarcodeRequest {
@@ -560,15 +575,6 @@ export interface ProductApiGetProductByBarcodeRequest {
  */
 export interface ProductApiGetProductByIdRequest {
     readonly id: number
-}
-
-/**
- * Request parameters for getProducts operation in ProductApi.
- */
-export interface ProductApiGetProductsRequest {
-    readonly pageNumber?: number
-
-    readonly pageSize?: number
 }
 
 /**
@@ -616,6 +622,16 @@ export class ProductApi extends BaseAPI {
 
     /**
      * 
+     * @param {ProductApiGetAllProductsRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public getAllProducts(requestParameters: ProductApiGetAllProductsRequest = {}, options?: RawAxiosRequestConfig) {
+        return ProductApiFp(this.configuration).getAllProducts(requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {ProductApiGetProductByBarcodeRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
@@ -632,16 +648,6 @@ export class ProductApi extends BaseAPI {
      */
     public getProductById(requestParameters: ProductApiGetProductByIdRequest, options?: RawAxiosRequestConfig) {
         return ProductApiFp(this.configuration).getProductById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {ProductApiGetProductsRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public getProducts(requestParameters: ProductApiGetProductsRequest = {}, options?: RawAxiosRequestConfig) {
-        return ProductApiFp(this.configuration).getProducts(requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

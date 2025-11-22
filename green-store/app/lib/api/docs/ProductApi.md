@@ -7,13 +7,13 @@ All URIs are relative to *http://localhost*
 |[**createProduct**](#createproduct) | **POST** /api/Product | |
 |[**deleteProduct**](#deleteproduct) | **DELETE** /api/Product/{id} | |
 |[**filterProducts**](#filterproducts) | **GET** /api/Product/filter | |
+|[**getAllProducts**](#getallproducts) | **GET** /api/Product | |
 |[**getProductByBarcode**](#getproductbybarcode) | **GET** /api/Product/barcode/{barcode} | |
 |[**getProductById**](#getproductbyid) | **GET** /api/Product/{id} | |
-|[**getProducts**](#getproducts) | **GET** /api/Product | |
 |[**updateProduct**](#updateproduct) | **PUT** /api/Product/{id} | |
 
 # **createProduct**
-> createProduct()
+> ResponseProductResponse createProduct()
 
 
 ### Example
@@ -44,7 +44,7 @@ const { status, data } = await apiInstance.createProduct(
 
 ### Return type
 
-void (empty response body)
+**ResponseProductResponse**
 
 ### Authorization
 
@@ -53,18 +53,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **deleteProduct**
-> deleteProduct()
+> ResponseObject deleteProduct()
 
 
 ### Example
@@ -94,7 +94,7 @@ const { status, data } = await apiInstance.deleteProduct(
 
 ### Return type
 
-void (empty response body)
+**ResponseObject**
 
 ### Authorization
 
@@ -103,18 +103,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **filterProducts**
-> filterProducts()
+> ResponsePagedResponseProductResponse filterProducts()
 
 
 ### Example
@@ -168,7 +168,7 @@ const { status, data } = await apiInstance.filterProducts(
 
 ### Return type
 
-void (empty response body)
+**ResponsePagedResponseProductResponse**
 
 ### Authorization
 
@@ -177,18 +177,71 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getAllProducts**
+> ResponsePagedResponseProductResponse getAllProducts()
+
+
+### Example
+
+```typescript
+import {
+    ProductApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new ProductApi(configuration);
+
+let pageNumber: number; // (optional) (default to 1)
+let pageSize: number; // (optional) (default to 10)
+
+const { status, data } = await apiInstance.getAllProducts(
+    pageNumber,
+    pageSize
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **pageNumber** | [**number**] |  | (optional) defaults to 1|
+| **pageSize** | [**number**] |  | (optional) defaults to 10|
+
+
+### Return type
+
+**ResponsePagedResponseProductResponse**
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getProductByBarcode**
-> getProductByBarcode()
+> ResponseProductResponse getProductByBarcode()
 
 
 ### Example
@@ -218,7 +271,7 @@ const { status, data } = await apiInstance.getProductByBarcode(
 
 ### Return type
 
-void (empty response body)
+**ResponseProductResponse**
 
 ### Authorization
 
@@ -227,18 +280,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getProductById**
-> getProductById()
+> ResponseProductResponse getProductById()
 
 
 ### Example
@@ -268,7 +321,7 @@ const { status, data } = await apiInstance.getProductById(
 
 ### Return type
 
-void (empty response body)
+**ResponseProductResponse**
 
 ### Authorization
 
@@ -277,71 +330,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **getProducts**
-> getProducts()
-
-
-### Example
-
-```typescript
-import {
-    ProductApi,
-    Configuration
-} from './api';
-
-const configuration = new Configuration();
-const apiInstance = new ProductApi(configuration);
-
-let pageNumber: number; // (optional) (default to 1)
-let pageSize: number; // (optional) (default to 10)
-
-const { status, data } = await apiInstance.getProducts(
-    pageNumber,
-    pageSize
-);
-```
-
-### Parameters
-
-|Name | Type | Description  | Notes|
-|------------- | ------------- | ------------- | -------------|
-| **pageNumber** | [**number**] |  | (optional) defaults to 1|
-| **pageSize** | [**number**] |  | (optional) defaults to 10|
-
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[Bearer](../README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **updateProduct**
-> updateProduct()
+> ResponseProductResponse updateProduct()
 
 
 ### Example
@@ -375,7 +375,7 @@ const { status, data } = await apiInstance.updateProduct(
 
 ### Return type
 
-void (empty response body)
+**ResponseProductResponse**
 
 ### Authorization
 
@@ -384,13 +384,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

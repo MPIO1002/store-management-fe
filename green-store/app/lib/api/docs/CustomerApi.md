@@ -6,16 +6,16 @@ All URIs are relative to *http://localhost*
 |------------- | ------------- | -------------|
 |[**createCustomer**](#createcustomer) | **POST** /api/Customer | |
 |[**deleteCustomer**](#deletecustomer) | **DELETE** /api/Customer/{id} | |
-|[**filterCustomers**](#filtercustomers) | **GET** /api/Customer/filter | |
+|[**filterCustomer**](#filtercustomer) | **GET** /api/Customer/filter | |
+|[**getAllCustomers**](#getallcustomers) | **GET** /api/Customer | |
 |[**getCustomerByEmail**](#getcustomerbyemail) | **GET** /api/Customer/email/{email} | |
 |[**getCustomerById**](#getcustomerbyid) | **GET** /api/Customer/{id} | |
 |[**getCustomerByPhone**](#getcustomerbyphone) | **GET** /api/Customer/phone/{phone} | |
-|[**getCustomers**](#getcustomers) | **GET** /api/Customer | |
-|[**searchCustomers**](#searchcustomers) | **GET** /api/Customer/search | |
+|[**searchCustomersByName**](#searchcustomersbyname) | **GET** /api/Customer/search | |
 |[**updateCustomer**](#updatecustomer) | **PUT** /api/Customer/{id} | |
 
 # **createCustomer**
-> createCustomer()
+> ResponseCustomerResponse createCustomer()
 
 
 ### Example
@@ -46,7 +46,7 @@ const { status, data } = await apiInstance.createCustomer(
 
 ### Return type
 
-void (empty response body)
+**ResponseCustomerResponse**
 
 ### Authorization
 
@@ -55,18 +55,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **deleteCustomer**
-> deleteCustomer()
+> ResponseObject deleteCustomer()
 
 
 ### Example
@@ -96,7 +96,7 @@ const { status, data } = await apiInstance.deleteCustomer(
 
 ### Return type
 
-void (empty response body)
+**ResponseObject**
 
 ### Authorization
 
@@ -105,18 +105,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **filterCustomers**
-> filterCustomers()
+# **filterCustomer**
+> ResponsePagedResponseCustomerResponse filterCustomer()
 
 
 ### Example
@@ -136,7 +136,7 @@ let phoneNumber: string; // (optional) (default to undefined)
 let pageNumber: number; // (optional) (default to undefined)
 let pageSize: number; // (optional) (default to undefined)
 
-const { status, data } = await apiInstance.filterCustomers(
+const { status, data } = await apiInstance.filterCustomer(
     fullName,
     email,
     phoneNumber,
@@ -158,7 +158,7 @@ const { status, data } = await apiInstance.filterCustomers(
 
 ### Return type
 
-void (empty response body)
+**ResponsePagedResponseCustomerResponse**
 
 ### Authorization
 
@@ -167,18 +167,71 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getAllCustomers**
+> ResponsePagedResponseCustomerResponse getAllCustomers()
+
+
+### Example
+
+```typescript
+import {
+    CustomerApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new CustomerApi(configuration);
+
+let pageNumber: number; // (optional) (default to 1)
+let pageSize: number; // (optional) (default to 10)
+
+const { status, data } = await apiInstance.getAllCustomers(
+    pageNumber,
+    pageSize
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **pageNumber** | [**number**] |  | (optional) defaults to 1|
+| **pageSize** | [**number**] |  | (optional) defaults to 10|
+
+
+### Return type
+
+**ResponsePagedResponseCustomerResponse**
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getCustomerByEmail**
-> getCustomerByEmail()
+> ResponseCustomerResponse getCustomerByEmail()
 
 
 ### Example
@@ -208,7 +261,7 @@ const { status, data } = await apiInstance.getCustomerByEmail(
 
 ### Return type
 
-void (empty response body)
+**ResponseCustomerResponse**
 
 ### Authorization
 
@@ -217,18 +270,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getCustomerById**
-> getCustomerById()
+> ResponseCustomerResponse getCustomerById()
 
 
 ### Example
@@ -258,7 +311,7 @@ const { status, data } = await apiInstance.getCustomerById(
 
 ### Return type
 
-void (empty response body)
+**ResponseCustomerResponse**
 
 ### Authorization
 
@@ -267,18 +320,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getCustomerByPhone**
-> getCustomerByPhone()
+> ResponseCustomerResponse getCustomerByPhone()
 
 
 ### Example
@@ -308,7 +361,7 @@ const { status, data } = await apiInstance.getCustomerByPhone(
 
 ### Return type
 
-void (empty response body)
+**ResponseCustomerResponse**
 
 ### Authorization
 
@@ -317,71 +370,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
-# **getCustomers**
-> getCustomers()
-
-
-### Example
-
-```typescript
-import {
-    CustomerApi,
-    Configuration
-} from './api';
-
-const configuration = new Configuration();
-const apiInstance = new CustomerApi(configuration);
-
-let pageNumber: number; // (optional) (default to 1)
-let pageSize: number; // (optional) (default to 10)
-
-const { status, data } = await apiInstance.getCustomers(
-    pageNumber,
-    pageSize
-);
-```
-
-### Parameters
-
-|Name | Type | Description  | Notes|
-|------------- | ------------- | ------------- | -------------|
-| **pageNumber** | [**number**] |  | (optional) defaults to 1|
-| **pageSize** | [**number**] |  | (optional) defaults to 10|
-
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[Bearer](../README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-|**200** | OK |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **searchCustomers**
-> searchCustomers()
+# **searchCustomersByName**
+> ResponseIEnumerableCustomerResponse searchCustomersByName()
 
 
 ### Example
@@ -397,7 +397,7 @@ const apiInstance = new CustomerApi(configuration);
 
 let name: string; // (optional) (default to undefined)
 
-const { status, data } = await apiInstance.searchCustomers(
+const { status, data } = await apiInstance.searchCustomersByName(
     name
 );
 ```
@@ -411,7 +411,7 @@ const { status, data } = await apiInstance.searchCustomers(
 
 ### Return type
 
-void (empty response body)
+**ResponseIEnumerableCustomerResponse**
 
 ### Authorization
 
@@ -420,18 +420,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **updateCustomer**
-> updateCustomer()
+> ResponseCustomerResponse updateCustomer()
 
 
 ### Example
@@ -465,7 +465,7 @@ const { status, data } = await apiInstance.updateCustomer(
 
 ### Return type
 
-void (empty response body)
+**ResponseCustomerResponse**
 
 ### Authorization
 
@@ -474,13 +474,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

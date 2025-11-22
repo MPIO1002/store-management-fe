@@ -8,10 +8,10 @@
   "paths": {
     "/api/auth/login": {
       "post": {
-        "operationId": "login",
         "tags": [
           "Auth"
         ],
+        "operationId": "Login",
         "requestBody": {
           "content": {
             "application/json": {
@@ -32,31 +32,65 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_AuthResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_AuthResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_AuthResponseDto"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/auth/logout": {
       "post": {
-        "operationId": "logout",
         "tags": [
           "Auth"
         ],
+        "operationId": "Logout",
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_AuthResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_AuthResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_AuthResponseDto"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Category/filter": {
       "get": {
-        "operationId": "filter_categories",
         "tags": [
           "Category"
         ],
+        "operationId": "FilterCategories",
         "parameters": [
           {
             "name": "CategoryName",
@@ -83,18 +117,35 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_CategoryResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_CategoryResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_CategoryResponse"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Category": {
       "get": {
-        "operationId": "get_categories",
         "tags": [
           "Category"
         ],
+        "operationId": "GetAllCategories",
         "parameters": [
           {
             "name": "pageNumber",
@@ -116,16 +167,33 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_CategoryResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_CategoryResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_CategoryResponse"
+                }
+              }
+            }
           }
         }
       },
       "post": {
-        "operationId": "create_category",
         "tags": [
           "Category"
         ],
+        "operationId": "CreateCategory",
         "requestBody": {
           "content": {
             "application/json": {
@@ -146,18 +214,35 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CategoryResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CategoryResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CategoryResponse"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Category/{id}": {
       "get": {
-        "operationId": "get_category_by_id",
         "tags": [
           "Category"
         ],
+        "operationId": "GetCategoryById",
         "parameters": [
           {
             "name": "id",
@@ -170,16 +255,33 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CategoryResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CategoryResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CategoryResponse"
+                }
+              }
+            }
           }
         }
       },
       "put": {
-        "operationId": "update_category",
         "tags": [
           "Category"
         ],
+        "operationId": "UpdateCategory",
         "parameters": [
           {
             "name": "id",
@@ -211,16 +313,33 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CategoryResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CategoryResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CategoryResponse"
+                }
+              }
+            }
           }
         }
       },
       "delete": {
-        "operationId": "delete_category",
         "tags": [
           "Category"
         ],
+        "operationId": "DeleteCategory",
         "parameters": [
           {
             "name": "id",
@@ -233,18 +352,35 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_Object"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_Object"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_Object"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Category/search": {
       "get": {
-        "operationId": "search_categories",
         "tags": [
           "Category"
         ],
+        "operationId": "SearchByCategoryName",
         "parameters": [
           {
             "name": "categoryName",
@@ -263,10 +399,10 @@
     },
     "/api/Customer": {
       "get": {
-        "operationId": "get_customers",
         "tags": [
           "Customer"
         ],
+        "operationId": "GetAllCustomers",
         "parameters": [
           {
             "name": "pageNumber",
@@ -288,16 +424,33 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_CustomerResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_CustomerResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_CustomerResponse"
+                }
+              }
+            }
           }
         }
       },
       "post": {
-        "operationId": "create_customer",
         "tags": [
           "Customer"
         ],
+        "operationId": "CreateCustomer",
         "requestBody": {
           "content": {
             "application/json": {
@@ -318,18 +471,35 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CustomerResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CustomerResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CustomerResponse"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Customer/filter": {
       "get": {
-        "operationId": "filter_customers",
         "tags": [
           "Customer"
         ],
+        "operationId": "FilterCustomer",
         "parameters": [
           {
             "name": "FullName",
@@ -370,18 +540,35 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_CustomerResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_CustomerResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_CustomerResponse"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Customer/{id}": {
       "get": {
-        "operationId": "get_customer_by_id",
         "tags": [
           "Customer"
         ],
+        "operationId": "GetCustomerById",
         "parameters": [
           {
             "name": "id",
@@ -394,16 +581,33 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CustomerResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CustomerResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CustomerResponse"
+                }
+              }
+            }
           }
         }
       },
       "put": {
-        "operationId": "update_customer",
         "tags": [
           "Customer"
         ],
+        "operationId": "UpdateCustomer",
         "parameters": [
           {
             "name": "id",
@@ -435,16 +639,33 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CustomerResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CustomerResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CustomerResponse"
+                }
+              }
+            }
           }
         }
       },
       "delete": {
-        "operationId": "delete_customer",
         "tags": [
           "Customer"
         ],
+        "operationId": "DeleteCustomer",
         "parameters": [
           {
             "name": "id",
@@ -457,18 +678,35 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_Object"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_Object"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_Object"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Customer/email/{email}": {
       "get": {
-        "operationId": "get_customer_by_email",
         "tags": [
           "Customer"
         ],
+        "operationId": "GetCustomerByEmail",
         "parameters": [
           {
             "name": "email",
@@ -480,18 +718,35 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CustomerResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CustomerResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CustomerResponse"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Customer/phone/{phone}": {
       "get": {
-        "operationId": "get_customer_by_phone",
         "tags": [
           "Customer"
         ],
+        "operationId": "GetCustomerByPhone",
         "parameters": [
           {
             "name": "phone",
@@ -503,18 +758,35 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CustomerResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CustomerResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CustomerResponse"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Customer/search": {
       "get": {
-        "operationId": "search_customers",
         "tags": [
           "Customer"
         ],
+        "operationId": "SearchCustomersByName",
         "parameters": [
           {
             "name": "name",
@@ -525,18 +797,35 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_IEnumerable_CustomerResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_IEnumerable_CustomerResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_IEnumerable_CustomerResponse"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Inventory/filter": {
       "get": {
-        "operationId": "filter_inventory",
         "tags": [
           "Inventory"
         ],
+        "operationId": "FilterInventories",
         "parameters": [
           {
             "name": "ProductName",
@@ -563,18 +852,35 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_InventoryResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_InventoryResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_InventoryResponse"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Inventory": {
       "get": {
-        "operationId": "get_inventory",
         "tags": [
           "Inventory"
         ],
+        "operationId": "GetAllInventories",
         "parameters": [
           {
             "name": "pageNumber",
@@ -596,16 +902,33 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_InventoryResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_InventoryResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_InventoryResponse"
+                }
+              }
+            }
           }
         }
       },
       "post": {
-        "operationId": "create_inventory",
         "tags": [
           "Inventory"
         ],
+        "operationId": "CreateInventory",
         "requestBody": {
           "content": {
             "application/json": {
@@ -626,18 +949,35 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_InventoryResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_InventoryResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_InventoryResponse"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Inventory/{id}": {
       "get": {
-        "operationId": "get_inventory_by_id",
         "tags": [
           "Inventory"
         ],
+        "operationId": "GetInventoryById",
         "parameters": [
           {
             "name": "id",
@@ -650,16 +990,33 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_InventoryResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_InventoryResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_InventoryResponse"
+                }
+              }
+            }
           }
         }
       },
       "put": {
-        "operationId": "update_inventory",
         "tags": [
           "Inventory"
         ],
+        "operationId": "UpdateInventory",
         "parameters": [
           {
             "name": "id",
@@ -691,16 +1048,33 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_InventoryResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_InventoryResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_InventoryResponse"
+                }
+              }
+            }
           }
         }
       },
       "delete": {
-        "operationId": "delete_inventory",
         "tags": [
           "Inventory"
         ],
+        "operationId": "DeleteInventory",
         "parameters": [
           {
             "name": "id",
@@ -713,18 +1087,35 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_Object"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_Object"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_Object"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Inventory/search": {
       "get": {
-        "operationId": "search_inventory",
         "tags": [
           "Inventory"
         ],
+        "operationId": "SearchInventoryByProductName",
         "parameters": [
           {
             "name": "productName",
@@ -735,18 +1126,35 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_IEnumerable_InventoryResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_IEnumerable_InventoryResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_IEnumerable_InventoryResponse"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Order": {
       "get": {
-        "operationId": "get_orders",
         "tags": [
           "Order"
         ],
+        "operationId": "GetAllOrders",
         "parameters": [
           {
             "name": "pageNumber",
@@ -768,16 +1176,33 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_OrderResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_OrderResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_OrderResponse"
+                }
+              }
+            }
           }
         }
       },
       "post": {
-        "operationId": "create_order",
         "tags": [
           "Order"
         ],
+        "operationId": "CreateOrder",
         "requestBody": {
           "content": {
             "application/json": {
@@ -798,18 +1223,35 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_Object"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_Object"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_Object"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Order/filter": {
       "get": {
-        "operationId": "filter_orders",
         "tags": [
           "Order"
         ],
+        "operationId": "FilterOrders",
         "parameters": [
           {
             "name": "customerName",
@@ -882,18 +1324,35 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_OrderResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_OrderResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_OrderResponse"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Order/vnpay": {
       "post": {
-        "operationId": "create_order_vnpay",
         "tags": [
           "Order"
         ],
+        "operationId": "CreateVnpayOrder",
         "requestBody": {
           "content": {
             "application/json": {
@@ -914,18 +1373,35 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_OrderRedirectResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_OrderRedirectResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_OrderRedirectResponse"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/vnpay/check-result/callback": {
       "get": {
-        "operationId": "vnpay_callback",
         "tags": [
           "Order"
         ],
+        "operationId": "Callback",
         "responses": {
           "200": {
             "description": "OK"
@@ -935,10 +1411,10 @@
     },
     "/api/Payment": {
       "get": {
-        "operationId": "get_payments",
         "tags": [
           "Payment"
         ],
+        "operationId": "GetAllPayments",
         "parameters": [
           {
             "name": "pageNumber",
@@ -960,18 +1436,35 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_PaymentResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_PaymentResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_PaymentResponse"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Payment/filter": {
       "get": {
-        "operationId": "filter_payments",
         "tags": [
           "Payment"
         ],
+        "operationId": "FilterPayments",
         "parameters": [
           {
             "name": "PaymentMethod",
@@ -998,18 +1491,35 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_PaymentResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_PaymentResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_PaymentResponse"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Payment/{id}": {
       "get": {
-        "operationId": "get_payment_by_id",
         "tags": [
           "Payment"
         ],
+        "operationId": "GetPaymentById",
         "parameters": [
           {
             "name": "id",
@@ -1022,18 +1532,35 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PaymentResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PaymentResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PaymentResponse"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Product": {
       "get": {
-        "operationId": "get_products",
         "tags": [
           "Product"
         ],
+        "operationId": "GetAllProducts",
         "parameters": [
           {
             "name": "pageNumber",
@@ -1055,16 +1582,33 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_ProductResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_ProductResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_ProductResponse"
+                }
+              }
+            }
           }
         }
       },
       "post": {
-        "operationId": "create_product",
         "tags": [
           "Product"
         ],
+        "operationId": "CreateProduct",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1085,18 +1629,35 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_ProductResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_ProductResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_ProductResponse"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Product/filter": {
       "get": {
-        "operationId": "filter_products",
         "tags": [
           "Product"
         ],
+        "operationId": "FilterProducts",
         "parameters": [
           {
             "name": "ProductName",
@@ -1175,18 +1736,35 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_ProductResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_ProductResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_ProductResponse"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Product/{id}": {
       "get": {
-        "operationId": "get_product_by_id",
         "tags": [
           "Product"
         ],
+        "operationId": "GetProductById",
         "parameters": [
           {
             "name": "id",
@@ -1199,16 +1777,33 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_ProductResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_ProductResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_ProductResponse"
+                }
+              }
+            }
           }
         }
       },
       "put": {
-        "operationId": "update_product",
         "tags": [
           "Product"
         ],
+        "operationId": "UpdateProduct",
         "parameters": [
           {
             "name": "id",
@@ -1240,16 +1835,33 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_ProductResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_ProductResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_ProductResponse"
+                }
+              }
+            }
           }
         }
       },
       "delete": {
-        "operationId": "delete_product",
         "tags": [
           "Product"
         ],
+        "operationId": "DeleteProduct",
         "parameters": [
           {
             "name": "id",
@@ -1262,18 +1874,35 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_Object"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_Object"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_Object"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Product/barcode/{barcode}": {
       "get": {
-        "operationId": "get_product_by_barcode",
         "tags": [
           "Product"
         ],
+        "operationId": "GetProductByBarcode",
         "parameters": [
           {
             "name": "barcode",
@@ -1285,18 +1914,35 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_ProductResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_ProductResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_ProductResponse"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Supplier": {
       "get": {
-        "operationId": "get_suppliers",
         "tags": [
           "Supplier"
         ],
+        "operationId": "GetAllSuppliers",
         "parameters": [
           {
             "name": "pageNumber",
@@ -1318,16 +1964,33 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_SupplierResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_SupplierResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_SupplierResponse"
+                }
+              }
+            }
           }
         }
       },
       "post": {
-        "operationId": "create_supplier",
         "tags": [
           "Supplier"
         ],
+        "operationId": "CreateSupplier",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1348,18 +2011,35 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_SupplierResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_SupplierResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_SupplierResponse"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Supplier/filter": {
       "get": {
-        "operationId": "filter_suppliers",
         "tags": [
           "Supplier"
         ],
+        "operationId": "FilterSuppliers",
         "parameters": [
           {
             "name": "Name",
@@ -1393,18 +2073,35 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_SupplierResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_SupplierResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_SupplierResponse"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Supplier/{id}": {
       "get": {
-        "operationId": "get_supplier_by_id",
         "tags": [
           "Supplier"
         ],
+        "operationId": "GetSupplierById",
         "parameters": [
           {
             "name": "id",
@@ -1417,16 +2114,33 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_SupplierResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_SupplierResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_SupplierResponse"
+                }
+              }
+            }
           }
         }
       },
       "put": {
-        "operationId": "update_supplier",
         "tags": [
           "Supplier"
         ],
+        "operationId": "UpdateSupplier",
         "parameters": [
           {
             "name": "id",
@@ -1458,16 +2172,33 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_SupplierResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_SupplierResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_SupplierResponse"
+                }
+              }
+            }
           }
         }
       },
       "delete": {
-        "operationId": "delete_supplier",
         "tags": [
           "Supplier"
         ],
+        "operationId": "DeleteSupplier",
         "parameters": [
           {
             "name": "id",
@@ -1480,18 +2211,35 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_Object"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_Object"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_Object"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Users": {
       "get": {
-        "operationId": "get_users",
         "tags": [
           "Users"
         ],
+        "operationId": "GetAllUsers",
         "parameters": [
           {
             "name": "pageNumber",
@@ -1513,16 +2261,33 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_UserResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_UserResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_UserResponse"
+                }
+              }
+            }
           }
         }
       },
       "post": {
-        "operationId": "create_user",
         "tags": [
           "Users"
         ],
+        "operationId": "CreateUser",
         "requestBody": {
           "content": {
             "application/json": {
@@ -1543,18 +2308,35 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_UserResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_UserResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_UserResponse"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Users/filter": {
       "get": {
-        "operationId": "filter_users",
         "tags": [
           "Users"
         ],
+        "operationId": "FilterUsers",
         "parameters": [
           {
             "name": "Username",
@@ -1595,18 +2377,35 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_UserResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_UserResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_PagedResponse_UserResponse"
+                }
+              }
+            }
           }
         }
       }
     },
     "/api/Users/{id}": {
       "get": {
-        "operationId": "get_user_by_id",
         "tags": [
           "Users"
         ],
+        "operationId": "GetUserById",
         "parameters": [
           {
             "name": "id",
@@ -1619,16 +2418,33 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_UserResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_UserResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_UserResponse"
+                }
+              }
+            }
           }
         }
       },
       "put": {
-        "operationId": "update_user",
         "tags": [
           "Users"
         ],
+        "operationId": "UpdateUser",
         "parameters": [
           {
             "name": "id",
@@ -1660,16 +2476,33 @@
           }
         },
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_UserResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_UserResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_UserResponse"
+                }
+              }
+            }
           }
         }
       },
       "delete": {
-        "operationId": "delete_user",
         "tags": [
           "Users"
         ],
+        "operationId": "DeleteUser",
         "parameters": [
           {
             "name": "id",
@@ -1682,8 +2515,25 @@
           }
         ],
         "responses": {
-          "200": {
-            "description": "OK"
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_Object"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_Object"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_Object"
+                }
+              }
+            }
           }
         }
       }
@@ -1691,9 +2541,41 @@
   },
   "components": {
     "schemas": {
+      "AuthResponseDto": {
+        "type": "object",
+        "properties": {
+          "token": {
+            "type": "string",
+            "nullable": true
+          },
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "role": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "CategoryRequest": {
         "type": "object",
         "properties": {
+          "categoryName": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "CategoryResponse": {
+        "type": "object",
+        "properties": {
+          "categoryId": {
+            "type": "integer",
+            "format": "int32"
+          },
           "categoryName": {
             "type": "string",
             "nullable": true
@@ -1730,6 +2612,40 @@
         },
         "additionalProperties": false
       },
+      "CustomerResponse": {
+        "type": "object",
+        "properties": {
+          "customerId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "orderCount": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "InventoryRequest": {
         "type": "object",
         "properties": {
@@ -1740,6 +2656,32 @@
           "quantity": {
             "type": "integer",
             "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
+      "InventoryResponse": {
+        "type": "object",
+        "properties": {
+          "inventoryId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "productId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "productName": {
+            "type": "string",
+            "nullable": true
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "updatedAt": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false
@@ -1776,6 +2718,42 @@
           "price": {
             "type": "number",
             "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrderItemResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "productName": {
+            "type": "string",
+            "nullable": true
+          },
+          "quantity": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "price": {
+            "type": "number",
+            "format": "double"
+          },
+          "subTotal": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
+      "OrderRedirectResponse": {
+        "type": "object",
+        "properties": {
+          "redirectUrl": {
+            "type": "string",
+            "nullable": true
           }
         },
         "additionalProperties": false
@@ -1825,6 +2803,47 @@
         },
         "additionalProperties": false
       },
+      "OrderResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "customerName": {
+            "type": "string",
+            "nullable": true
+          },
+          "employeeName": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "discountAmount": {
+            "type": "number",
+            "format": "double"
+          },
+          "status": {
+            "type": "string",
+            "nullable": true
+          },
+          "orderDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "listItem": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderItemResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "OrderStatus": {
         "enum": [
           0,
@@ -1834,6 +2853,310 @@
         "type": "integer",
         "format": "int32"
       },
+      "PagedResponse_CategoryResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CategoryResponse"
+            },
+            "nullable": true
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalItems": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasPreviousPage": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasNextPage": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PagedResponse_CustomerResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerResponse"
+            },
+            "nullable": true
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalItems": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasPreviousPage": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasNextPage": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PagedResponse_InventoryResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InventoryResponse"
+            },
+            "nullable": true
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalItems": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasPreviousPage": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasNextPage": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PagedResponse_OrderResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/OrderResponse"
+            },
+            "nullable": true
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalItems": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasPreviousPage": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasNextPage": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PagedResponse_PaymentResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PaymentResponse"
+            },
+            "nullable": true
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalItems": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasPreviousPage": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasNextPage": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PagedResponse_ProductResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/ProductResponse"
+            },
+            "nullable": true
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalItems": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasPreviousPage": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasNextPage": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PagedResponse_SupplierResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/SupplierResponse"
+            },
+            "nullable": true
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalItems": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasPreviousPage": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasNextPage": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "PagedResponse_UserResponse": {
+        "type": "object",
+        "properties": {
+          "items": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/UserResponse"
+            },
+            "nullable": true
+          },
+          "pageNumber": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "pageSize": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalItems": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "totalPages": {
+            "type": "integer",
+            "format": "int32",
+            "readOnly": true
+          },
+          "hasPreviousPage": {
+            "type": "boolean",
+            "readOnly": true
+          },
+          "hasNextPage": {
+            "type": "boolean",
+            "readOnly": true
+          }
+        },
+        "additionalProperties": false
+      },
       "PaymentMethod": {
         "enum": [
           0,
@@ -1842,6 +3165,36 @@
         ],
         "type": "integer",
         "format": "int32"
+      },
+      "PaymentResponse": {
+        "type": "object",
+        "properties": {
+          "paymentId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "orderId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "amount": {
+            "type": "number",
+            "format": "double"
+          },
+          "paymentMethod": {
+            "type": "string",
+            "nullable": true
+          },
+          "paymentDate": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "orderStatus": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
       },
       "ProductCreateRequest": {
         "required": [
@@ -1883,6 +3236,53 @@
           "imageUrl": {
             "maxLength": 255,
             "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "ProductResponse": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "productName": {
+            "type": "string",
+            "nullable": true
+          },
+          "categoryName": {
+            "type": "string",
+            "nullable": true
+          },
+          "supplierName": {
+            "type": "string",
+            "nullable": true
+          },
+          "barcode": {
+            "type": "string",
+            "nullable": true
+          },
+          "price": {
+            "type": "number",
+            "format": "double"
+          },
+          "unit": {
+            "type": "string",
+            "nullable": true
+          },
+          "imageUrl": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
+          },
+          "stockQuantity": {
+            "type": "integer",
+            "format": "int32",
             "nullable": true
           }
         },
@@ -1933,6 +3333,274 @@
         },
         "additionalProperties": false
       },
+      "Response_AuthResponseDto": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/AuthResponseDto"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Response_CategoryResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/CategoryResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Response_CustomerResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/CustomerResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Response_IEnumerable_CustomerResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/CustomerResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Response_IEnumerable_InventoryResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/InventoryResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Response_InventoryResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/InventoryResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Response_Object": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Response_OrderRedirectResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/OrderRedirectResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Response_PagedResponse_CategoryResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/PagedResponse_CategoryResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Response_PagedResponse_CustomerResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/PagedResponse_CustomerResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Response_PagedResponse_InventoryResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/PagedResponse_InventoryResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Response_PagedResponse_OrderResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/PagedResponse_OrderResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Response_PagedResponse_PaymentResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/PagedResponse_PaymentResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Response_PagedResponse_ProductResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/PagedResponse_ProductResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Response_PagedResponse_SupplierResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/PagedResponse_SupplierResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Response_PagedResponse_UserResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/PagedResponse_UserResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Response_PaymentResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/PaymentResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Response_ProductResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/ProductResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Response_SupplierResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/SupplierResponse"
+          }
+        },
+        "additionalProperties": false
+      },
+      "Response_UserResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/UserResponse"
+          }
+        },
+        "additionalProperties": false
+      },
       "SupplierDto": {
         "required": [
           "name"
@@ -1957,6 +3625,32 @@
             "maxLength": 100,
             "type": "string",
             "format": "email",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "SupplierResponse": {
+        "type": "object",
+        "properties": {
+          "supplierId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "name": {
+            "type": "string",
+            "nullable": true
+          },
+          "phone": {
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "type": "string",
             "nullable": true
           },
           "address": {
@@ -1992,6 +3686,32 @@
           "role": {
             "minLength": 1,
             "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "UserResponse": {
+        "type": "object",
+        "properties": {
+          "userId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "username": {
+            "type": "string",
+            "nullable": true
+          },
+          "fullName": {
+            "type": "string",
+            "nullable": true
+          },
+          "role": {
+            "type": "string",
+            "nullable": true
+          },
+          "createdAt": {
+            "type": "string",
+            "format": "date-time"
           }
         },
         "additionalProperties": false

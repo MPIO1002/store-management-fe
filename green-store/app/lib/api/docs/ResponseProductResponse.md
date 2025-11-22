@@ -1,21 +1,21 @@
-# LoginDto
+# ResponseProductResponse
 
 
 ## Properties
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**username** | **string** |  | [default to undefined]
-**password** | **string** |  | [default to undefined]
+**message** | **string** |  | [optional] [default to undefined]
+**data** | [**ProductResponse**](ProductResponse.md) |  | [optional] [default to undefined]
 
 ## Example
 
 ```typescript
-import { LoginDto } from './api';
+import { ResponseProductResponse } from './api';
 
-const instance: LoginDto = {
-    username,
-    password,
+const instance: ResponseProductResponse = {
+    message,
+    data,
 };
 ```
 

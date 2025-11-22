@@ -23,6 +23,12 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
 import type { CategoryRequest } from '../models';
+// @ts-ignore
+import type { ResponseCategoryResponse } from '../models';
+// @ts-ignore
+import type { ResponseObject } from '../models';
+// @ts-ignore
+import type { ResponsePagedResponseCategoryResponse } from '../models';
 /**
  * CategoryApi - axios parameter creator
  */
@@ -154,7 +160,7 @@ export const CategoryApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCategories: async (pageNumber?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAllCategories: async (pageNumber?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/Category`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -231,7 +237,7 @@ export const CategoryApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchCategories: async (categoryName?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        searchByCategoryName: async (categoryName?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/Category/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -317,7 +323,7 @@ export const CategoryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createCategory(categoryRequest?: CategoryRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async createCategory(categoryRequest?: CategoryRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseCategoryResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createCategory(categoryRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CategoryApi.createCategory']?.[localVarOperationServerIndex]?.url;
@@ -329,7 +335,7 @@ export const CategoryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteCategory(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteCategory(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseObject>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCategory(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CategoryApi.deleteCategory']?.[localVarOperationServerIndex]?.url;
@@ -343,7 +349,7 @@ export const CategoryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async filterCategories(categoryName?: string, pageNumber?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async filterCategories(categoryName?: string, pageNumber?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponsePagedResponseCategoryResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.filterCategories(categoryName, pageNumber, pageSize, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CategoryApi.filterCategories']?.[localVarOperationServerIndex]?.url;
@@ -356,10 +362,10 @@ export const CategoryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCategories(pageNumber?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getCategories(pageNumber, pageSize, options);
+        async getAllCategories(pageNumber?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponsePagedResponseCategoryResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllCategories(pageNumber, pageSize, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CategoryApi.getCategories']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CategoryApi.getAllCategories']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -368,7 +374,7 @@ export const CategoryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCategoryById(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getCategoryById(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseCategoryResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCategoryById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CategoryApi.getCategoryById']?.[localVarOperationServerIndex]?.url;
@@ -380,10 +386,10 @@ export const CategoryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async searchCategories(categoryName?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.searchCategories(categoryName, options);
+        async searchByCategoryName(categoryName?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.searchByCategoryName(categoryName, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CategoryApi.searchCategories']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CategoryApi.searchByCategoryName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -393,7 +399,7 @@ export const CategoryApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateCategory(id: number, categoryRequest?: CategoryRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateCategory(id: number, categoryRequest?: CategoryRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseCategoryResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateCategory(id, categoryRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CategoryApi.updateCategory']?.[localVarOperationServerIndex]?.url;
@@ -414,7 +420,7 @@ export const CategoryApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createCategory(requestParameters: CategoryApiCreateCategoryRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        createCategory(requestParameters: CategoryApiCreateCategoryRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ResponseCategoryResponse> {
             return localVarFp.createCategory(requestParameters.categoryRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -423,7 +429,7 @@ export const CategoryApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteCategory(requestParameters: CategoryApiDeleteCategoryRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteCategory(requestParameters: CategoryApiDeleteCategoryRequest, options?: RawAxiosRequestConfig): AxiosPromise<ResponseObject> {
             return localVarFp.deleteCategory(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -432,17 +438,17 @@ export const CategoryApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        filterCategories(requestParameters: CategoryApiFilterCategoriesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        filterCategories(requestParameters: CategoryApiFilterCategoriesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ResponsePagedResponseCategoryResponse> {
             return localVarFp.filterCategories(requestParameters.categoryName, requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {CategoryApiGetCategoriesRequest} requestParameters Request parameters.
+         * @param {CategoryApiGetAllCategoriesRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCategories(requestParameters: CategoryApiGetCategoriesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getCategories(requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(axios, basePath));
+        getAllCategories(requestParameters: CategoryApiGetAllCategoriesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ResponsePagedResponseCategoryResponse> {
+            return localVarFp.getAllCategories(requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -450,17 +456,17 @@ export const CategoryApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCategoryById(requestParameters: CategoryApiGetCategoryByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getCategoryById(requestParameters: CategoryApiGetCategoryByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<ResponseCategoryResponse> {
             return localVarFp.getCategoryById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {CategoryApiSearchCategoriesRequest} requestParameters Request parameters.
+         * @param {CategoryApiSearchByCategoryNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchCategories(requestParameters: CategoryApiSearchCategoriesRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.searchCategories(requestParameters.categoryName, options).then((request) => request(axios, basePath));
+        searchByCategoryName(requestParameters: CategoryApiSearchByCategoryNameRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+            return localVarFp.searchByCategoryName(requestParameters.categoryName, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -468,7 +474,7 @@ export const CategoryApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateCategory(requestParameters: CategoryApiUpdateCategoryRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        updateCategory(requestParameters: CategoryApiUpdateCategoryRequest, options?: RawAxiosRequestConfig): AxiosPromise<ResponseCategoryResponse> {
             return localVarFp.updateCategory(requestParameters.id, requestParameters.categoryRequest, options).then((request) => request(axios, basePath));
         },
     };
@@ -500,9 +506,9 @@ export interface CategoryApiFilterCategoriesRequest {
 }
 
 /**
- * Request parameters for getCategories operation in CategoryApi.
+ * Request parameters for getAllCategories operation in CategoryApi.
  */
-export interface CategoryApiGetCategoriesRequest {
+export interface CategoryApiGetAllCategoriesRequest {
     readonly pageNumber?: number
 
     readonly pageSize?: number
@@ -516,9 +522,9 @@ export interface CategoryApiGetCategoryByIdRequest {
 }
 
 /**
- * Request parameters for searchCategories operation in CategoryApi.
+ * Request parameters for searchByCategoryName operation in CategoryApi.
  */
-export interface CategoryApiSearchCategoriesRequest {
+export interface CategoryApiSearchByCategoryNameRequest {
     readonly categoryName?: string
 }
 
@@ -567,12 +573,12 @@ export class CategoryApi extends BaseAPI {
 
     /**
      * 
-     * @param {CategoryApiGetCategoriesRequest} requestParameters Request parameters.
+     * @param {CategoryApiGetAllCategoriesRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public getCategories(requestParameters: CategoryApiGetCategoriesRequest = {}, options?: RawAxiosRequestConfig) {
-        return CategoryApiFp(this.configuration).getCategories(requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(this.axios, this.basePath));
+    public getAllCategories(requestParameters: CategoryApiGetAllCategoriesRequest = {}, options?: RawAxiosRequestConfig) {
+        return CategoryApiFp(this.configuration).getAllCategories(requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -587,12 +593,12 @@ export class CategoryApi extends BaseAPI {
 
     /**
      * 
-     * @param {CategoryApiSearchCategoriesRequest} requestParameters Request parameters.
+     * @param {CategoryApiSearchByCategoryNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public searchCategories(requestParameters: CategoryApiSearchCategoriesRequest = {}, options?: RawAxiosRequestConfig) {
-        return CategoryApiFp(this.configuration).searchCategories(requestParameters.categoryName, options).then((request) => request(this.axios, this.basePath));
+    public searchByCategoryName(requestParameters: CategoryApiSearchByCategoryNameRequest = {}, options?: RawAxiosRequestConfig) {
+        return CategoryApiFp(this.configuration).searchByCategoryName(requestParameters.categoryName, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

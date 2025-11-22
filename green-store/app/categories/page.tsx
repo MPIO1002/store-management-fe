@@ -1,19 +1,17 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import { useState } from "react";
 import TableProp from "@/components/table-prop";
 import CreateCategoryModal from "./components/create-category.modal";
 import UpdateCategoryModal from "./components/update-category.modal";
 import SearchInput from "@/components/search-input";
 import Button from "@/components/button";
-import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import { faTrash } from "@fortawesome/free-solid-svg-icons/faTrash";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons/faPenToSquare";
 import { useGetAllCategoryQuery, useDeleteCategoryMutation } from "./hooks/category-hooks";
-
-type ApiCategory = { categoryId: number; categoryName: string };
+import { CategoryResponse } from "../lib/api";
 
 export default function Page() {
   const { data, isLoading, isError } = useGetAllCategoryQuery();
@@ -21,7 +19,7 @@ export default function Page() {
   const [query, setQuery] = useState("");
   const [showCreate, setShowCreate] = useState(false);
   const [showUpdate, setShowUpdate] = useState(false);
-  const [editingCategory, setEditingCategory] = useState<ApiCategory | null>(null);
+  const [editingCategory, setEditingCategory] = useState<CategoryResponse | null>(null);
   const [selectedKeys, setSelectedKeys] = useState<Array<string | number>>([]);
   const [deleting, setDeleting] = useState(false);
 
@@ -35,7 +33,7 @@ export default function Page() {
     { header: "TÊN", accessor: "categoryName" },
     {
       header: "HÀNH ĐỘNG",
-      render: (row: ApiCategory) => (
+      render: (row: CategoryResponse) => (
         <div className="flex gap-2 items-center">
           <button
             type="button"
@@ -109,7 +107,7 @@ export default function Page() {
 
         <UpdateCategoryModal
           open={showUpdate}
-          id={editingCategory ? editingCategory.categoryId : null}
+          id={(editingCategory && editingCategory?.categoryId) ? editingCategory?.categoryId : null}
           onClose={() => {
             setShowUpdate(false);
             setEditingCategory(null);
@@ -118,11 +116,11 @@ export default function Page() {
 
         <TableProp
           columns={columns}
-          data={data || []}
+          data={data?.data?.items || []}
           loading={isLoading}
           error={isError}
           skeletonRows={5}
-          rowKey={(r) => r.categoryId}
+          rowKey={(r) => r.categoryId ?? ""}
           selectable={true}
           onSelectionChange={(sel) => setSelectedKeys(sel)}
         />
