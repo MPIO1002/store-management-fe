@@ -22,6 +22,12 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
+import type { ResponseObject } from '../models';
+// @ts-ignore
+import type { ResponsePagedResponseSupplierResponse } from '../models';
+// @ts-ignore
+import type { ResponseSupplierResponse } from '../models';
+// @ts-ignore
 import type { SupplierDto } from '../models';
 /**
  * SupplierApi - axios parameter creator
@@ -154,48 +160,12 @@ export const SupplierApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
-         * @param {number} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getSupplierById: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            // verify required parameter 'id' is not null or undefined
-            assertParamExists('getSupplierById', 'id', id)
-            const localVarPath = `/api/Supplier/{id}`
-                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @param {number} [pageNumber] 
          * @param {number} [pageSize] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSuppliers: async (pageNumber?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        getAllSuppliers: async (pageNumber?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/Supplier`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -218,6 +188,42 @@ export const SupplierApiAxiosParamCreator = function (configuration?: Configurat
             if (pageSize !== undefined) {
                 localVarQueryParameter['pageSize'] = pageSize;
             }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getSupplierById: async (id: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'id' is not null or undefined
+            assertParamExists('getSupplierById', 'id', id)
+            const localVarPath = `/api/Supplier/{id}`
+                .replace(`{${"id"}}`, encodeURIComponent(String(id)));
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
 
 
     
@@ -285,7 +291,7 @@ export const SupplierApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createSupplier(supplierDto?: SupplierDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async createSupplier(supplierDto?: SupplierDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseSupplierResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createSupplier(supplierDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SupplierApi.createSupplier']?.[localVarOperationServerIndex]?.url;
@@ -297,7 +303,7 @@ export const SupplierApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteSupplier(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteSupplier(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseObject>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteSupplier(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SupplierApi.deleteSupplier']?.[localVarOperationServerIndex]?.url;
@@ -312,22 +318,10 @@ export const SupplierApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async filterSuppliers(name?: string, phone?: string, pageNumber?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async filterSuppliers(name?: string, phone?: string, pageNumber?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponsePagedResponseSupplierResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.filterSuppliers(name, phone, pageNumber, pageSize, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SupplierApi.filterSuppliers']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {number} id 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getSupplierById(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getSupplierById(id, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SupplierApi.getSupplierById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -337,10 +331,22 @@ export const SupplierApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getSuppliers(pageNumber?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getSuppliers(pageNumber, pageSize, options);
+        async getAllSuppliers(pageNumber?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponsePagedResponseSupplierResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllSuppliers(pageNumber, pageSize, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['SupplierApi.getSuppliers']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['SupplierApi.getAllSuppliers']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {number} id 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getSupplierById(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseSupplierResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getSupplierById(id, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['SupplierApi.getSupplierById']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -350,7 +356,7 @@ export const SupplierApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateSupplier(id: number, supplierDto?: SupplierDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateSupplier(id: number, supplierDto?: SupplierDto, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseSupplierResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateSupplier(id, supplierDto, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['SupplierApi.updateSupplier']?.[localVarOperationServerIndex]?.url;
@@ -371,7 +377,7 @@ export const SupplierApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createSupplier(requestParameters: SupplierApiCreateSupplierRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        createSupplier(requestParameters: SupplierApiCreateSupplierRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ResponseSupplierResponse> {
             return localVarFp.createSupplier(requestParameters.supplierDto, options).then((request) => request(axios, basePath));
         },
         /**
@@ -380,7 +386,7 @@ export const SupplierApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteSupplier(requestParameters: SupplierApiDeleteSupplierRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteSupplier(requestParameters: SupplierApiDeleteSupplierRequest, options?: RawAxiosRequestConfig): AxiosPromise<ResponseObject> {
             return localVarFp.deleteSupplier(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -389,8 +395,17 @@ export const SupplierApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        filterSuppliers(requestParameters: SupplierApiFilterSuppliersRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        filterSuppliers(requestParameters: SupplierApiFilterSuppliersRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ResponsePagedResponseSupplierResponse> {
             return localVarFp.filterSuppliers(requestParameters.name, requestParameters.phone, requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {SupplierApiGetAllSuppliersRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllSuppliers(requestParameters: SupplierApiGetAllSuppliersRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ResponsePagedResponseSupplierResponse> {
+            return localVarFp.getAllSuppliers(requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -398,17 +413,8 @@ export const SupplierApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getSupplierById(requestParameters: SupplierApiGetSupplierByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getSupplierById(requestParameters: SupplierApiGetSupplierByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<ResponseSupplierResponse> {
             return localVarFp.getSupplierById(requestParameters.id, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {SupplierApiGetSuppliersRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getSuppliers(requestParameters: SupplierApiGetSuppliersRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getSuppliers(requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -416,7 +422,7 @@ export const SupplierApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateSupplier(requestParameters: SupplierApiUpdateSupplierRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        updateSupplier(requestParameters: SupplierApiUpdateSupplierRequest, options?: RawAxiosRequestConfig): AxiosPromise<ResponseSupplierResponse> {
             return localVarFp.updateSupplier(requestParameters.id, requestParameters.supplierDto, options).then((request) => request(axios, basePath));
         },
     };
@@ -450,19 +456,19 @@ export interface SupplierApiFilterSuppliersRequest {
 }
 
 /**
+ * Request parameters for getAllSuppliers operation in SupplierApi.
+ */
+export interface SupplierApiGetAllSuppliersRequest {
+    readonly pageNumber?: number
+
+    readonly pageSize?: number
+}
+
+/**
  * Request parameters for getSupplierById operation in SupplierApi.
  */
 export interface SupplierApiGetSupplierByIdRequest {
     readonly id: number
-}
-
-/**
- * Request parameters for getSuppliers operation in SupplierApi.
- */
-export interface SupplierApiGetSuppliersRequest {
-    readonly pageNumber?: number
-
-    readonly pageSize?: number
 }
 
 /**
@@ -510,22 +516,22 @@ export class SupplierApi extends BaseAPI {
 
     /**
      * 
+     * @param {SupplierApiGetAllSuppliersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public getAllSuppliers(requestParameters: SupplierApiGetAllSuppliersRequest = {}, options?: RawAxiosRequestConfig) {
+        return SupplierApiFp(this.configuration).getAllSuppliers(requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
      * @param {SupplierApiGetSupplierByIdRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
     public getSupplierById(requestParameters: SupplierApiGetSupplierByIdRequest, options?: RawAxiosRequestConfig) {
         return SupplierApiFp(this.configuration).getSupplierById(requestParameters.id, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {SupplierApiGetSuppliersRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public getSuppliers(requestParameters: SupplierApiGetSuppliersRequest = {}, options?: RawAxiosRequestConfig) {
-        return SupplierApiFp(this.configuration).getSuppliers(requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

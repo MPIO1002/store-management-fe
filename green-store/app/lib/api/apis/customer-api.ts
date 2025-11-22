@@ -23,6 +23,14 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
 import type { CustomerCreateRequest } from '../models';
+// @ts-ignore
+import type { ResponseCustomerResponse } from '../models';
+// @ts-ignore
+import type { ResponseIEnumerableCustomerResponse } from '../models';
+// @ts-ignore
+import type { ResponseObject } from '../models';
+// @ts-ignore
+import type { ResponsePagedResponseCustomerResponse } from '../models';
 /**
  * CustomerApi - axios parameter creator
  */
@@ -110,7 +118,7 @@ export const CustomerApiAxiosParamCreator = function (configuration?: Configurat
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        filterCustomers: async (fullName?: string, email?: string, phoneNumber?: string, pageNumber?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        filterCustomer: async (fullName?: string, email?: string, phoneNumber?: string, pageNumber?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/Customer/filter`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -144,6 +152,48 @@ export const CustomerApiAxiosParamCreator = function (configuration?: Configurat
 
             if (pageSize !== undefined) {
                 localVarQueryParameter['PageSize'] = pageSize;
+            }
+
+
+    
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllCustomers: async (pageNumber?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Customer`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+            if (pageNumber !== undefined) {
+                localVarQueryParameter['pageNumber'] = pageNumber;
+            }
+
+            if (pageSize !== undefined) {
+                localVarQueryParameter['pageSize'] = pageSize;
             }
 
 
@@ -267,53 +317,11 @@ export const CustomerApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
-         * @param {number} [pageNumber] 
-         * @param {number} [pageSize] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        getCustomers: async (pageNumber?: number, pageSize?: number, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
-            const localVarPath = `/api/Customer`;
-            // use dummy base URL string because the URL constructor only accepts absolute URLs.
-            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
-            let baseOptions;
-            if (configuration) {
-                baseOptions = configuration.baseOptions;
-            }
-
-            const localVarRequestOptions = { method: 'GET', ...baseOptions, ...options};
-            const localVarHeaderParameter = {} as any;
-            const localVarQueryParameter = {} as any;
-
-            // authentication Bearer required
-            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
-
-            if (pageNumber !== undefined) {
-                localVarQueryParameter['pageNumber'] = pageNumber;
-            }
-
-            if (pageSize !== undefined) {
-                localVarQueryParameter['pageSize'] = pageSize;
-            }
-
-
-    
-            setSearchParams(localVarUrlObj, localVarQueryParameter);
-            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
-            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-
-            return {
-                url: toPathString(localVarUrlObj),
-                options: localVarRequestOptions,
-            };
-        },
-        /**
-         * 
          * @param {string} [name] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        searchCustomers: async (name?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        searchCustomersByName: async (name?: string, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/Customer/search`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -399,7 +407,7 @@ export const CustomerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createCustomer(customerCreateRequest?: CustomerCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async createCustomer(customerCreateRequest?: CustomerCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseCustomerResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createCustomer(customerCreateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CustomerApi.createCustomer']?.[localVarOperationServerIndex]?.url;
@@ -411,7 +419,7 @@ export const CustomerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async deleteCustomer(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async deleteCustomer(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseObject>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.deleteCustomer(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CustomerApi.deleteCustomer']?.[localVarOperationServerIndex]?.url;
@@ -427,10 +435,23 @@ export const CustomerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async filterCustomers(fullName?: string, email?: string, phoneNumber?: string, pageNumber?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.filterCustomers(fullName, email, phoneNumber, pageNumber, pageSize, options);
+        async filterCustomer(fullName?: string, email?: string, phoneNumber?: string, pageNumber?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponsePagedResponseCustomerResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.filterCustomer(fullName, email, phoneNumber, pageNumber, pageSize, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CustomerApi.filterCustomers']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CustomerApi.filterCustomer']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {number} [pageNumber] 
+         * @param {number} [pageSize] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async getAllCustomers(pageNumber?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponsePagedResponseCustomerResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.getAllCustomers(pageNumber, pageSize, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerApi.getAllCustomers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -439,7 +460,7 @@ export const CustomerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCustomerByEmail(email: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getCustomerByEmail(email: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseCustomerResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCustomerByEmail(email, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CustomerApi.getCustomerByEmail']?.[localVarOperationServerIndex]?.url;
@@ -451,7 +472,7 @@ export const CustomerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCustomerById(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getCustomerById(id: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseCustomerResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCustomerById(id, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CustomerApi.getCustomerById']?.[localVarOperationServerIndex]?.url;
@@ -463,23 +484,10 @@ export const CustomerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async getCustomerByPhone(phone: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async getCustomerByPhone(phone: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseCustomerResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.getCustomerByPhone(phone, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CustomerApi.getCustomerByPhone']?.[localVarOperationServerIndex]?.url;
-            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
-        },
-        /**
-         * 
-         * @param {number} [pageNumber] 
-         * @param {number} [pageSize] 
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        async getCustomers(pageNumber?: number, pageSize?: number, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.getCustomers(pageNumber, pageSize, options);
-            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CustomerApi.getCustomers']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -488,10 +496,10 @@ export const CustomerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async searchCustomers(name?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.searchCustomers(name, options);
+        async searchCustomersByName(name?: string, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseIEnumerableCustomerResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.searchCustomersByName(name, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
-            const localVarOperationServerBasePath = operationServerMap['CustomerApi.searchCustomers']?.[localVarOperationServerIndex]?.url;
+            const localVarOperationServerBasePath = operationServerMap['CustomerApi.searchCustomersByName']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
         },
         /**
@@ -501,7 +509,7 @@ export const CustomerApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateCustomer(id: number, customerCreateRequest?: CustomerCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<void>> {
+        async updateCustomer(id: number, customerCreateRequest?: CustomerCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseCustomerResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.updateCustomer(id, customerCreateRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['CustomerApi.updateCustomer']?.[localVarOperationServerIndex]?.url;
@@ -522,7 +530,7 @@ export const CustomerApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createCustomer(requestParameters: CustomerApiCreateCustomerRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        createCustomer(requestParameters: CustomerApiCreateCustomerRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ResponseCustomerResponse> {
             return localVarFp.createCustomer(requestParameters.customerCreateRequest, options).then((request) => request(axios, basePath));
         },
         /**
@@ -531,17 +539,26 @@ export const CustomerApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        deleteCustomer(requestParameters: CustomerApiDeleteCustomerRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        deleteCustomer(requestParameters: CustomerApiDeleteCustomerRequest, options?: RawAxiosRequestConfig): AxiosPromise<ResponseObject> {
             return localVarFp.deleteCustomer(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {CustomerApiFilterCustomersRequest} requestParameters Request parameters.
+         * @param {CustomerApiFilterCustomerRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        filterCustomers(requestParameters: CustomerApiFilterCustomersRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.filterCustomers(requestParameters.fullName, requestParameters.email, requestParameters.phoneNumber, requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(axios, basePath));
+        filterCustomer(requestParameters: CustomerApiFilterCustomerRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ResponsePagedResponseCustomerResponse> {
+            return localVarFp.filterCustomer(requestParameters.fullName, requestParameters.email, requestParameters.phoneNumber, requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
+         * @param {CustomerApiGetAllCustomersRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        getAllCustomers(requestParameters: CustomerApiGetAllCustomersRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ResponsePagedResponseCustomerResponse> {
+            return localVarFp.getAllCustomers(requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -549,7 +566,7 @@ export const CustomerApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCustomerByEmail(requestParameters: CustomerApiGetCustomerByEmailRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getCustomerByEmail(requestParameters: CustomerApiGetCustomerByEmailRequest, options?: RawAxiosRequestConfig): AxiosPromise<ResponseCustomerResponse> {
             return localVarFp.getCustomerByEmail(requestParameters.email, options).then((request) => request(axios, basePath));
         },
         /**
@@ -558,7 +575,7 @@ export const CustomerApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCustomerById(requestParameters: CustomerApiGetCustomerByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getCustomerById(requestParameters: CustomerApiGetCustomerByIdRequest, options?: RawAxiosRequestConfig): AxiosPromise<ResponseCustomerResponse> {
             return localVarFp.getCustomerById(requestParameters.id, options).then((request) => request(axios, basePath));
         },
         /**
@@ -567,26 +584,17 @@ export const CustomerApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCustomerByPhone(requestParameters: CustomerApiGetCustomerByPhoneRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        getCustomerByPhone(requestParameters: CustomerApiGetCustomerByPhoneRequest, options?: RawAxiosRequestConfig): AxiosPromise<ResponseCustomerResponse> {
             return localVarFp.getCustomerByPhone(requestParameters.phone, options).then((request) => request(axios, basePath));
         },
         /**
          * 
-         * @param {CustomerApiGetCustomersRequest} requestParameters Request parameters.
+         * @param {CustomerApiSearchCustomersByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        getCustomers(requestParameters: CustomerApiGetCustomersRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.getCustomers(requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(axios, basePath));
-        },
-        /**
-         * 
-         * @param {CustomerApiSearchCustomersRequest} requestParameters Request parameters.
-         * @param {*} [options] Override http request option.
-         * @throws {RequiredError}
-         */
-        searchCustomers(requestParameters: CustomerApiSearchCustomersRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<void> {
-            return localVarFp.searchCustomers(requestParameters.name, options).then((request) => request(axios, basePath));
+        searchCustomersByName(requestParameters: CustomerApiSearchCustomersByNameRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ResponseIEnumerableCustomerResponse> {
+            return localVarFp.searchCustomersByName(requestParameters.name, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -594,7 +602,7 @@ export const CustomerApiFactory = function (configuration?: Configuration, baseP
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateCustomer(requestParameters: CustomerApiUpdateCustomerRequest, options?: RawAxiosRequestConfig): AxiosPromise<void> {
+        updateCustomer(requestParameters: CustomerApiUpdateCustomerRequest, options?: RawAxiosRequestConfig): AxiosPromise<ResponseCustomerResponse> {
             return localVarFp.updateCustomer(requestParameters.id, requestParameters.customerCreateRequest, options).then((request) => request(axios, basePath));
         },
     };
@@ -615,15 +623,24 @@ export interface CustomerApiDeleteCustomerRequest {
 }
 
 /**
- * Request parameters for filterCustomers operation in CustomerApi.
+ * Request parameters for filterCustomer operation in CustomerApi.
  */
-export interface CustomerApiFilterCustomersRequest {
+export interface CustomerApiFilterCustomerRequest {
     readonly fullName?: string
 
     readonly email?: string
 
     readonly phoneNumber?: string
 
+    readonly pageNumber?: number
+
+    readonly pageSize?: number
+}
+
+/**
+ * Request parameters for getAllCustomers operation in CustomerApi.
+ */
+export interface CustomerApiGetAllCustomersRequest {
     readonly pageNumber?: number
 
     readonly pageSize?: number
@@ -651,18 +668,9 @@ export interface CustomerApiGetCustomerByPhoneRequest {
 }
 
 /**
- * Request parameters for getCustomers operation in CustomerApi.
+ * Request parameters for searchCustomersByName operation in CustomerApi.
  */
-export interface CustomerApiGetCustomersRequest {
-    readonly pageNumber?: number
-
-    readonly pageSize?: number
-}
-
-/**
- * Request parameters for searchCustomers operation in CustomerApi.
- */
-export interface CustomerApiSearchCustomersRequest {
+export interface CustomerApiSearchCustomersByNameRequest {
     readonly name?: string
 }
 
@@ -701,12 +709,22 @@ export class CustomerApi extends BaseAPI {
 
     /**
      * 
-     * @param {CustomerApiFilterCustomersRequest} requestParameters Request parameters.
+     * @param {CustomerApiFilterCustomerRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public filterCustomers(requestParameters: CustomerApiFilterCustomersRequest = {}, options?: RawAxiosRequestConfig) {
-        return CustomerApiFp(this.configuration).filterCustomers(requestParameters.fullName, requestParameters.email, requestParameters.phoneNumber, requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(this.axios, this.basePath));
+    public filterCustomer(requestParameters: CustomerApiFilterCustomerRequest = {}, options?: RawAxiosRequestConfig) {
+        return CustomerApiFp(this.configuration).filterCustomer(requestParameters.fullName, requestParameters.email, requestParameters.phoneNumber, requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {CustomerApiGetAllCustomersRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public getAllCustomers(requestParameters: CustomerApiGetAllCustomersRequest = {}, options?: RawAxiosRequestConfig) {
+        return CustomerApiFp(this.configuration).getAllCustomers(requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -741,22 +759,12 @@ export class CustomerApi extends BaseAPI {
 
     /**
      * 
-     * @param {CustomerApiGetCustomersRequest} requestParameters Request parameters.
+     * @param {CustomerApiSearchCustomersByNameRequest} requestParameters Request parameters.
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public getCustomers(requestParameters: CustomerApiGetCustomersRequest = {}, options?: RawAxiosRequestConfig) {
-        return CustomerApiFp(this.configuration).getCustomers(requestParameters.pageNumber, requestParameters.pageSize, options).then((request) => request(this.axios, this.basePath));
-    }
-
-    /**
-     * 
-     * @param {CustomerApiSearchCustomersRequest} requestParameters Request parameters.
-     * @param {*} [options] Override http request option.
-     * @throws {RequiredError}
-     */
-    public searchCustomers(requestParameters: CustomerApiSearchCustomersRequest = {}, options?: RawAxiosRequestConfig) {
-        return CustomerApiFp(this.configuration).searchCustomers(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
+    public searchCustomersByName(requestParameters: CustomerApiSearchCustomersByNameRequest = {}, options?: RawAxiosRequestConfig) {
+        return CustomerApiFp(this.configuration).searchCustomersByName(requestParameters.name, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

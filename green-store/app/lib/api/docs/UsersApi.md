@@ -7,12 +7,12 @@ All URIs are relative to *http://localhost*
 |[**createUser**](#createuser) | **POST** /api/Users | |
 |[**deleteUser**](#deleteuser) | **DELETE** /api/Users/{id} | |
 |[**filterUsers**](#filterusers) | **GET** /api/Users/filter | |
+|[**getAllUsers**](#getallusers) | **GET** /api/Users | |
 |[**getUserById**](#getuserbyid) | **GET** /api/Users/{id} | |
-|[**getUsers**](#getusers) | **GET** /api/Users | |
 |[**updateUser**](#updateuser) | **PUT** /api/Users/{id} | |
 
 # **createUser**
-> createUser()
+> ResponseUserResponse createUser()
 
 
 ### Example
@@ -43,7 +43,7 @@ const { status, data } = await apiInstance.createUser(
 
 ### Return type
 
-void (empty response body)
+**ResponseUserResponse**
 
 ### Authorization
 
@@ -52,18 +52,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **deleteUser**
-> deleteUser()
+> ResponseObject deleteUser()
 
 
 ### Example
@@ -93,7 +93,7 @@ const { status, data } = await apiInstance.deleteUser(
 
 ### Return type
 
-void (empty response body)
+**ResponseObject**
 
 ### Authorization
 
@@ -102,18 +102,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **filterUsers**
-> filterUsers()
+> ResponsePagedResponseUserResponse filterUsers()
 
 
 ### Example
@@ -155,7 +155,7 @@ const { status, data } = await apiInstance.filterUsers(
 
 ### Return type
 
-void (empty response body)
+**ResponsePagedResponseUserResponse**
 
 ### Authorization
 
@@ -164,18 +164,71 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getAllUsers**
+> ResponsePagedResponseUserResponse getAllUsers()
+
+
+### Example
+
+```typescript
+import {
+    UsersApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new UsersApi(configuration);
+
+let pageNumber: number; // (optional) (default to 1)
+let pageSize: number; // (optional) (default to 10)
+
+const { status, data } = await apiInstance.getAllUsers(
+    pageNumber,
+    pageSize
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **pageNumber** | [**number**] |  | (optional) defaults to 1|
+| **pageSize** | [**number**] |  | (optional) defaults to 10|
+
+
+### Return type
+
+**ResponsePagedResponseUserResponse**
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getUserById**
-> getUserById()
+> ResponseUserResponse getUserById()
 
 
 ### Example
@@ -205,7 +258,7 @@ const { status, data } = await apiInstance.getUserById(
 
 ### Return type
 
-void (empty response body)
+**ResponseUserResponse**
 
 ### Authorization
 
@@ -214,71 +267,18 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **getUsers**
-> getUsers()
-
-
-### Example
-
-```typescript
-import {
-    UsersApi,
-    Configuration
-} from './api';
-
-const configuration = new Configuration();
-const apiInstance = new UsersApi(configuration);
-
-let pageNumber: number; // (optional) (default to 1)
-let pageSize: number; // (optional) (default to 10)
-
-const { status, data } = await apiInstance.getUsers(
-    pageNumber,
-    pageSize
-);
-```
-
-### Parameters
-
-|Name | Type | Description  | Notes|
-|------------- | ------------- | ------------- | -------------|
-| **pageNumber** | [**number**] |  | (optional) defaults to 1|
-| **pageSize** | [**number**] |  | (optional) defaults to 10|
-
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[Bearer](../README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **updateUser**
-> updateUser()
+> ResponseUserResponse updateUser()
 
 
 ### Example
@@ -312,7 +312,7 @@ const { status, data } = await apiInstance.updateUser(
 
 ### Return type
 
-void (empty response body)
+**ResponseUserResponse**
 
 ### Authorization
 
@@ -321,13 +321,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/json, text/json, application/*+json
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 

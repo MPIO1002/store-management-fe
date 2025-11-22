@@ -1,4 +1,4 @@
-import { CategoryApiCreateCategoryRequest, CategoryRequest } from "@/app/lib/api";
+import { CategoryRequest } from "@/app/lib/api";
 import { apis } from "@/app/lib/api/apis";
 import { useMutation, useQuery, useQueryClient, UseQueryOptions } from "@tanstack/react-query";
 
@@ -13,7 +13,7 @@ export const categoryKeys = {
 export const useGetAllCategoryQuery = (params?: any) => {
     return useQuery({
         queryKey: categoryKeys.list(params),
-        queryFn: () => apis.categories.getCategories(),
+        queryFn: () => apis.categories.getAllCategories(params),
         select: (response) => response.data,
         staleTime: 1 * 60 * 1000 // refetch every 1 min
     })

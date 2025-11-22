@@ -42,6 +42,7 @@ export default function TableProp<T extends Record<string, any>>({
 
   const getRowKey = (row: any, idx: number) => (rowKey ? rowKey(row, idx) : row.id ?? row.key ?? idx);
 
+  debugger;
   const allRowKeys = data.map((r, i) => getRowKey(r, i));
   const allSelected = allRowKeys.length > 0 && allRowKeys.every((k) => selectedSet.has(k));
 

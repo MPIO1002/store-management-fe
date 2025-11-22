@@ -13,9 +13,12 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { UserResponse } from './user-response';
 
-export interface LoginDto {
-    'username': string;
-    'password': string;
+export interface ResponseUserResponse {
+    'message'?: string | null;
+    'data'?: UserResponse;
 }
 

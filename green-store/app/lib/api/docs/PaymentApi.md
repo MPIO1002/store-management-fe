@@ -5,11 +5,11 @@ All URIs are relative to *http://localhost*
 |Method | HTTP request | Description|
 |------------- | ------------- | -------------|
 |[**filterPayments**](#filterpayments) | **GET** /api/Payment/filter | |
+|[**getAllPayments**](#getallpayments) | **GET** /api/Payment | |
 |[**getPaymentById**](#getpaymentbyid) | **GET** /api/Payment/{id} | |
-|[**getPayments**](#getpayments) | **GET** /api/Payment | |
 
 # **filterPayments**
-> filterPayments()
+> ResponsePagedResponsePaymentResponse filterPayments()
 
 
 ### Example
@@ -45,7 +45,7 @@ const { status, data } = await apiInstance.filterPayments(
 
 ### Return type
 
-void (empty response body)
+**ResponsePagedResponsePaymentResponse**
 
 ### Authorization
 
@@ -54,18 +54,71 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **getAllPayments**
+> ResponsePagedResponsePaymentResponse getAllPayments()
+
+
+### Example
+
+```typescript
+import {
+    PaymentApi,
+    Configuration
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new PaymentApi(configuration);
+
+let pageNumber: number; // (optional) (default to 1)
+let pageSize: number; // (optional) (default to 10)
+
+const { status, data } = await apiInstance.getAllPayments(
+    pageNumber,
+    pageSize
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **pageNumber** | [**number**] |  | (optional) defaults to 1|
+| **pageSize** | [**number**] |  | (optional) defaults to 10|
+
+
+### Return type
+
+**ResponsePagedResponsePaymentResponse**
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **getPaymentById**
-> getPaymentById()
+> ResponsePaymentResponse getPaymentById()
 
 
 ### Example
@@ -95,7 +148,7 @@ const { status, data } = await apiInstance.getPaymentById(
 
 ### Return type
 
-void (empty response body)
+**ResponsePaymentResponse**
 
 ### Authorization
 
@@ -104,66 +157,13 @@ void (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: text/plain, application/json, text/json
 
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-|**200** | OK |  -  |
-
-[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
-
-# **getPayments**
-> getPayments()
-
-
-### Example
-
-```typescript
-import {
-    PaymentApi,
-    Configuration
-} from './api';
-
-const configuration = new Configuration();
-const apiInstance = new PaymentApi(configuration);
-
-let pageNumber: number; // (optional) (default to 1)
-let pageSize: number; // (optional) (default to 10)
-
-const { status, data } = await apiInstance.getPayments(
-    pageNumber,
-    pageSize
-);
-```
-
-### Parameters
-
-|Name | Type | Description  | Notes|
-|------------- | ------------- | ------------- | -------------|
-| **pageNumber** | [**number**] |  | (optional) defaults to 1|
-| **pageSize** | [**number**] |  | (optional) defaults to 10|
-
-
-### Return type
-
-void (empty response body)
-
-### Authorization
-
-[Bearer](../README.md#Bearer)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: Not defined
-
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-|**200** | OK |  -  |
+|**0** | Error |  -  |
 
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
