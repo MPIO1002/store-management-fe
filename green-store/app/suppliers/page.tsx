@@ -16,9 +16,10 @@ import {
   useDeleteSupplierMutation,
 } from "./hooks/supplier-hooks";
 import { SupplierResponse } from "../lib/api";
-import { Toaster } from "sonner";
+import { toast, Toaster } from "sonner";
+import ConfirmModal from "@/components/confirm-alert";
 
-export default function Page() {
+export default function SupplierPage() {
   const [query, setQuery] = useState("");
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
@@ -26,11 +27,11 @@ export default function Page() {
   const [showUpdate, setShowUpdate] = useState(false);
   const [editingSupplier, setEditingSupplier] = useState<SupplierResponse | null>(null);
   const [selectedKeys, setSelectedKeys] = useState<Array<string | number>>([]);
-  const [deleting, setDeleting] = useState(false);
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
 
   // pass name filter to hook (hook will do client-side filtering if API doesn't support it)
   const { data, isLoading, isError } = useGetAllSupplierQuery({ name: query, pageNumber, pageSize });
-  const { mutateAsync: deleteSupplierAsync } = useDeleteSupplierMutation();
+  const { mutateAsync: deleteSupplierAsync, isPending: isDeleting } = useDeleteSupplierMutation();
 
   const columns = [
     { header: "TÊN", accessor: "name" },
@@ -56,6 +57,18 @@ export default function Page() {
     },
   ];
 
+  const handleDelete = async () => {
+    if (selectedKeys.length === 0) return;
+    try {
+      await Promise.all(selectedKeys.map((id) => deleteSupplierAsync(id as number)));
+      toast.success("Xóa nhà cung cấp thành công", { description: "Success" });
+      setSelectedKeys([]);
+    } catch (err) {
+      console.error(err);
+      alert((err as any)?.message ?? "Lỗi khi xóa");
+    }
+  };
+
   return (
     <div className="mx-auto p-6">
       <header className="flex items-center justify-between mb-6">
@@ -76,23 +89,11 @@ export default function Page() {
           <div className="flex items-center gap-2">
             <Button
               variant="secondary"
-              onClick={async () => {
-                if (selectedKeys.length === 0) return;
-                const ok = confirm(`Xác nhận xóa ${selectedKeys.length} mục?`);
-                if (!ok) return;
-                try {
-                  setDeleting(true);
-                  await Promise.all(selectedKeys.map((id) => deleteSupplierAsync(id as number)));
-                  setSelectedKeys([]);
-                } catch (err) {
-                  console.error(err);
-                  alert((err as any)?.message ?? "Lỗi khi xóa");
-                } finally {
-                  setDeleting(false);
-                }
+              onClick={() => {
+                setConfirmDeleteOpen(true);
               }}
-              disabled={deleting || selectedKeys.length === 0}
-              aria-disabled={deleting || selectedKeys.length === 0}
+              disabled={isDeleting || selectedKeys.length === 0}
+              aria-disabled={isDeleting || selectedKeys.length === 0}
               title={selectedKeys.length === 0 ? "Chọn mục để xóa" : `Xóa ${selectedKeys.length} mục`}
             >
               <FontAwesomeIcon icon={faTrash} />
@@ -105,6 +106,19 @@ export default function Page() {
             </Button>
           </div>
         </div>
+
+        {confirmDeleteOpen && (
+          <ConfirmModal
+            open={confirmDeleteOpen}
+            message={`Xác nhận xóa ${selectedKeys.length} mục?`}
+            title="Xác nhận xóa"
+            disabled={isDeleting}
+            onConfirm={() => {
+              handleDelete();
+            }}
+            onCancel={() => setConfirmDeleteOpen(false)}
+          />
+        )}
 
         {showCreate && <CreateSupplierModal open={showCreate} onClose={() => setShowCreate(false)} />}
 
