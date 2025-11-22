@@ -63,7 +63,7 @@ export const useGetSupplierQuery = (id: number | null) => {
     return useQuery({
         queryKey: supplierKeys.detail(id as number),
         queryFn: () => apis.suppliers.getSupplierById({ id: id as number }),
-        select: (response: any) => response.data,
+        select: (response) => response.data,
         enabled: !!id,
     });
 };

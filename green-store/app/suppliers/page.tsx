@@ -15,8 +15,8 @@ import {
   useGetAllSupplierQuery,
   useDeleteSupplierMutation,
 } from "./hooks/supplier-hooks";
-
-type Supplier = { supplierId?: number; name: string; phone?: string | null; email?: string | null; address?: string | null };
+import { SupplierResponse } from "../lib/api";
+import { Toaster } from "sonner";
 
 export default function Page() {
   const [query, setQuery] = useState("");
@@ -24,7 +24,7 @@ export default function Page() {
   const [pageSize, setPageSize] = useState<number>(10);
   const [showCreate, setShowCreate] = useState(false);
   const [showUpdate, setShowUpdate] = useState(false);
-  const [editingSupplier, setEditingSupplier] = useState<Supplier | null>(null);
+  const [editingSupplier, setEditingSupplier] = useState<SupplierResponse | null>(null);
   const [selectedKeys, setSelectedKeys] = useState<Array<string | number>>([]);
   const [deleting, setDeleting] = useState(false);
 
@@ -39,7 +39,7 @@ export default function Page() {
     { header: "ĐỊA CHỈ", accessor: "address" },
     {
       header: "HÀNH ĐỘNG",
-      render: (row: Supplier) => (
+      render: (row: SupplierResponse) => (
         <div className="flex gap-2 items-center">
           <button
             type="button"
@@ -105,7 +105,8 @@ export default function Page() {
             </Button>
           </div>
         </div>
-        <CreateSupplierModal open={showCreate} onClose={() => setShowCreate(false)} />
+
+        {showCreate && <CreateSupplierModal open={showCreate} onClose={() => setShowCreate(false)} />}
 
         <TableProp
           columns={columns}
@@ -118,14 +119,16 @@ export default function Page() {
           onSelectionChange={(sel) => setSelectedKeys(sel)}
         />
 
-        <UpdateSupplierModal
-          open={showUpdate}
-          id={editingSupplier ? (editingSupplier.supplierId as number) : null}
-          onClose={() => {
-            setShowUpdate(false);
-            setEditingSupplier(null);
-          }}
-        />
+        {showUpdate &&
+          <UpdateSupplierModal
+            open={showUpdate}
+            id={editingSupplier?.supplierId}
+            onClose={() => {
+              setShowUpdate(false);
+              setEditingSupplier(null);
+            }}
+          />
+        }
 
         {/* Pagination controls */}
         <Pagination

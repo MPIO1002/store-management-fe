@@ -5,6 +5,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import SidebarClient from "../components/sidebar-client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "sonner";
 
 // export const metadata: Metadata = {
 //   title: "Create Next App",
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         {/* Client-managed sidebar; it updates --sidebar-width on :root */}
         <QueryClientProvider client={client}>
           <SidebarClient />
+          <Toaster position="top-right" richColors />
           <main
             className="min-h-screen transition-all duration-200 p-6"
             style={{ marginLeft: "var(--sidebar-width, 14rem)" }}>
