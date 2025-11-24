@@ -1,4 +1,4 @@
-import { CategoryRequest } from "@/app/lib/api";
+import { CategoryApiFilterCategoriesRequest, CategoryApiGetAllCategoriesRequest, CategoryRequest } from "@/app/lib/api";
 import { apis } from "@/app/lib/api/apis";
 import { useMutation, useQuery, useQueryClient, UseQueryOptions } from "@tanstack/react-query";
 
@@ -10,7 +10,16 @@ export const categoryKeys = {
     detail: (id: number) => [...categoryKeys.details(), id] as const,
 }
 
-export const useGetAllCategoryQuery = (params?: any) => {
+export const useFilterCategoryQuery = (params?: CategoryApiFilterCategoriesRequest) => {
+    return useQuery({
+        queryKey: categoryKeys.list(params),
+        queryFn: () => apis.categories.filterCategories(params),
+        select: (response) => response.data,
+        staleTime: 1 * 60 * 1000 // refetch every 1 min
+    })
+}
+
+export const useGetAllCategoryQuery = (params?: CategoryApiGetAllCategoriesRequest) => {
     return useQuery({
         queryKey: categoryKeys.list(params),
         queryFn: () => apis.categories.getAllCategories(params),
@@ -19,16 +28,12 @@ export const useGetAllCategoryQuery = (params?: any) => {
     })
 }
 
-export const useGetCategoryQuery = (
-    id: number | null,
-    options?: UseQueryOptions<any>
-) => {
+export const useGetCategoryQuery = (id: number) => {
     return useQuery({
-        queryKey: categoryKeys.detail(id!),
-        queryFn: () => apis.categories.getCategoryById({ id: id! }),
+        queryKey: categoryKeys.detail(id),
+        queryFn: () => apis.categories.getCategoryById({ id: id }),
         select: (response) => response.data,
         enabled: !!id,
-        ...options,
     });
 };
 

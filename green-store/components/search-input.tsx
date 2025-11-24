@@ -7,7 +7,6 @@ import React, { useEffect, useState } from "react";
 type SearchInputProps = {
   value?: string;
   placeholder?: string;
-  onChange?: (val: string) => void;
   onSearch?: (val: string) => void;
   debounceMs?: number;
   className?: string;
@@ -17,7 +16,6 @@ type SearchInputProps = {
 export default function SearchInput({
   value = "",
   placeholder = "Tìm kiếm...",
-  onChange,
   onSearch,
   debounceMs = 300,
   className = "",
@@ -26,11 +24,6 @@ export default function SearchInput({
   const [term, setTerm] = useState(value);
 
   useEffect(() => setTerm(value), [value]);
-
-  useEffect(() => {
-    if (!onChange) return;
-    onChange(term);
-  }, [term]);
 
   useEffect(() => {
     if (!onSearch) return;

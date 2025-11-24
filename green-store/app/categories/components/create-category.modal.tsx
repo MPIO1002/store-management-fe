@@ -1,30 +1,36 @@
 "use client";
 
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useCreateCategoryMutation } from "../hooks/category-hooks";
 import { CategoryRequest } from "@/app/lib/api";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
+
+const createCategorySchema = z.object({
+  categoryName: z.string().min(1, "Vui lòng nhập tên loại sản phẩm")
+});
+
+type CreateCategoryData = z.infer<typeof createCategorySchema>;
 
 type Props = {
   open: boolean;
   onClose: () => void;
 };
 
+const defaultValues = { categoryName: "" };
+
 export default function CreateCategoryModal({ open, onClose }: Props) {
   const { mutate, isPending } = useCreateCategoryMutation();
-
-  const defaultValues: CategoryRequest = { categoryName: "" };
 
   const {
     register,
     handleSubmit,
-    reset,
-    formState: { errors },
-  } = useForm<CategoryRequest>({ defaultValues });
-
-  useEffect(() => {
-    if (open) reset(defaultValues);
-  }, [open, reset]);
+    formState,
+  } = useForm<CreateCategoryData>({
+    resolver: zodResolver(createCategorySchema),
+    defaultValues: defaultValues
+  });
 
   if (!open) return null;
 
@@ -33,8 +39,13 @@ export default function CreateCategoryModal({ open, onClose }: Props) {
     if (!payload.categoryName) return;
 
     mutate(payload, {
-      onSuccess: () => onClose(),
-      onError: (err: any) => console.log(err?.message || "Đã có lỗi xảy ra"),
+      onSuccess: () => {
+        toast.success("Tạo loại sản phẩm thành công", { description: "Success" });
+        onClose();
+      },
+      onError: (err: any) => {
+        toast.error("Đã có lỗi xảy ra", { description: "Failed" })
+      },
     });
   };
 
@@ -46,13 +57,13 @@ export default function CreateCategoryModal({ open, onClose }: Props) {
 
         <label className="block mb-2 text-sm font-medium text-gray-700">Tên</label>
         <input
-          {...register("categoryName", { required: "Vui lòng nhập tên loại sản phẩm" })}
-          className="w-full border border-gray-300 rounded px-3 py-2 mb-2"
+          {...register("categoryName")}
+          className={`w-full border border-gray-300 rounded px-3 py-2 mb-2 ${formState.errors?.categoryName ? 'border-red-600 focus:ring-red-500' : 'border-gray-300'}`}
           disabled={isPending}
           autoFocus
         />
-        {errors.categoryName && (
-          <div className="text-sm text-red-600 mb-2">{errors.categoryName.message}</div>
+        {formState.errors?.categoryName && (
+          <div className="text-sm text-red-600 mb-2">{formState.errors?.categoryName?.message}</div>
         )}
 
         <div className="flex justify-end gap-2">

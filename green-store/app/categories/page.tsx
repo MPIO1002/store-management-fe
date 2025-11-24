@@ -10,13 +10,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import { faTrash } from "@fortawesome/free-solid-svg-icons/faTrash";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons/faPenToSquare";
-import { useGetAllCategoryQuery, useDeleteCategoryMutation } from "./hooks/category-hooks";
+import { useDeleteCategoryMutation, useFilterCategoryQuery } from "./hooks/category-hooks";
 import { CategoryResponse } from "../lib/api";
+import Pagination from "@/components/pagination";
+import { PaginationData } from "../lib/schema/pagination";
 
 export default function Page() {
-  const { data, isLoading, isError } = useGetAllCategoryQuery();
-
+  const [page, setPage] = useState(1);
+  const [pageSize, setPageSize] = useState(10);
   const [query, setQuery] = useState("");
+
+  const { data, isLoading, isError } = useFilterCategoryQuery({ categoryName: query, pageNumber: page, pageSize: pageSize });
+  const paginateData = data?.data as PaginationData;
+
   const [showCreate, setShowCreate] = useState(false);
   const [showUpdate, setShowUpdate] = useState(false);
   const [editingCategory, setEditingCategory] = useState<CategoryResponse | null>(null);
@@ -24,10 +30,6 @@ export default function Page() {
   const [deleting, setDeleting] = useState(false);
 
   const { mutateAsync: deleteCategoryAsync } = useDeleteCategoryMutation();
-
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
 
   const columns = [
     { header: "TÊN", accessor: "categoryName" },
@@ -60,8 +62,7 @@ export default function Page() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
           <div className="flex-1 min-w-0">
             <SearchInput
-              value={query}
-              onChange={(v) => setQuery(v)}
+              onSearch={(v) => setQuery(v)}
               placeholder="Tìm theo tên danh mục..."
               className="w-full"
             />
@@ -101,18 +102,22 @@ export default function Page() {
           </div>
         </div>
 
-        <CreateCategoryModal
-          open={showCreate}
-          onClose={() => setShowCreate(false)} />
+        {showCreate && (
+          <CreateCategoryModal
+            open={showCreate}
+            onClose={() => setShowCreate(false)} />
+        )}
 
-        <UpdateCategoryModal
-          open={showUpdate}
-          id={(editingCategory && editingCategory?.categoryId) ? editingCategory?.categoryId : null}
-          onClose={() => {
-            setShowUpdate(false);
-            setEditingCategory(null);
-          }}
-        />
+        {showUpdate && (
+          <UpdateCategoryModal
+            open={showUpdate}
+            id={editingCategory?.categoryId}
+            onClose={() => {
+              setShowUpdate(false);
+              setEditingCategory(null);
+            }}
+          />
+        )}
 
         <TableProp
           columns={columns}
@@ -124,6 +129,14 @@ export default function Page() {
           selectable={true}
           onSelectionChange={(sel) => setSelectedKeys(sel)}
         />
+
+        <Pagination pageNumber={paginateData?.pageNumber ?? 0}
+          pageSize={paginateData?.pageSize ?? 0}
+          totalItems={paginateData?.totalItems ?? 0}
+          onPageChange={(p) => setPage(p)}
+          onPageSizeChange={(s) => setPageSize(s)}>
+
+        </Pagination>
       </div>
     </div>
   );
