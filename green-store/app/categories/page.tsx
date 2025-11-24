@@ -20,7 +20,7 @@ export default function Page() {
   const [pageSize, setPageSize] = useState(10);
   const [query, setQuery] = useState("");
 
-  const { data, isLoading, isError } = useFilterCategoryQuery({categoryName: query, pageNumber: page, pageSize: pageSize});
+  const { data, isLoading, isError } = useFilterCategoryQuery({ categoryName: query, pageNumber: page, pageSize: pageSize });
   const paginateData = data?.data as PaginationData;
 
   const [showCreate, setShowCreate] = useState(false);
@@ -102,18 +102,22 @@ export default function Page() {
           </div>
         </div>
 
-        <CreateCategoryModal
-          open={showCreate}
-          onClose={() => setShowCreate(false)} />
+        {showCreate && (
+          <CreateCategoryModal
+            open={showCreate}
+            onClose={() => setShowCreate(false)} />
+        )}
 
-        <UpdateCategoryModal
-          open={showUpdate}
-          id={(editingCategory && editingCategory?.categoryId) ? editingCategory?.categoryId : null}
-          onClose={() => {
-            setShowUpdate(false);
-            setEditingCategory(null);
-          }}
-        />
+        {showUpdate && (
+          <UpdateCategoryModal
+            open={showUpdate}
+            id={(editingCategory && editingCategory?.categoryId) ? editingCategory?.categoryId : null}
+            onClose={() => {
+              setShowUpdate(false);
+              setEditingCategory(null);
+            }}
+          />
+        )}
 
         <TableProp
           columns={columns}
