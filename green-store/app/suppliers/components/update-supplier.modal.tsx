@@ -7,6 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
 import { SupplierDto } from "@/app/lib/api";
+import { trimAll } from "@/app/lib/api/utils/object-utils";
 
 const updateSupplierSchema = z.object({
   name: z.string().min(1, "Vui lòng nhập tên nhà cung cấp"),
@@ -51,13 +52,9 @@ export default function UpdateSupplierModal({ open, id, onClose }: Props) {
   if (isError) return null;
 
   const onSubmit = handleSubmit((data) => {
-    const payload: SupplierDto  = {
-      name: data.name?.trim(),
-      phone: data.phone?.toString().trim() || null,
-      email: data.email?.toString().trim() || null,
-      address: data.address?.toString().trim() || null,
-    }
-    mutate({ id: id as number, data: payload }, {
+    trimAll(data);
+
+    mutate({ id: id as number, data: data }, {
       onSuccess: () => {
         toast.success("Cập nhật nhà cung cấp thành công", { description: "Success" });
         onClose();

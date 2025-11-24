@@ -6,6 +6,7 @@ import { useCreateSupplierMutation } from "../hooks/supplier-hooks";
 import { toast } from "sonner";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { trimAll } from "@/app/lib/api/utils/object-utils";
 
 const createSupplierSchema = z.object({
   name: z.string().min(1, "Vui lòng nhập tên nhà cung cấp"),
@@ -42,14 +43,9 @@ export default function CreateSupplierModal({ open, onClose }: Props) {
 
   const onSubmit = handleSubmit((values: SupplierDto) => {
     // trim values
-    const payload: SupplierDto = {
-      name: values.name?.trim(),
-      phone: values.phone?.toString().trim() || null,
-      email: values.email?.toString().trim() || null,
-      address: values.address?.toString().trim() || null,
-    }
+    trimAll(values);
 
-    mutate(payload, {
+    mutate(values, {
       onSuccess: () => {
         toast.success("Tạo nhà cung cấp thành công", { description: "Success" });
         onClose();
