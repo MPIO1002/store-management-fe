@@ -16,7 +16,7 @@ import {
   useDeleteSupplierMutation,
 } from "./hooks/supplier-hooks";
 import { SupplierResponse } from "../lib/api";
-import { toast, Toaster } from "sonner";
+import { toast } from "sonner";
 import ConfirmModal from "@/components/confirm-alert";
 
 export default function SupplierPage() {
@@ -80,7 +80,7 @@ export default function SupplierPage() {
           <div className="flex-1 min-w-0">
             <SearchInput
               value={query}
-              onChange={(v) => setQuery(v)}
+              onSearch={(v) => setQuery(v)}
               placeholder="Tìm theo tên nhà cung cấp..."
               className="w-full"
             />

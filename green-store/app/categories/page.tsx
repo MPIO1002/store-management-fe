@@ -14,8 +14,9 @@ import { useDeleteCategoryMutation, useFilterCategoryQuery } from "./hooks/categ
 import { CategoryResponse } from "../lib/api";
 import Pagination from "@/components/pagination";
 import { PaginationData } from "../lib/schema/pagination";
+import { toast } from "sonner";
 
-export default function Page() {
+export default function CategoryPage() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [query, setQuery] = useState("");
@@ -27,9 +28,20 @@ export default function Page() {
   const [showUpdate, setShowUpdate] = useState(false);
   const [editingCategory, setEditingCategory] = useState<CategoryResponse | null>(null);
   const [selectedKeys, setSelectedKeys] = useState<Array<string | number>>([]);
-  const [deleting, setDeleting] = useState(false);
 
   const { mutateAsync: deleteCategoryAsync } = useDeleteCategoryMutation();
+
+  const handleDelete = async () => {
+    if (selectedKeys.length === 0) return;
+    try {
+      await Promise.all(selectedKeys.map((id) => deleteCategoryAsync(id as number)));
+      toast.success("Xóa loại sản phẩm thành công", { description: "Success" });
+      setSelectedKeys([]);
+    } catch (err) {
+      console.error(err);
+      alert((err as any)?.message ?? "Lỗi khi xóa");
+    }
+  };
 
   const columns = [
     { header: "TÊN", accessor: "categoryName" },
@@ -71,26 +83,9 @@ export default function Page() {
           <div className="flex items-center gap-2">
             <Button
               variant="secondary"
-              onClick={async () => {
-                if (selectedKeys.length === 0) return;
-                const ok = confirm(`Xác nhận xóa ${selectedKeys.length} mục?`);
-                if (!ok) return;
-                try {
-                  setDeleting(true);
-                  await Promise.all(selectedKeys.map((id) => deleteCategoryAsync(id as number)));
-                  setSelectedKeys([]);
-                } catch (err) {
-                  console.error(err);
-                  // optional: show a user-facing message
-                  alert((err as any)?.message ?? "Lỗi khi xóa");
-                } finally {
-                  setDeleting(false);
-                }
-              }}
-              disabled={deleting || selectedKeys.length === 0}
-              aria-disabled={deleting || selectedKeys.length === 0}
-              title={selectedKeys.length === 0 ? "Chọn mục để xóa" : `Xóa ${selectedKeys.length} mục`}
-            >
+              onClick={handleDelete}
+              disabled={selectedKeys.length === 0}
+              aria-disabled={selectedKeys.length === 0}>
               <FontAwesomeIcon icon={faTrash} />
               <span className="ml-2">Xóa ({selectedKeys.length})</span>
             </Button>
