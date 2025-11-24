@@ -13,6 +13,7 @@ import { UserResponse } from "../lib/api";
 import Pagination from "@/components/pagination";
 import { PaginationData } from "../lib/api/schema/pagination";
 import CreateUserModal from "./components/create-staff.modal";
+import UpdateUserModal from "./components/update-staff.modal";
 
 export default function UserPage() {
   const [page, setPage] = useState(1);
@@ -109,7 +110,7 @@ export default function UserPage() {
             onClose={() => setShowCreate(false)} />
         )}
 
-        {/* {showUpdate && (
+        {showUpdate && (
           <UpdateUserModal
             open={showUpdate}
             id={editingUser?.userId}
@@ -118,7 +119,7 @@ export default function UserPage() {
               setEditingUser(null);
             }}
           />
-        )} */}
+        )}
 
         <TableProp
           columns={columns}

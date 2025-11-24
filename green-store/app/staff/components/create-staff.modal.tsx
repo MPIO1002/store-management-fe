@@ -34,6 +34,7 @@ const defaultValues = {
   username: "",
   fullName: "",
   password: "",
+  confirmPassword: "",
   role: Role.Staff
 };
 
@@ -137,8 +138,8 @@ export default function CreateUserModal({ open, onClose }: Props) {
             </option>
           ))}
         </select>
-        {formState.errors?.password && (
-          <div className="text-sm text-red-600 mb-2">{formState.errors?.password?.message}</div>
+        {formState.errors?.role && (
+          <div className="text-sm text-red-600 mb-2">{formState.errors?.role?.message}</div>
         )}
 
         <div className="flex justify-end gap-2">

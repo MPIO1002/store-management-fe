@@ -1,5 +1,3 @@
-
-
 export const trimAll = (object: Record<string, any>) => {
     for (let key in object) {
         let value = object[key];
