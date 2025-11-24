@@ -3,37 +3,45 @@ import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useUpdateCategoryMutation, useGetCategoryQuery } from "../hooks/category-hooks";
 import { CategoryRequest } from "@/app/lib/api";
+import z from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const updateCategorySchema = z.object({
+  categoryName: z.string().min(1, "Vui lòng nhập tên loại sản phẩm")
+});
+
+type UpdateCategoryData = z.infer<typeof updateCategorySchema>;
 
 type Props = {
   open: boolean;
-  id: number | null;
+  id: number | undefined;
   onClose: () => void;
 };
 
+const defaultValue = { categoryName: "" };
 
 export default function UpdateCategoryModal({ open, id, onClose }: Props) {
+  if (!open || !id) return null;
+
   const { data: category, isLoading, isError } = useGetCategoryQuery(id);
   const { mutate, isPending } = useUpdateCategoryMutation();
 
-  const defaultValue: CategoryRequest = { categoryName: "" };
-  const initialData = (category as CategoryRequest) ?? defaultValue;
+  const initialData = category?.data as UpdateCategoryData ?? defaultValue;
 
   const {
     register,
     handleSubmit,
     reset,
-    formState: { errors },
-  } = useForm<CategoryRequest>({
+    formState
+  } = useForm<UpdateCategoryData>({
+    resolver: zodResolver(updateCategorySchema),
     defaultValues: initialData,
   });
 
   useEffect(() => {
-    if (category) {
-      reset(category);
-    }
-  }, [category, reset]);
-
-  if (!open || !id) return null;
+    reset(initialData);
+    console.log(initialData)
+  }, [reset, category]);
 
   if (isLoading) {
     return (
@@ -73,38 +81,25 @@ export default function UpdateCategoryModal({ open, id, onClose }: Props) {
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
-      <form
-        onSubmit={handleSubmit(onSubmit)}
-        className="relative bg-white rounded-lg shadow-lg w-full max-w-md p-6"
-      >
+      <form onSubmit={handleSubmit(onSubmit)} className="relative bg-white rounded-lg shadow-lg w-full max-w-md p-6">
         <h2 className="text-lg font-semibold mb-4">Cập nhật loại sản phẩm</h2>
 
         <label className="block mb-2 text-sm font-medium text-gray-700">Tên</label>
         <input
-          {...register("categoryName", { required: "Vui lòng nhập tên loại sản phẩm" })}
-          className="w-full border border-gray-300 rounded px-3 py-2 mb-2"
+          {...register("categoryName")}
+          className={`w-full border border-gray-300 rounded px-3 py-2 mb-2 ${formState.errors?.categoryName ? 'border-red-600 focus:ring-red-500' : 'border-gray-300'}`}
           disabled={isPending}
           autoFocus
         />
-
-        {errors.categoryName && (
-          <div className="text-sm text-red-600 mb-2">{errors.categoryName.message}</div>
+        {formState.errors?.categoryName && (
+          <div className="text-sm text-red-600 mb-2">{formState.errors?.categoryName?.message}</div>
         )}
 
         <div className="flex justify-end gap-2">
-          <button
-            type="button"
-            className="px-4 py-2 rounded-md bg-gray-300"
-            onClick={onClose}
-            disabled={isPending}
-          >
+          <button type="button" className="px-3 py-2 rounded-md bg-gray-100" onClick={onClose} disabled={isPending}>
             Hủy
           </button>
-          <button
-            type="submit"
-            className="px-4 py-2 rounded-md bg-green-600 text-white disabled:opacity-50"
-            disabled={isPending}
-          >
+          <button type="submit" className="px-4 py-2 rounded-md bg-green-600 text-white" disabled={isPending}>
             {isPending ? "Đang lưu..." : "Lưu"}
           </button>
         </div>

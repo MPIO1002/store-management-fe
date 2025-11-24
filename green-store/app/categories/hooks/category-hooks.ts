@@ -28,16 +28,12 @@ export const useGetAllCategoryQuery = (params?: CategoryApiGetAllCategoriesReque
     })
 }
 
-export const useGetCategoryQuery = (
-    id: number | null,
-    options?: UseQueryOptions<any>
-) => {
+export const useGetCategoryQuery = (id: number) => {
     return useQuery({
-        queryKey: categoryKeys.detail(id!),
-        queryFn: () => apis.categories.getCategoryById({ id: id! }),
+        queryKey: categoryKeys.detail(id),
+        queryFn: () => apis.categories.getCategoryById({ id: id }),
         select: (response) => response.data,
         enabled: !!id,
-        ...options,
     });
 };
 
