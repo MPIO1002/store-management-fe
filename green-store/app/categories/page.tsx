@@ -13,7 +13,7 @@ import { faPenToSquare } from "@fortawesome/free-solid-svg-icons/faPenToSquare";
 import { useDeleteCategoryMutation, useFilterCategoryQuery } from "./hooks/category-hooks";
 import { CategoryResponse } from "../lib/api";
 import Pagination from "@/components/pagination";
-import { PaginationData } from "../lib/schema/pagination";
+import { PaginationData } from "../lib/api/schema/pagination";
 
 export default function Page() {
   const [page, setPage] = useState(1);
