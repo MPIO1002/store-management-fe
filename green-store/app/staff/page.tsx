@@ -14,6 +14,7 @@ import Pagination from "@/components/pagination";
 import { PaginationData } from "../lib/api/schema/pagination";
 import CreateUserModal from "./components/create-staff.modal";
 import UpdateUserModal from "./components/update-staff.modal";
+import { toast } from "sonner";
 
 export default function UserPage() {
   const [page, setPage] = useState(1);
@@ -30,6 +31,18 @@ export default function UserPage() {
   const [deleting, setDeleting] = useState(false);
 
   const { mutateAsync: deleteUserAsync } = useDeleteUserMutation();
+
+  const handleDelete = async () => {
+    if (selectedKeys.length === 0) return;
+    try {
+      await Promise.all(selectedKeys.map((id) => deleteUserAsync(id as number)));
+      toast.success("Xóa nhân viên thành công", { description: "Success" });
+      setSelectedKeys([]);
+    } catch (err) {
+      console.error(err);
+      toast.error("Lỗi khi xóa", { description: "Error" });
+    }
+  };
 
   const columns = [
     { header: "HỌ TÊN", accessor: "fullName" },
@@ -73,26 +86,7 @@ export default function UserPage() {
           <div className="flex items-center gap-2">
             <Button
               variant="secondary"
-              onClick={async () => {
-                if (selectedKeys.length === 0) return;
-                const ok = confirm(`Xác nhận xóa ${selectedKeys.length} mục?`);
-                if (!ok) return;
-                try {
-                  setDeleting(true);
-                  await Promise.all(selectedKeys.map((id) => deleteUserAsync(id as number)));
-                  setSelectedKeys([]);
-                } catch (err) {
-                  console.error(err);
-                  // optional: show a user-facing message
-                  alert((err as any)?.message ?? "Lỗi khi xóa");
-                } finally {
-                  setDeleting(false);
-                }
-              }}
-              disabled={deleting || selectedKeys.length === 0}
-              aria-disabled={deleting || selectedKeys.length === 0}
-              title={selectedKeys.length === 0 ? "Chọn mục để xóa" : `Xóa ${selectedKeys.length} mục`}
-            >
+              onClick={() => handleDelete()}>
               <FontAwesomeIcon icon={faTrash} />
               <span className="ml-2">Xóa ({selectedKeys.length})</span>
             </Button>
