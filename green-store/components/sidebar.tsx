@@ -19,7 +19,7 @@ type NavItem = { label: string; href: string; icon: any };
 const items: NavItem[] = [
   { label: "Thống kê", href: "/", icon: faMagnifyingGlassChart },
   { label: "Loại sản phẩm", href: "/categories", icon: faLayerGroup },
-  { label: "Kho", href: "/warehouse", icon: faWarehouse },
+  { label: "Kho", href: "/inventory", icon: faWarehouse },
   { label: "Đơn hàng", href: "/orders", icon: faBox },
   { label: "Thanh toán", href: "/payments", icon: faMoneyBill },
   { label: "Sản phẩm", href: "/products", icon: faUtensils },
