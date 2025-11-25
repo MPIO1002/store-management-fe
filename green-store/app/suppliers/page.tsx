@@ -65,7 +65,7 @@ export default function SupplierPage() {
       setSelectedKeys([]);
     } catch (err) {
       console.error(err);
-      alert((err as any)?.message ?? "Lỗi khi xóa");
+      toast.error("Lỗi khi xóa", { description: "Error" });
     }
   };
 

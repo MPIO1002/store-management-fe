@@ -13,7 +13,7 @@ import { faPenToSquare } from "@fortawesome/free-solid-svg-icons/faPenToSquare";
 import { useDeleteCategoryMutation, useFilterCategoryQuery } from "./hooks/category-hooks";
 import { CategoryResponse } from "../lib/api";
 import Pagination from "@/components/pagination";
-import { PaginationData } from "../lib/schema/pagination";
+import { PaginationData } from "../lib/api/schema/pagination";
 import { toast } from "sonner";
 
 export default function CategoryPage() {
@@ -39,7 +39,7 @@ export default function CategoryPage() {
       setSelectedKeys([]);
     } catch (err) {
       console.error(err);
-      alert((err as any)?.message ?? "Lỗi khi xóa");
+      toast.error("Lỗi khi xóa", { description: "Error" });
     }
   };
 

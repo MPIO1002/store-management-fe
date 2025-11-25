@@ -6,6 +6,7 @@ import { CategoryRequest } from "@/app/lib/api";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
+import { trimAll } from "@/app/lib/api/utils/object-utils";
 
 const createCategorySchema = z.object({
   categoryName: z.string().min(1, "Vui lòng nhập tên loại sản phẩm")
@@ -35,10 +36,10 @@ export default function CreateCategoryModal({ open, onClose }: Props) {
   if (!open) return null;
 
   const onSubmit = (data: CategoryRequest) => {
-    const payload: CategoryRequest = { ...data, categoryName: (data.categoryName ?? "").trim() };
-    if (!payload.categoryName) return;
+    trimAll(data);
+    if (!data.categoryName) return;
 
-    mutate(payload, {
+    mutate(data, {
       onSuccess: () => {
         toast.success("Tạo loại sản phẩm thành công", { description: "Success" });
         onClose();

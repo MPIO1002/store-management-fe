@@ -5,6 +5,7 @@ import { useUpdateCategoryMutation, useGetCategoryQuery } from "../hooks/categor
 import { CategoryRequest } from "@/app/lib/api";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { trimAll } from "@/app/lib/api/utils/object-utils";
 
 const updateCategorySchema = z.object({
   categoryName: z.string().min(1, "Vui lòng nhập tên loại sản phẩm")
@@ -62,11 +63,11 @@ export default function UpdateCategoryModal({ open, id, onClose }: Props) {
   }
 
   const onSubmit = (data: CategoryRequest) => {
-    const payload: CategoryRequest = { ...data, categoryName: (data.categoryName ?? "").trim() };
-    if (!payload.categoryName) return;
+    trimAll(data);
+    if (!data.categoryName) return;
 
     mutate(
-      { id: id!, data: payload },
+      { id: id!, data: data },
       {
         onSuccess: () => {
           onClose();
