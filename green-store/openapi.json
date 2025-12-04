@@ -1611,19 +1611,74 @@
         "operationId": "CreateProduct",
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/ProductCreateRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProductCreateRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProductCreateRequest"
+                "required": [
+                  "Price",
+                  "ProductName"
+                ],
+                "type": "object",
+                "properties": {
+                  "ProductName": {
+                    "maxLength": 100,
+                    "type": "string"
+                  },
+                  "CategoryId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "SupplierId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "Barcode": {
+                    "maxLength": 50,
+                    "type": "string"
+                  },
+                  "Price": {
+                    "minimum": 0.01,
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "Unit": {
+                    "maxLength": 20,
+                    "type": "string"
+                  },
+                  "ImageUrl": {
+                    "maxLength": 255,
+                    "type": "string"
+                  },
+                  "ImageFile": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "ProductName": {
+                  "style": "form"
+                },
+                "CategoryId": {
+                  "style": "form"
+                },
+                "SupplierId": {
+                  "style": "form"
+                },
+                "Barcode": {
+                  "style": "form"
+                },
+                "Price": {
+                  "style": "form"
+                },
+                "Unit": {
+                  "style": "form"
+                },
+                "ImageUrl": {
+                  "style": "form"
+                },
+                "ImageFile": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -1817,19 +1872,74 @@
         ],
         "requestBody": {
           "content": {
-            "application/json": {
+            "multipart/form-data": {
               "schema": {
-                "$ref": "#/components/schemas/ProductUpdateRequest"
-              }
-            },
-            "text/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProductUpdateRequest"
-              }
-            },
-            "application/*+json": {
-              "schema": {
-                "$ref": "#/components/schemas/ProductUpdateRequest"
+                "required": [
+                  "Price",
+                  "ProductName"
+                ],
+                "type": "object",
+                "properties": {
+                  "ProductName": {
+                    "maxLength": 100,
+                    "type": "string"
+                  },
+                  "CategoryId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "SupplierId": {
+                    "type": "integer",
+                    "format": "int32"
+                  },
+                  "Barcode": {
+                    "maxLength": 50,
+                    "type": "string"
+                  },
+                  "Price": {
+                    "minimum": 0.01,
+                    "type": "number",
+                    "format": "double"
+                  },
+                  "Unit": {
+                    "maxLength": 20,
+                    "type": "string"
+                  },
+                  "ImageUrl": {
+                    "maxLength": 255,
+                    "type": "string"
+                  },
+                  "ImageFile": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              },
+              "encoding": {
+                "ProductName": {
+                  "style": "form"
+                },
+                "CategoryId": {
+                  "style": "form"
+                },
+                "SupplierId": {
+                  "style": "form"
+                },
+                "Barcode": {
+                  "style": "form"
+                },
+                "Price": {
+                  "style": "form"
+                },
+                "Unit": {
+                  "style": "form"
+                },
+                "ImageUrl": {
+                  "style": "form"
+                },
+                "ImageFile": {
+                  "style": "form"
+                }
               }
             }
           }
@@ -3196,51 +3306,6 @@
         },
         "additionalProperties": false
       },
-      "ProductCreateRequest": {
-        "required": [
-          "price",
-          "productName"
-        ],
-        "type": "object",
-        "properties": {
-          "productName": {
-            "maxLength": 100,
-            "minLength": 1,
-            "type": "string"
-          },
-          "categoryId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "supplierId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "barcode": {
-            "maxLength": 50,
-            "type": "string",
-            "nullable": true
-          },
-          "price": {
-            "minimum": 0.01,
-            "type": "number",
-            "format": "double"
-          },
-          "unit": {
-            "maxLength": 20,
-            "type": "string",
-            "nullable": true
-          },
-          "imageUrl": {
-            "maxLength": 255,
-            "type": "string",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
       "ProductResponse": {
         "type": "object",
         "properties": {
@@ -3283,51 +3348,6 @@
           "stockQuantity": {
             "type": "integer",
             "format": "int32",
-            "nullable": true
-          }
-        },
-        "additionalProperties": false
-      },
-      "ProductUpdateRequest": {
-        "required": [
-          "price",
-          "productName"
-        ],
-        "type": "object",
-        "properties": {
-          "productName": {
-            "maxLength": 100,
-            "minLength": 1,
-            "type": "string"
-          },
-          "categoryId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "supplierId": {
-            "type": "integer",
-            "format": "int32",
-            "nullable": true
-          },
-          "barcode": {
-            "maxLength": 50,
-            "type": "string",
-            "nullable": true
-          },
-          "price": {
-            "minimum": 0.01,
-            "type": "number",
-            "format": "double"
-          },
-          "unit": {
-            "maxLength": 20,
-            "type": "string",
-            "nullable": true
-          },
-          "imageUrl": {
-            "maxLength": 255,
-            "type": "string",
             "nullable": true
           }
         },

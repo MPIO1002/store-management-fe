@@ -11,18 +11,29 @@ import { faPenToSquare } from "@fortawesome/free-solid-svg-icons/faPenToSquare";
 import { useDeleteUserMutation, useFilterUserQuery } from "./hooks/staff-hooks";
 import { UserResponse } from "../lib/api";
 import Pagination from "@/components/pagination";
-import { PaginationData } from "../lib/api/schema/pagination";
 import CreateUserModal from "./components/create-staff.modal";
 import UpdateUserModal from "./components/update-staff.modal";
 import { toast } from "sonner";
+
+// Danh sách vai trò
+const ROLES = [
+  { value: "", label: "Tất cả vai trò" },
+  { value: "Admin", label: "Admin" },
+  { value: "Staff", label: "Staff" },
+];
 
 export default function UserPage() {
   const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(10);
   const [query, setQuery] = useState("");
+  const [roleFilter, setRoleFilter] = useState("");
 
-  const { data, isLoading, isError } = useFilterUserQuery({ fullName: query, pageNumber: page, pageSize: pageSize });
-  const paginateData = data?.data as PaginationData;
+  const { data, isLoading, isError } = useFilterUserQuery({ 
+    fullName: query, 
+    role: roleFilter || undefined,
+    pageNumber: page, 
+    pageSize: pageSize 
+  });
 
   const [showCreate, setShowCreate] = useState(false);
   const [showUpdate, setShowUpdate] = useState(false);
@@ -75,12 +86,29 @@ export default function UserPage() {
 
       <div className="bg-[#fffff] p-4 rounded-lg shadow-sm">
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
-          <div className="flex-1 min-w-0">
+          <div className="flex flex-1 min-w-0 gap-3">
             <SearchInput
-              onSearch={(v) => setQuery(v)}
+              onSearch={(v) => {
+                setQuery(v);
+                setPage(1);
+              }}
               placeholder="Tìm theo tên nhân viên..."
-              className="w-full"
+              className="flex-1"
             />
+            <select
+              value={roleFilter}
+              onChange={(e) => {
+                setRoleFilter(e.target.value);
+                setPage(1);
+              }}
+              className="px-3 py-2 border border-gray-300 rounded-lg bg-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+            >
+              {ROLES.map((role) => (
+                <option key={role.value} value={role.value}>
+                  {role.label}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="flex items-center gap-2">
@@ -117,7 +145,7 @@ export default function UserPage() {
 
         <TableProp
           columns={columns}
-          data={data?.data?.items || []}
+          data={data?.items || []}
           loading={isLoading}
           error={isError}
           skeletonRows={5}
@@ -126,13 +154,13 @@ export default function UserPage() {
           onSelectionChange={(sel) => setSelectedKeys(sel)}
         />
 
-        <Pagination pageNumber={paginateData?.pageNumber ?? 0}
-          pageSize={paginateData?.pageSize ?? 0}
-          totalItems={paginateData?.totalItems ?? 0}
+        <Pagination 
+          pageNumber={data?.meta?.pageNumber ?? 1}
+          pageSize={data?.meta?.pageSize ?? 10}
+          totalItems={data?.meta?.totalItems ?? 0}
           onPageChange={(p) => setPage(p)}
-          onPageSizeChange={(s) => setPageSize(s)}>
-
-        </Pagination>
+          onPageSizeChange={(s) => setPageSize(s)}
+        />
       </div>
     </div>
   );

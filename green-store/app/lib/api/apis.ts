@@ -1,58 +1,51 @@
-import { AuthApi, 
-         CategoryApi, 
-         InventoryApi, 
-         OrderApi, 
-         PaymentApi,
-         ProductApi,
-         SupplierApi,
-         UsersApi } from "./api";
-import { createApiConfiguration } from "./configuration-builder";
+import {
+  AuthApi,
+  CategoryApi,
+  CustomerApi,
+  InventoryApi,
+  OrderApi,
+  PaymentApi,
+  ProductApi,
+  SupplierApi,
+  UsersApi,
+} from "./api";
+import { Configuration } from "./configuration";
 
-let apiInstance: {
-    auth?: AuthApi;
-    categories?: CategoryApi;
-    inventory?: InventoryApi;
-    orders?: OrderApi;
-    payments?: PaymentApi;
-    products?: ProductApi;
-    suppliers?: SupplierApi;
-    users?: UsersApi;
-} = {}
+const getConfiguration = () => {
+  const token = typeof window !== "undefined" ? localStorage.getItem("token") : null;
 
-function getOrCreateAPI<T>(
-    key: keyof typeof apiInstance, 
-    ApiClass: new (config: any) => T): T {
-        if (!apiInstance[key]) {
-            const config = createApiConfiguration();
-            apiInstance[key] = new ApiClass(config) as any;
-        }
-
-        return apiInstance[key] as T;
-}
+  return new Configuration({
+    basePath: process.env.NEXT_PUBLIC_API_URL,
+    apiKey: token ? `Bearer ${token}` : undefined,
+  });
+};
 
 export const apis = {
-    get auth() {
-      return getOrCreateAPI('auth', AuthApi);
-    },
-    get categories() {
-      return getOrCreateAPI('categories', CategoryApi);
-    },
-    get inventory() {
-      return getOrCreateAPI('inventory', InventoryApi);
-    },
-    get orders() {
-      return getOrCreateAPI('orders', OrderApi);
-    },
-    get payments() {
-      return getOrCreateAPI('payments', PaymentApi);
-    },
-    get products() {
-      return getOrCreateAPI('products', ProductApi);
-    },
-    get suppliers() {
-      return getOrCreateAPI('suppliers', SupplierApi);
-    },
-    get users() {
-      return getOrCreateAPI('users', UsersApi);
-    },
-} as const;
+  get auth() {
+    return new AuthApi(getConfiguration());
+  },
+  get categories() {
+    return new CategoryApi(getConfiguration());
+  },
+  get customers() {
+    return new CustomerApi(getConfiguration());
+  },
+  get inventory() {
+    return new InventoryApi(getConfiguration());
+  },
+  get orders() {
+    return new OrderApi(getConfiguration());
+  },
+  get payments() {
+    return new PaymentApi(getConfiguration());
+  },
+  get products() {
+    return new ProductApi(getConfiguration());
+  },
+  get suppliers() {
+    return new SupplierApi(getConfiguration());
+  },
+  get users() {
+    return new UsersApi(getConfiguration());
+  },
+};

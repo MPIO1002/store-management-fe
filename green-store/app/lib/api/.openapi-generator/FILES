@@ -1,5 +1,6 @@
 .gitignore
 .npmignore
+.openapi-generator-ignore
 api.ts
 apis/auth-api.ts
 apis/category-api.ts
@@ -44,9 +45,7 @@ docs/PaymentApi.md
 docs/PaymentMethod.md
 docs/PaymentResponse.md
 docs/ProductApi.md
-docs/ProductCreateRequest.md
 docs/ProductResponse.md
-docs/ProductUpdateRequest.md
 docs/ResponseAuthResponseDto.md
 docs/ResponseCategoryResponse.md
 docs/ResponseCustomerResponse.md
@@ -101,9 +100,7 @@ models/paged-response-supplier-response.ts
 models/paged-response-user-response.ts
 models/payment-method.ts
 models/payment-response.ts
-models/product-create-request.ts
 models/product-response.ts
-models/product-update-request.ts
 models/response-auth-response-dto.ts
 models/response-category-response.ts
 models/response-customer-response.ts

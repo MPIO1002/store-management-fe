@@ -74,7 +74,10 @@ export default function CategoryPage() {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-4">
           <div className="flex-1 min-w-0">
             <SearchInput
-              onSearch={(v) => setQuery(v)}
+              onSearch={(v) => {
+                setQuery(v);
+                setPage(1); // Reset về trang 1 khi search
+              }}
               placeholder="Tìm theo tên danh mục..."
               className="w-full"
             />

@@ -21,17 +21,30 @@ All URIs are relative to *http://localhost*
 ```typescript
 import {
     ProductApi,
-    Configuration,
-    ProductCreateRequest
+    Configuration
 } from './api';
 
 const configuration = new Configuration();
 const apiInstance = new ProductApi(configuration);
 
-let productCreateRequest: ProductCreateRequest; // (optional)
+let productName: string; // (default to undefined)
+let price: number; // (default to undefined)
+let categoryId: number; // (optional) (default to undefined)
+let supplierId: number; // (optional) (default to undefined)
+let barcode: string; // (optional) (default to undefined)
+let unit: string; // (optional) (default to undefined)
+let imageUrl: string; // (optional) (default to undefined)
+let imageFile: File; // (optional) (default to undefined)
 
 const { status, data } = await apiInstance.createProduct(
-    productCreateRequest
+    productName,
+    price,
+    categoryId,
+    supplierId,
+    barcode,
+    unit,
+    imageUrl,
+    imageFile
 );
 ```
 
@@ -39,7 +52,14 @@ const { status, data } = await apiInstance.createProduct(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **productCreateRequest** | **ProductCreateRequest**|  | |
+| **productName** | [**string**] |  | defaults to undefined|
+| **price** | [**number**] |  | defaults to undefined|
+| **categoryId** | [**number**] |  | (optional) defaults to undefined|
+| **supplierId** | [**number**] |  | (optional) defaults to undefined|
+| **barcode** | [**string**] |  | (optional) defaults to undefined|
+| **unit** | [**string**] |  | (optional) defaults to undefined|
+| **imageUrl** | [**string**] |  | (optional) defaults to undefined|
+| **imageFile** | [**File**] |  | (optional) defaults to undefined|
 
 
 ### Return type
@@ -52,7 +72,7 @@ const { status, data } = await apiInstance.createProduct(
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, text/json, application/*+json
+ - **Content-Type**: multipart/form-data
  - **Accept**: text/plain, application/json, text/json
 
 
@@ -349,19 +369,32 @@ const { status, data } = await apiInstance.getProductById(
 ```typescript
 import {
     ProductApi,
-    Configuration,
-    ProductUpdateRequest
+    Configuration
 } from './api';
 
 const configuration = new Configuration();
 const apiInstance = new ProductApi(configuration);
 
 let id: number; // (default to undefined)
-let productUpdateRequest: ProductUpdateRequest; // (optional)
+let productName: string; // (default to undefined)
+let price: number; // (default to undefined)
+let categoryId: number; // (optional) (default to undefined)
+let supplierId: number; // (optional) (default to undefined)
+let barcode: string; // (optional) (default to undefined)
+let unit: string; // (optional) (default to undefined)
+let imageUrl: string; // (optional) (default to undefined)
+let imageFile: File; // (optional) (default to undefined)
 
 const { status, data } = await apiInstance.updateProduct(
     id,
-    productUpdateRequest
+    productName,
+    price,
+    categoryId,
+    supplierId,
+    barcode,
+    unit,
+    imageUrl,
+    imageFile
 );
 ```
 
@@ -369,8 +402,15 @@ const { status, data } = await apiInstance.updateProduct(
 
 |Name | Type | Description  | Notes|
 |------------- | ------------- | ------------- | -------------|
-| **productUpdateRequest** | **ProductUpdateRequest**|  | |
 | **id** | [**number**] |  | defaults to undefined|
+| **productName** | [**string**] |  | defaults to undefined|
+| **price** | [**number**] |  | defaults to undefined|
+| **categoryId** | [**number**] |  | (optional) defaults to undefined|
+| **supplierId** | [**number**] |  | (optional) defaults to undefined|
+| **barcode** | [**string**] |  | (optional) defaults to undefined|
+| **unit** | [**string**] |  | (optional) defaults to undefined|
+| **imageUrl** | [**string**] |  | (optional) defaults to undefined|
+| **imageFile** | [**File**] |  | (optional) defaults to undefined|
 
 
 ### Return type
@@ -383,7 +423,7 @@ const { status, data } = await apiInstance.updateProduct(
 
 ### HTTP request headers
 
- - **Content-Type**: application/json, text/json, application/*+json
+ - **Content-Type**: multipart/form-data
  - **Accept**: text/plain, application/json, text/json
 
 

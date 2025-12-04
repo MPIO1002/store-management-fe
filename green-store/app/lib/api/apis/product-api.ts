@@ -22,10 +22,6 @@ import { DUMMY_BASE_URL, assertParamExists, setApiKeyToObject, setBasicAuthToObj
 // @ts-ignore
 import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError, operationServerMap } from '../base';
 // @ts-ignore
-import type { ProductCreateRequest } from '../models';
-// @ts-ignore
-import type { ProductUpdateRequest } from '../models';
-// @ts-ignore
 import type { ResponseObject } from '../models';
 // @ts-ignore
 import type { ResponsePagedResponseProductResponse } from '../models';
@@ -38,11 +34,22 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
     return {
         /**
          * 
-         * @param {ProductCreateRequest} [productCreateRequest] 
+         * @param {string} productName 
+         * @param {number} price 
+         * @param {number} [categoryId] 
+         * @param {number} [supplierId] 
+         * @param {string} [barcode] 
+         * @param {string} [unit] 
+         * @param {string} [imageUrl] 
+         * @param {File} [imageFile] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createProduct: async (productCreateRequest?: ProductCreateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        createProduct: async (productName: string, price: number, categoryId?: number, supplierId?: number, barcode?: string, unit?: string, imageUrl?: string, imageFile?: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            // verify required parameter 'productName' is not null or undefined
+            assertParamExists('createProduct', 'productName', productName)
+            // verify required parameter 'price' is not null or undefined
+            assertParamExists('createProduct', 'price', price)
             const localVarPath = `/api/Product`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
             const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
@@ -54,18 +61,51 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
             // authentication Bearer required
             await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
 
 
+            if (productName !== undefined) { 
+                localVarFormParams.append('ProductName', productName as any);
+            }
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
+            if (categoryId !== undefined) { 
+                localVarFormParams.append('CategoryId', categoryId as any);
+            }
+    
+            if (supplierId !== undefined) { 
+                localVarFormParams.append('SupplierId', supplierId as any);
+            }
+    
+            if (barcode !== undefined) { 
+                localVarFormParams.append('Barcode', barcode as any);
+            }
+    
+            if (price !== undefined) { 
+                localVarFormParams.append('Price', price as any);
+            }
+    
+            if (unit !== undefined) { 
+                localVarFormParams.append('Unit', unit as any);
+            }
+    
+            if (imageUrl !== undefined) { 
+                localVarFormParams.append('ImageUrl', imageUrl as any);
+            }
+    
+            if (imageFile !== undefined) { 
+                localVarFormParams.append('ImageFile', imageFile as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(productCreateRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = localVarFormParams;
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -302,13 +342,24 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
         /**
          * 
          * @param {number} id 
-         * @param {ProductUpdateRequest} [productUpdateRequest] 
+         * @param {string} productName 
+         * @param {number} price 
+         * @param {number} [categoryId] 
+         * @param {number} [supplierId] 
+         * @param {string} [barcode] 
+         * @param {string} [unit] 
+         * @param {string} [imageUrl] 
+         * @param {File} [imageFile] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        updateProduct: async (id: number, productUpdateRequest?: ProductUpdateRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+        updateProduct: async (id: number, productName: string, price: number, categoryId?: number, supplierId?: number, barcode?: string, unit?: string, imageUrl?: string, imageFile?: File, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             // verify required parameter 'id' is not null or undefined
             assertParamExists('updateProduct', 'id', id)
+            // verify required parameter 'productName' is not null or undefined
+            assertParamExists('updateProduct', 'productName', productName)
+            // verify required parameter 'price' is not null or undefined
+            assertParamExists('updateProduct', 'price', price)
             const localVarPath = `/api/Product/{id}`
                 .replace(`{${"id"}}`, encodeURIComponent(String(id)));
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -321,18 +372,51 @@ export const ProductApiAxiosParamCreator = function (configuration?: Configurati
             const localVarRequestOptions = { method: 'PUT', ...baseOptions, ...options};
             const localVarHeaderParameter = {} as any;
             const localVarQueryParameter = {} as any;
+            const localVarFormParams = new ((configuration && configuration.formDataCtor) || FormData)();
 
             // authentication Bearer required
             await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
 
 
+            if (productName !== undefined) { 
+                localVarFormParams.append('ProductName', productName as any);
+            }
     
-            localVarHeaderParameter['Content-Type'] = 'application/json';
-
+            if (categoryId !== undefined) { 
+                localVarFormParams.append('CategoryId', categoryId as any);
+            }
+    
+            if (supplierId !== undefined) { 
+                localVarFormParams.append('SupplierId', supplierId as any);
+            }
+    
+            if (barcode !== undefined) { 
+                localVarFormParams.append('Barcode', barcode as any);
+            }
+    
+            if (price !== undefined) { 
+                localVarFormParams.append('Price', price as any);
+            }
+    
+            if (unit !== undefined) { 
+                localVarFormParams.append('Unit', unit as any);
+            }
+    
+            if (imageUrl !== undefined) { 
+                localVarFormParams.append('ImageUrl', imageUrl as any);
+            }
+    
+            if (imageFile !== undefined) { 
+                localVarFormParams.append('ImageFile', imageFile as any);
+            }
+    
+    
+            localVarHeaderParameter['Content-Type'] = 'multipart/form-data';
+    
             setSearchParams(localVarUrlObj, localVarQueryParameter);
             let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
             localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
-            localVarRequestOptions.data = serializeDataIfNeeded(productUpdateRequest, localVarRequestOptions, configuration)
+            localVarRequestOptions.data = localVarFormParams;
 
             return {
                 url: toPathString(localVarUrlObj),
@@ -350,12 +434,19 @@ export const ProductApiFp = function(configuration?: Configuration) {
     return {
         /**
          * 
-         * @param {ProductCreateRequest} [productCreateRequest] 
+         * @param {string} productName 
+         * @param {number} price 
+         * @param {number} [categoryId] 
+         * @param {number} [supplierId] 
+         * @param {string} [barcode] 
+         * @param {string} [unit] 
+         * @param {string} [imageUrl] 
+         * @param {File} [imageFile] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async createProduct(productCreateRequest?: ProductCreateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseProductResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.createProduct(productCreateRequest, options);
+        async createProduct(productName: string, price: number, categoryId?: number, supplierId?: number, barcode?: string, unit?: string, imageUrl?: string, imageFile?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseProductResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createProduct(productName, price, categoryId, supplierId, barcode, unit, imageUrl, imageFile, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProductApi.createProduct']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -432,12 +523,19 @@ export const ProductApiFp = function(configuration?: Configuration) {
         /**
          * 
          * @param {number} id 
-         * @param {ProductUpdateRequest} [productUpdateRequest] 
+         * @param {string} productName 
+         * @param {number} price 
+         * @param {number} [categoryId] 
+         * @param {number} [supplierId] 
+         * @param {string} [barcode] 
+         * @param {string} [unit] 
+         * @param {string} [imageUrl] 
+         * @param {File} [imageFile] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        async updateProduct(id: number, productUpdateRequest?: ProductUpdateRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseProductResponse>> {
-            const localVarAxiosArgs = await localVarAxiosParamCreator.updateProduct(id, productUpdateRequest, options);
+        async updateProduct(id: number, productName: string, price: number, categoryId?: number, supplierId?: number, barcode?: string, unit?: string, imageUrl?: string, imageFile?: File, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseProductResponse>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.updateProduct(id, productName, price, categoryId, supplierId, barcode, unit, imageUrl, imageFile, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
             const localVarOperationServerBasePath = operationServerMap['ProductApi.updateProduct']?.[localVarOperationServerIndex]?.url;
             return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
@@ -457,8 +555,8 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
-        createProduct(requestParameters: ProductApiCreateProductRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ResponseProductResponse> {
-            return localVarFp.createProduct(requestParameters.productCreateRequest, options).then((request) => request(axios, basePath));
+        createProduct(requestParameters: ProductApiCreateProductRequest, options?: RawAxiosRequestConfig): AxiosPromise<ResponseProductResponse> {
+            return localVarFp.createProduct(requestParameters.productName, requestParameters.price, requestParameters.categoryId, requestParameters.supplierId, requestParameters.barcode, requestParameters.unit, requestParameters.imageUrl, requestParameters.imageFile, options).then((request) => request(axios, basePath));
         },
         /**
          * 
@@ -512,7 +610,7 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
          * @throws {RequiredError}
          */
         updateProduct(requestParameters: ProductApiUpdateProductRequest, options?: RawAxiosRequestConfig): AxiosPromise<ResponseProductResponse> {
-            return localVarFp.updateProduct(requestParameters.id, requestParameters.productUpdateRequest, options).then((request) => request(axios, basePath));
+            return localVarFp.updateProduct(requestParameters.id, requestParameters.productName, requestParameters.price, requestParameters.categoryId, requestParameters.supplierId, requestParameters.barcode, requestParameters.unit, requestParameters.imageUrl, requestParameters.imageFile, options).then((request) => request(axios, basePath));
         },
     };
 };
@@ -521,7 +619,21 @@ export const ProductApiFactory = function (configuration?: Configuration, basePa
  * Request parameters for createProduct operation in ProductApi.
  */
 export interface ProductApiCreateProductRequest {
-    readonly productCreateRequest?: ProductCreateRequest
+    readonly productName: string
+
+    readonly price: number
+
+    readonly categoryId?: number
+
+    readonly supplierId?: number
+
+    readonly barcode?: string
+
+    readonly unit?: string
+
+    readonly imageUrl?: string
+
+    readonly imageFile?: File
 }
 
 /**
@@ -583,7 +695,21 @@ export interface ProductApiGetProductByIdRequest {
 export interface ProductApiUpdateProductRequest {
     readonly id: number
 
-    readonly productUpdateRequest?: ProductUpdateRequest
+    readonly productName: string
+
+    readonly price: number
+
+    readonly categoryId?: number
+
+    readonly supplierId?: number
+
+    readonly barcode?: string
+
+    readonly unit?: string
+
+    readonly imageUrl?: string
+
+    readonly imageFile?: File
 }
 
 /**
@@ -596,8 +722,8 @@ export class ProductApi extends BaseAPI {
      * @param {*} [options] Override http request option.
      * @throws {RequiredError}
      */
-    public createProduct(requestParameters: ProductApiCreateProductRequest = {}, options?: RawAxiosRequestConfig) {
-        return ProductApiFp(this.configuration).createProduct(requestParameters.productCreateRequest, options).then((request) => request(this.axios, this.basePath));
+    public createProduct(requestParameters: ProductApiCreateProductRequest, options?: RawAxiosRequestConfig) {
+        return ProductApiFp(this.configuration).createProduct(requestParameters.productName, requestParameters.price, requestParameters.categoryId, requestParameters.supplierId, requestParameters.barcode, requestParameters.unit, requestParameters.imageUrl, requestParameters.imageFile, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**
@@ -657,7 +783,7 @@ export class ProductApi extends BaseAPI {
      * @throws {RequiredError}
      */
     public updateProduct(requestParameters: ProductApiUpdateProductRequest, options?: RawAxiosRequestConfig) {
-        return ProductApiFp(this.configuration).updateProduct(requestParameters.id, requestParameters.productUpdateRequest, options).then((request) => request(this.axios, this.basePath));
+        return ProductApiFp(this.configuration).updateProduct(requestParameters.id, requestParameters.productName, requestParameters.price, requestParameters.categoryId, requestParameters.supplierId, requestParameters.barcode, requestParameters.unit, requestParameters.imageUrl, requestParameters.imageFile, options).then((request) => request(this.axios, this.basePath));
     }
 }
 

@@ -80,7 +80,10 @@ export default function SupplierPage() {
           <div className="flex-1 min-w-0">
             <SearchInput
               value={query}
-              onSearch={(v) => setQuery(v)}
+              onSearch={(v) => {
+                setQuery(v);
+                setPageNumber(1); // Reset về trang 1 khi search
+              }}
               placeholder="Tìm theo tên nhà cung cấp..."
               className="w-full"
             />

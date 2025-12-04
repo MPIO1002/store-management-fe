@@ -1,4 +1,4 @@
-import { InventoryRequest } from "@/app/lib/api";
+import { InventoryApiFilterInventoriesRequest, InventoryRequest } from "@/app/lib/api";
 import { apis } from "@/app/lib/api/apis";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 
@@ -19,18 +19,40 @@ export const useGetAllProducts = () => {
     return useQuery({
         queryKey: productKeys.lists(),
         queryFn: () =>
-            apis.products.getAllProducts({ pageNumber: 1, pageSize: 9999 }),
+            apis.products.filterProducts({ pageNumber: 1, pageSize: 9999 }),
+        select: (response: any) => {
+            const payload = response?.data;
+            // Handle nested structure: response.data.data.items or response.data.items
+            const body = payload?.data ?? payload;
+            const arr: any[] = Array.isArray(body) ? body : (body?.items ?? []);
+            return arr;
+        },
+        staleTime: 0, // Always refetch to get latest products
+    });
+};
+
+// Search products by name - calls API directly for accurate results
+export const useSearchProducts = (searchTerm: string) => {
+    return useQuery({
+        queryKey: [...productKeys.lists(), "search", searchTerm],
+        queryFn: () =>
+            apis.products.filterProducts({ 
+                productName: searchTerm || undefined,
+                pageNumber: 1, 
+                pageSize: 50 
+            }),
         select: (response: any) => {
             const payload = response?.data;
             const body = payload?.data ?? payload;
             const arr: any[] = Array.isArray(body) ? body : (body?.items ?? []);
             return arr;
         },
-        staleTime: 5 * 60 * 1000,
+        enabled: !!searchTerm && searchTerm.length > 0,
+        staleTime: 0,
     });
 };
 
-export const useGetAllInventoryQuery = (params?: any) => {
+export const useFilterInventoryQuery = (params?: InventoryApiFilterInventoriesRequest) => {
     return useQuery({
         queryKey: inventoryKeys.list(params),
         queryFn: () =>
@@ -45,20 +67,10 @@ export const useGetAllInventoryQuery = (params?: any) => {
 
             let arr: any[] = Array.isArray(body) ? body : (body?.items ?? []);
 
-            if (params?.productName) {
-                const q = params.productName.toLowerCase();
-                arr = arr.filter((inv) => (inv.productName ?? "").toLowerCase().includes(q));
-            }
-
             const pageNumber = body?.pageNumber ?? params?.pageNumber ?? 1;
             const pageSize = body?.pageSize ?? params?.pageSize ?? (arr.length || 10);
             const totalItems = body?.totalItems ?? arr.length;
             const totalPages = body?.totalPages ?? Math.max(1, Math.ceil(totalItems / pageSize));
-
-            if (!body?.items && params?.pageNumber && params?.pageSize) {
-                const start = (params.pageNumber - 1) * params.pageSize;
-                arr = arr.slice(start, start + params.pageSize);
-            }
 
             return {
                 items: arr,

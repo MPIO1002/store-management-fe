@@ -1,8 +1,6 @@
 export interface PaginationData {
-    pageNumber?: number;
-    pageSize?: number;
-    totalItems?: number;
-    totalPages?: number;
-    hasPreviousPage?: boolean;
-    hasNextPage?: boolean;
+  pageNumber: number;
+  pageSize: number;
+  totalPages: number;
+  totalRecords: number;
 }

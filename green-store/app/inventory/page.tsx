@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import TableProp from "@/components/table-prop";
 import SearchInput from "@/components/search-input";
 import Button from "@/components/button";
@@ -12,9 +12,8 @@ import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import { faTrash } from "@fortawesome/free-solid-svg-icons/faTrash";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons/faPenToSquare";
 import {
-  useGetAllInventoryQuery,
+  useFilterInventoryQuery,
   useDeleteInventoryMutation,
-  useGetAllProducts,
 } from "./hooks/inventory-hooks";
 import { InventoryResponse } from "../lib/api";
 import { toast } from "sonner";
@@ -30,38 +29,19 @@ export default function InventoryPage() {
   const [selectedKeys, setSelectedKeys] = useState<Array<string | number>>([]);
   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
 
-  const { data, isLoading, isError } = useGetAllInventoryQuery({
+  const { data, isLoading, isError } = useFilterInventoryQuery({
+    productName: query,
     pageNumber,
     pageSize,
   });
-  const { data: products = [] } = useGetAllProducts();
   const { mutateAsync: deleteInventoryAsync, isPending: isDeleting } =
     useDeleteInventoryMutation();
-
-  // Create a map of productId -> productName for quick lookup
-  const productMap = useMemo(() => {
-    const map = new Map<number, string>();
-    products.forEach((product: any) => {
-      map.set(product.productId, product.productName);
-    });
-    return map;
-  }, [products]);
-
-  // Filter inventory data by query
-  const filteredData = useMemo(() => {
-    if (!query) return data?.items ?? [];
-    return (data?.items ?? []).filter((item: any) => {
-      const productName = productMap.get(item.productId) || "";
-      return productName.toLowerCase().includes(query.toLowerCase());
-    });
-  }, [data?.items, query, productMap]);
 
   const columns = [
     {
       header: "TÊN SẢN PHẨM",
-      render: (row: InventoryResponse) => (
-        <span>{row.productId ? productMap.get(row.productId) || "N/A" : "N/A"}</span>
-      ),
+      // Use productName directly from API response
+      accessor: "productName",
     },
     { header: "SỐ LƯỢNG", accessor: "quantity" },
     {
@@ -106,7 +86,10 @@ export default function InventoryPage() {
           <div className="flex-1 min-w-0">
             <SearchInput
               value={query}
-              onSearch={(v: string) => setQuery(v)}
+              onSearch={(v: string) => {
+                setQuery(v);
+                setPageNumber(1); // Reset về trang 1 khi search
+              }}
               placeholder="Tìm theo tên sản phẩm..."
               className="w-full"
             />
@@ -157,7 +140,7 @@ export default function InventoryPage() {
 
         <TableProp
           columns={columns}
-          data={filteredData}
+          data={data?.items ?? []}
           loading={isLoading}
           error={isError}
           skeletonRows={5}
