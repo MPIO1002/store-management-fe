@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faLayerGroup,
@@ -7,12 +10,13 @@ import {
   faMoneyBill,
   faUtensils,
   faMagnifyingGlassChart,
-  faRetweet,
+  faRightFromBracket,
   faLeaf,
   faTruckField,
   faUsers,
   faCircleUser,
 } from "@fortawesome/free-solid-svg-icons";
+import { useAuth } from "@/app/lib/auth/auth-context";
 
 type NavItem = { label: string; href: string; icon: any };
 
@@ -36,6 +40,14 @@ export default function Sidebar({
   onMouseEnter?: () => void;
   onMouseLeave?: () => void;
 }) {
+  const { user, logout } = useAuth();
+  const router = useRouter();
+
+  const handleLogout = () => {
+    logout();
+    router.push("/login");
+  };
+
   return (
     <aside
       onMouseEnter={onMouseEnter}
@@ -78,19 +90,29 @@ export default function Sidebar({
       </div>
 
       <div className="p-3">
-        <div className={`flex items-center`} style={{overflow: "hidden"}}>
+        <div className={`flex items-center justify-between`} style={{overflow: "hidden"}}>
           <div className={`flex items-center`}
           style={{gap: "15px"}}>
             <div className="w-[32px] h-10 rounded-full bg-green-100 flex items-center justify-center text-green-700">
               <FontAwesomeIcon icon={faCircleUser} />
             </div>
             <div>
-              <div className="font-medium text-sm" style={{ color: "var(--foreground)" }}>Admin</div>
-              <div className="text-sm" style={{ color: "var(--foreground)", opacity: 0.8 }}>admin@gmail.com</div>
+              <div className="font-medium text-sm" style={{ color: "var(--foreground)" }}>
+                {user?.username || "User"}
+              </div>
+              <div className="text-sm capitalize" style={{ color: "var(--foreground)", opacity: 0.8 }}>
+                {user?.role || ""}
+              </div>
             </div>
           </div>
-          <button aria-label="Settings" className="p-2 rounded hover:bg-gray-100 text-foreground" style={{ color: 'var(--foreground)' }}>
-              <FontAwesomeIcon icon={faRetweet} />
+          <button 
+            onClick={handleLogout}
+            aria-label="Đăng xuất" 
+            title="Đăng xuất"
+            className="p-2 rounded hover:bg-red-100 hover:text-red-600 text-foreground transition-colors" 
+            style={{ color: 'var(--foreground)' }}
+          >
+            <FontAwesomeIcon icon={faRightFromBracket} />
           </button>
         </div>
       </div>

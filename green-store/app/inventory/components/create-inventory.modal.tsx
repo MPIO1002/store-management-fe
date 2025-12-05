@@ -129,7 +129,7 @@ export default function CreateInventoryModal({ open, onClose }: Props) {
         onSubmit={onSubmit}
         className="relative bg-white rounded-lg shadow-lg w-full max-w-md p-6"
       >
-        <h2 className="text-lg font-semibold mb-4">Tạo kho mới</h2>
+        <h2 className="text-lg font-semibold mb-4">Nhập hàng</h2>
 
         <label className="block mb-2 text-sm font-medium text-gray-700">
           Chọn sản phẩm <span className="text-red-500">*</span>

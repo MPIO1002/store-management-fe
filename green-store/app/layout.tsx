@@ -6,6 +6,9 @@ import "./globals.css";
 import SidebarClient from "../components/sidebar-client";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Toaster } from "sonner";
+import { AuthProvider, useAuth } from "./lib/auth/auth-context";
+import AuthGuard from "../components/auth-guard";
+import { usePathname } from "next/navigation";
 
 // export const metadata: Metadata = {
 //   title: "Create Next App",
@@ -13,6 +16,27 @@ import { Toaster } from "sonner";
 // };
 
 const client = new QueryClient();
+
+function LayoutContent({ children }: { children: React.ReactNode }) {
+  const pathname = usePathname();
+  const isLoginPage = pathname === "/login";
+
+  if (isLoginPage) {
+    return <main className="min-h-screen">{children}</main>;
+  }
+
+  return (
+    <>
+      <SidebarClient />
+      <main
+        className="min-h-screen transition-all duration-200 p-6"
+        style={{ marginLeft: "var(--sidebar-width, 14rem)" }}
+      >
+        {children}
+      </main>
+    </>
+  );
+}
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {
   return (
@@ -30,15 +54,13 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
         />
       </head>
       <body className="">
-        {/* Client-managed sidebar; it updates --sidebar-width on :root */}
         <QueryClientProvider client={client}>
-          <SidebarClient />
-          <Toaster position="top-right" richColors />
-          <main
-            className="min-h-screen transition-all duration-200 p-6"
-            style={{ marginLeft: "var(--sidebar-width, 14rem)" }}>
-            {children}
-          </main>
+          <AuthProvider>
+            <AuthGuard>
+              <Toaster position="top-right" richColors />
+              <LayoutContent>{children}</LayoutContent>
+            </AuthGuard>
+          </AuthProvider>
         </QueryClientProvider>
       </body>
     </html>
