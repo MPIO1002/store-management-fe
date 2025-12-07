@@ -14,6 +14,7 @@ import Pagination from "@/components/pagination";
 import CreateUserModal from "./components/create-staff.modal";
 import UpdateUserModal from "./components/update-staff.modal";
 import { toast } from "sonner";
+import ConfirmModal from "@/components/confirm-alert";
 
 // Danh sách vai trò
 const ROLES = [
@@ -39,9 +40,9 @@ export default function UserPage() {
   const [showUpdate, setShowUpdate] = useState(false);
   const [editingUser, setEditingUser] = useState<UserResponse | null>(null);
   const [selectedKeys, setSelectedKeys] = useState<Array<string | number>>([]);
-  const [deleting, setDeleting] = useState(false);
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
 
-  const { mutateAsync: deleteUserAsync } = useDeleteUserMutation();
+  const { mutateAsync: deleteUserAsync, isPending: isDeleting } = useDeleteUserMutation();
 
   const handleDelete = async () => {
     if (selectedKeys.length === 0) return;
@@ -49,6 +50,7 @@ export default function UserPage() {
       await Promise.all(selectedKeys.map((id) => deleteUserAsync(id as number)));
       toast.success("Xóa nhân viên thành công", { description: "Success" });
       setSelectedKeys([]);
+      setConfirmDeleteOpen(false);
     } catch (err) {
       console.error(err);
       toast.error("Lỗi khi xóa", { description: "Error" });
@@ -114,7 +116,11 @@ export default function UserPage() {
           <div className="flex items-center gap-2">
             <Button
               variant="secondary"
-              onClick={() => handleDelete()}>
+              onClick={() => setConfirmDeleteOpen(true)}
+              disabled={isDeleting || selectedKeys.length === 0}
+              aria-disabled={isDeleting || selectedKeys.length === 0}
+              title={selectedKeys.length === 0 ? "Chọn mục để xóa" : `Xóa ${selectedKeys.length} mục`}
+            >
               <FontAwesomeIcon icon={faTrash} />
               <span className="ml-2">Xóa ({selectedKeys.length})</span>
             </Button>
@@ -125,6 +131,17 @@ export default function UserPage() {
             </Button>
           </div>
         </div>
+
+        {confirmDeleteOpen && (
+          <ConfirmModal
+            open={confirmDeleteOpen}
+            message={`Xác nhận xóa ${selectedKeys.length} nhân viên?`}
+            title="Xác nhận xóa"
+            disabled={isDeleting}
+            onConfirm={handleDelete}
+            onCancel={() => setConfirmDeleteOpen(false)}
+          />
+        )}
 
         {showCreate && (
           <CreateUserModal

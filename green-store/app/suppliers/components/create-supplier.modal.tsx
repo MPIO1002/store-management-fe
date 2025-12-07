@@ -61,7 +61,7 @@ export default function CreateSupplierModal({ open, onClose }: Props) {
     <div className="fixed inset-0 z-50 flex items-center justify-center">
       <div className="absolute inset-0 bg-black/40" onClick={onClose} />
       <form onSubmit={onSubmit} className="relative bg-white rounded-lg shadow-lg w-full max-w-md p-6">
-        <h2 className="text-lg font-semibold mb-4">Cập nhật nhà cung cấp</h2>
+        <h2 className="text-lg font-semibold mb-4">Thêm nhà cung cấp</h2>
 
         <label className="block mb-2 text-sm font-medium text-gray-700">Tên</label>
         <input

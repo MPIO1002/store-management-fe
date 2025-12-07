@@ -13,15 +13,12 @@
  */
 
 
+// May contain unused imports in some cases
+// @ts-ignore
+import type { TopSellerProductResponse } from './top-seller-product-response';
 
-export * from './apis/auth-api';
-export * from './apis/category-api';
-export * from './apis/customer-api';
-export * from './apis/inventory-api';
-export * from './apis/order-api';
-export * from './apis/payment-api';
-export * from './apis/product-api';
-export * from './apis/statistic-api';
-export * from './apis/supplier-api';
-export * from './apis/users-api';
+export interface ResponseIEnumerableTopSellerProductResponse {
+    'message'?: string | null;
+    'data'?: Array<TopSellerProductResponse> | null;
+}
 

@@ -11,6 +11,7 @@ All URIs are relative to *http://localhost*
 |[**getCustomerByEmail**](#getcustomerbyemail) | **GET** /api/Customer/email/{email} | |
 |[**getCustomerById**](#getcustomerbyid) | **GET** /api/Customer/{id} | |
 |[**getCustomerByPhone**](#getcustomerbyphone) | **GET** /api/Customer/phone/{phone} | |
+|[**register**](#register) | **POST** /api/Customer/register | |
 |[**searchCustomersByName**](#searchcustomersbyname) | **GET** /api/Customer/search | |
 |[**updateCustomer**](#updatecustomer) | **PUT** /api/Customer/{id} | |
 
@@ -370,6 +371,57 @@ const { status, data } = await apiInstance.getCustomerByPhone(
 ### HTTP request headers
 
  - **Content-Type**: Not defined
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**0** | Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **register**
+> ResponseCustomerRegisterRequest register()
+
+
+### Example
+
+```typescript
+import {
+    CustomerApi,
+    Configuration,
+    CustomerRegisterRequest
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new CustomerApi(configuration);
+
+let customerRegisterRequest: CustomerRegisterRequest; // (optional)
+
+const { status, data } = await apiInstance.register(
+    customerRegisterRequest
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **customerRegisterRequest** | **CustomerRegisterRequest**|  | |
+
+
+### Return type
+
+**ResponseCustomerRegisterRequest**
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/json, application/*+json
  - **Accept**: text/plain, application/json, text/json
 
 

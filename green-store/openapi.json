@@ -55,6 +55,55 @@
         }
       }
     },
+    "/api/auth/customer-login": {
+      "post": {
+        "tags": [
+          "Auth"
+        ],
+        "operationId": "CustomerLogin",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerLoginRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerLoginRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerLoginRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_AuthResponseDto"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_AuthResponseDto"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_AuthResponseDto"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/auth/logout": {
       "post": {
         "tags": [
@@ -694,6 +743,55 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Response_Object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Customer/register": {
+      "post": {
+        "tags": [
+          "Customer"
+        ],
+        "operationId": "Register",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerRegisterRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerRegisterRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/CustomerRegisterRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CustomerRegisterRequest"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CustomerRegisterRequest"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_CustomerRegisterRequest"
                 }
               }
             }
@@ -2047,6 +2145,104 @@
         }
       }
     },
+    "/api/Statistic/revenue": {
+      "get": {
+        "tags": [
+          "Statistic"
+        ],
+        "operationId": "GetDailyRevenue",
+        "parameters": [
+          {
+            "name": "year",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "month",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          },
+          {
+            "name": "day",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int32"
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_IEnumerable_RevenueResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_IEnumerable_RevenueResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_IEnumerable_RevenueResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Statistic/top-seller/{top}": {
+      "get": {
+        "tags": [
+          "Statistic"
+        ],
+        "operationId": "GetTopSellerProduct",
+        "parameters": [
+          {
+            "name": "top",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 5
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_IEnumerable_TopSellerProductResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_IEnumerable_TopSellerProductResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_IEnumerable_TopSellerProductResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Supplier": {
       "get": {
         "tags": [
@@ -2722,6 +2918,57 @@
         },
         "additionalProperties": false
       },
+      "CustomerLoginRequest": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "minLength": 1,
+            "type": "string"
+          },
+          "password": {
+            "minLength": 1,
+            "type": "string"
+          }
+        },
+        "additionalProperties": false
+      },
+      "CustomerRegisterRequest": {
+        "required": [
+          "name"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "maxLength": 100,
+            "minLength": 1,
+            "type": "string"
+          },
+          "phone": {
+            "maxLength": 20,
+            "type": "string",
+            "nullable": true
+          },
+          "email": {
+            "maxLength": 100,
+            "type": "string",
+            "format": "email",
+            "nullable": true
+          },
+          "address": {
+            "type": "string",
+            "nullable": true
+          },
+          "password": {
+            "type": "string",
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
       "CustomerResponse": {
         "type": "object",
         "properties": {
@@ -3379,6 +3626,19 @@
         },
         "additionalProperties": false
       },
+      "Response_CustomerRegisterRequest": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "$ref": "#/components/schemas/CustomerRegisterRequest"
+          }
+        },
+        "additionalProperties": false
+      },
       "Response_CustomerResponse": {
         "type": "object",
         "properties": {
@@ -3420,6 +3680,40 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/InventoryResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Response_IEnumerable_RevenueResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/RevenueResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Response_IEnumerable_TopSellerProductResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/TopSellerProductResponse"
             },
             "nullable": true
           }
@@ -3621,6 +3915,24 @@
         },
         "additionalProperties": false
       },
+      "RevenueResponse": {
+        "type": "object",
+        "properties": {
+          "paymentDate": {
+            "type": "string",
+            "nullable": true
+          },
+          "revenue": {
+            "type": "number",
+            "format": "double"
+          },
+          "totalSold": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        "additionalProperties": false
+      },
       "SupplierDto": {
         "required": [
           "name"
@@ -3676,6 +3988,24 @@
           "address": {
             "type": "string",
             "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "TopSellerProductResponse": {
+        "type": "object",
+        "properties": {
+          "productId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "productName": {
+            "type": "string",
+            "nullable": true
+          },
+          "totalSold": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

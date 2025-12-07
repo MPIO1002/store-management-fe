@@ -13,8 +13,8 @@ import { OrderResponse } from "../lib/api";
 // Status badge color mapping
 const getStatusColor = (status: string | null | undefined) => {
   switch (status?.toLowerCase()) {
-    case "completed":
-    case "hoàn thành":
+    case "paid":
+    case "đã thanh toán":
       return "bg-green-100 text-green-800";
     case "pending":
     case "chờ xử lý":
@@ -22,11 +22,22 @@ const getStatusColor = (status: string | null | undefined) => {
     case "cancelled":
     case "đã hủy":
       return "bg-red-100 text-red-800";
-    case "processing":
-    case "đang xử lý":
-      return "bg-blue-100 text-blue-800";
     default:
       return "bg-gray-100 text-gray-800";
+  }
+};
+
+// Translate status to Vietnamese
+const getStatusLabel = (status: string | null | undefined) => {
+  switch (status?.toLowerCase()) {
+    case "paid":
+      return "Đã thanh toán";
+    case "pending":
+      return "Chờ xử lý";
+    case "cancelled":
+      return "Đã hủy";
+    default:
+      return status || "N/A";
   }
 };
 
@@ -100,7 +111,7 @@ export default function OrderPage() {
             row.status
           )}`}
         >
-          {row.status || "N/A"}
+          {getStatusLabel(row.status)}
         </span>
       ),
     },
@@ -128,8 +139,7 @@ export default function OrderPage() {
   const statusOptions = [
     { value: "", label: "Tất cả trạng thái" },
     { value: "Pending", label: "Chờ xử lý" },
-    { value: "Processing", label: "Đang xử lý" },
-    { value: "Completed", label: "Hoàn thành" },
+    { value: "Paid", label: "Đã thanh toán" },
     { value: "Cancelled", label: "Đã hủy" },
   ];
 

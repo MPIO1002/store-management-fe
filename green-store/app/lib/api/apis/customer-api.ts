@@ -24,6 +24,10 @@ import { BASE_PATH, COLLECTION_FORMATS, type RequestArgs, BaseAPI, RequiredError
 // @ts-ignore
 import type { CustomerCreateRequest } from '../models';
 // @ts-ignore
+import type { CustomerRegisterRequest } from '../models';
+// @ts-ignore
+import type { ResponseCustomerRegisterRequest } from '../models';
+// @ts-ignore
 import type { ResponseCustomerResponse } from '../models';
 // @ts-ignore
 import type { ResponseIEnumerableCustomerResponse } from '../models';
@@ -317,6 +321,42 @@ export const CustomerApiAxiosParamCreator = function (configuration?: Configurat
         },
         /**
          * 
+         * @param {CustomerRegisterRequest} [customerRegisterRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        register: async (customerRegisterRequest?: CustomerRegisterRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Customer/register`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(customerRegisterRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
          * @param {string} [name] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -492,6 +532,18 @@ export const CustomerApiFp = function(configuration?: Configuration) {
         },
         /**
          * 
+         * @param {CustomerRegisterRequest} [customerRegisterRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        async register(customerRegisterRequest?: CustomerRegisterRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseCustomerRegisterRequest>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.register(customerRegisterRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['CustomerApi.register']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
          * @param {string} [name] 
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -589,6 +641,15 @@ export const CustomerApiFactory = function (configuration?: Configuration, baseP
         },
         /**
          * 
+         * @param {CustomerApiRegisterRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        register(requestParameters: CustomerApiRegisterRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ResponseCustomerRegisterRequest> {
+            return localVarFp.register(requestParameters.customerRegisterRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {CustomerApiSearchCustomersByNameRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -665,6 +726,13 @@ export interface CustomerApiGetCustomerByIdRequest {
  */
 export interface CustomerApiGetCustomerByPhoneRequest {
     readonly phone: string
+}
+
+/**
+ * Request parameters for register operation in CustomerApi.
+ */
+export interface CustomerApiRegisterRequest {
+    readonly customerRegisterRequest?: CustomerRegisterRequest
 }
 
 /**
@@ -755,6 +823,16 @@ export class CustomerApi extends BaseAPI {
      */
     public getCustomerByPhone(requestParameters: CustomerApiGetCustomerByPhoneRequest, options?: RawAxiosRequestConfig) {
         return CustomerApiFp(this.configuration).getCustomerByPhone(requestParameters.phone, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {CustomerApiRegisterRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public register(requestParameters: CustomerApiRegisterRequest = {}, options?: RawAxiosRequestConfig) {
+        return CustomerApiFp(this.configuration).register(requestParameters.customerRegisterRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

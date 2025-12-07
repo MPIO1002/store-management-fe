@@ -15,6 +15,7 @@ import { CategoryResponse } from "../lib/api";
 import Pagination from "@/components/pagination";
 import { PaginationData } from "../lib/api/schema/pagination";
 import { toast } from "sonner";
+import ConfirmModal from "@/components/confirm-alert";
 
 export default function CategoryPage() {
   const [page, setPage] = useState(1);
@@ -28,8 +29,9 @@ export default function CategoryPage() {
   const [showUpdate, setShowUpdate] = useState(false);
   const [editingCategory, setEditingCategory] = useState<CategoryResponse | null>(null);
   const [selectedKeys, setSelectedKeys] = useState<Array<string | number>>([]);
+  const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
 
-  const { mutateAsync: deleteCategoryAsync } = useDeleteCategoryMutation();
+  const { mutateAsync: deleteCategoryAsync, isPending: isDeleting } = useDeleteCategoryMutation();
 
   const handleDelete = async () => {
     if (selectedKeys.length === 0) return;
@@ -37,6 +39,7 @@ export default function CategoryPage() {
       await Promise.all(selectedKeys.map((id) => deleteCategoryAsync(id as number)));
       toast.success("Xóa loại sản phẩm thành công", { description: "Success" });
       setSelectedKeys([]);
+      setConfirmDeleteOpen(false);
     } catch (err) {
       console.error(err);
       toast.error("Lỗi khi xóa", { description: "Error" });
@@ -86,9 +89,11 @@ export default function CategoryPage() {
           <div className="flex items-center gap-2">
             <Button
               variant="secondary"
-              onClick={handleDelete}
-              disabled={selectedKeys.length === 0}
-              aria-disabled={selectedKeys.length === 0}>
+              onClick={() => setConfirmDeleteOpen(true)}
+              disabled={isDeleting || selectedKeys.length === 0}
+              aria-disabled={isDeleting || selectedKeys.length === 0}
+              title={selectedKeys.length === 0 ? "Chọn mục để xóa" : `Xóa ${selectedKeys.length} mục`}
+            >
               <FontAwesomeIcon icon={faTrash} />
               <span className="ml-2">Xóa ({selectedKeys.length})</span>
             </Button>
@@ -99,6 +104,17 @@ export default function CategoryPage() {
             </Button>
           </div>
         </div>
+
+        {confirmDeleteOpen && (
+          <ConfirmModal
+            open={confirmDeleteOpen}
+            message={`Xác nhận xóa ${selectedKeys.length} loại sản phẩm?`}
+            title="Xác nhận xóa"
+            disabled={isDeleting}
+            onConfirm={handleDelete}
+            onCancel={() => setConfirmDeleteOpen(false)}
+          />
+        )}
 
         {showCreate && (
           <CreateCategoryModal

@@ -69,9 +69,10 @@ export default function InventoryPage() {
       await Promise.all(selectedKeys.map((id) => deleteInventoryAsync(id as number)));
       toast.success("Xóa kho thành công", { description: "Success" });
       setSelectedKeys([]);
+      setConfirmDeleteOpen(false);
     } catch (err) {
       console.error(err);
-      alert((err as any)?.message ?? "Lỗi khi xóa");
+      toast.error("Lỗi khi xóa", { description: "Error" });
     }
   };
 

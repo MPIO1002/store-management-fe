@@ -63,6 +63,7 @@ export default function SupplierPage() {
       await Promise.all(selectedKeys.map((id) => deleteSupplierAsync(id as number)));
       toast.success("Xóa nhà cung cấp thành công", { description: "Success" });
       setSelectedKeys([]);
+      setConfirmDeleteOpen(false);
     } catch (err) {
       console.error(err);
       toast.error("Lỗi khi xóa", { description: "Error" });
