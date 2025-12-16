@@ -257,11 +257,15 @@ export default function PaymentPage() {
     }
 
     try {
+      // Convert current time to Vietnam timezone (GMT+7)
+      const vietnamDate = new Date();
+      vietnamDate.setHours(vietnamDate.getHours() + 7);
+      
       const orderData = {
         paymentMethod,
         totalAmount: total,
         discountAmount: discount,
-        date: new Date().toISOString(),
+        date: vietnamDate.toISOString(),
         orderStatus: OrderStatus.NUMBER_0, // Pending
         userId: user.userId,
         customerId: customer?.customerId ?? null,
