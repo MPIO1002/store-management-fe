@@ -5,59 +5,75 @@ import TableProp from "@/components/table-prop";
 import SearchInput from "@/components/search-input";
 import Button from "@/components/button";
 import Pagination from "@/components/pagination";
-import CreateInventoryModal from "./components/create-inventory.modal";
-import InventoryDetailModal from "./components/inventory-detail.modal";
+import CreateCustomerModal from "./components/create-customer.modal";
+import UpdateCustomerModal from "./components/update-customer.modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlus } from "@fortawesome/free-solid-svg-icons/faPlus";
 import { faTrash } from "@fortawesome/free-solid-svg-icons/faTrash";
-import { faEye } from "@fortawesome/free-solid-svg-icons/faEye";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons/faPenToSquare";
 import {
-  useFilterInventoryQuery,
-  useDeleteInventoryMutation,
-} from "./hooks/inventory-hooks";
-import { InventoryResponse } from "../lib/api";
+  useFilterCustomerQuery,
+  useDeleteCustomerMutation,
+} from "./hooks/customer-hooks";
+import { CustomerResponse } from "../lib/api";
 import { toast } from "sonner";
 import ConfirmModal from "@/components/confirm-alert";
 
-export default function InventoryPage() {
+export default function CustomersPage() {
   const [query, setQuery] = useState("");
   const [pageNumber, setPageNumber] = useState<number>(1);
   const [pageSize, setPageSize] = useState<number>(10);
   const [showCreate, setShowCreate] = useState(false);
-  const [showDetail, setShowDetail] = useState(false);
-  const [selectedInventory, setSelectedInventory] = useState<InventoryResponse | null>(null);
+  const [showUpdate, setShowUpdate] = useState(false);
+  const [editingCustomer, setEditingCustomer] = useState<CustomerResponse | null>(null);
   const [selectedKeys, setSelectedKeys] = useState<Array<string | number>>([]);
   const [confirmDeleteOpen, setConfirmDeleteOpen] = useState(false);
 
-  const { data, isLoading, isError } = useFilterInventoryQuery({
-    productName: query,
+  const { data, isLoading, isError } = useFilterCustomerQuery({
+    fullName: query,
     pageNumber,
     pageSize,
   });
-  const { mutateAsync: deleteInventoryAsync, isPending: isDeleting } =
-    useDeleteInventoryMutation();
+  const { mutateAsync: deleteCustomerAsync, isPending: isDeleting } =
+    useDeleteCustomerMutation();
 
   const columns = [
     {
-      header: "TÊN SẢN PHẨM",
-      // Use productName directly from API response
-      accessor: "productName",
+      header: "TÊN KHÁCH HÀNG",
+      accessor: "name",
     },
-    { header: "SỐ LƯỢNG", accessor: "quantity" },
+    { 
+      header: "SỐ ĐIỆN THOẠI", 
+      accessor: "phone",
+      render: (row: CustomerResponse) => row.phone || "N/A"
+    },
+    { 
+      header: "EMAIL", 
+      accessor: "email",
+      render: (row: CustomerResponse) => row.email || "N/A"
+    },
+    { 
+      header: "ĐỊA CHỈ", 
+      accessor: "address",
+      render: (row: CustomerResponse) => row.address || "N/A"
+    },
+    {
+      header: "SỐ ĐON",
+      accessor: "orderCount",
+    },
     {
       header: "HÀNH ĐỘNG",
-      render: (row: InventoryResponse) => (
+      render: (row: CustomerResponse) => (
         <div className="flex gap-2 items-center">
           <button
             type="button"
             className="text-blue-600 hover:underline"
             onClick={() => {
-              setSelectedInventory(row);
-              setShowDetail(true);
+              setEditingCustomer(row);
+              setShowUpdate(true);
             }}
-            title="Xem chi tiết"
           >
-            <FontAwesomeIcon icon={faEye} />
+            <FontAwesomeIcon icon={faPenToSquare} />
           </button>
         </div>
       ),
@@ -67,8 +83,8 @@ export default function InventoryPage() {
   const handleDelete = async () => {
     if (selectedKeys.length === 0) return;
     try {
-      await Promise.all(selectedKeys.map((id) => deleteInventoryAsync(id as number)));
-      toast.success("Xóa kho thành công", { description: "Success" });
+      await Promise.all(selectedKeys.map((id) => deleteCustomerAsync(id as number)));
+      toast.success("Xóa khách hàng thành công", { description: "Success" });
       setSelectedKeys([]);
       setConfirmDeleteOpen(false);
     } catch (err) {
@@ -80,7 +96,7 @@ export default function InventoryPage() {
   return (
     <div className="mx-auto p-6">
       <header className="flex items-center justify-between mb-6">
-        <h1 className="text-2xl font-semibold">Kho</h1>
+        <h1 className="text-2xl font-semibold">Khách hàng</h1>
       </header>
 
       <div className="bg-[#fffff] p-4 rounded-lg shadow-sm">
@@ -90,9 +106,9 @@ export default function InventoryPage() {
               value={query}
               onSearch={(v: string) => {
                 setQuery(v);
-                setPageNumber(1); // Reset về trang 1 khi search
+                setPageNumber(1);
               }}
-              placeholder="Tìm theo tên sản phẩm..."
+              placeholder="Tìm theo tên khách hàng..."
               className="w-full"
             />
           </div>
@@ -123,7 +139,7 @@ export default function InventoryPage() {
         {confirmDeleteOpen && (
           <ConfirmModal
             open={confirmDeleteOpen}
-            message={`Xác nhận xóa ${selectedKeys.length} mục?`}
+            message={`Xác nhận xóa ${selectedKeys.length} khách hàng?`}
             title="Xác nhận xóa"
             disabled={isDeleting}
             onConfirm={() => {
@@ -134,7 +150,7 @@ export default function InventoryPage() {
         )}
 
         {showCreate && (
-          <CreateInventoryModal
+          <CreateCustomerModal
             open={showCreate}
             onClose={() => setShowCreate(false)}
           />
@@ -146,23 +162,22 @@ export default function InventoryPage() {
           loading={isLoading}
           error={isError}
           skeletonRows={5}
-          rowKey={(r: any) => r.inventoryId ?? r.productId}
+          rowKey={(r: any) => r.customerId}
           selectable={true}
           onSelectionChange={(sel) => setSelectedKeys(sel)}
         />
 
-        {showDetail && (
-          <InventoryDetailModal
-            open={showDetail}
-            id={selectedInventory?.inventoryId}
+        {showUpdate && (
+          <UpdateCustomerModal
+            open={showUpdate}
+            id={editingCustomer?.customerId}
             onClose={() => {
-              setShowDetail(false);
-              setSelectedInventory(null);
+              setShowUpdate(false);
+              setEditingCustomer(null);
             }}
           />
         )}
 
-        {/* Pagination controls */}
         <Pagination
           pageNumber={data?.meta?.pageNumber ?? pageNumber}
           pageSize={data?.meta?.pageSize ?? pageSize}

@@ -13,8 +13,8 @@ type Props = {
 // Status badge color mapping
 const getStatusColor = (status: string | null | undefined) => {
   switch (status?.toLowerCase()) {
-    case "completed":
-    case "hoàn thành":
+    case "paid":
+    case "đã thanh toán":
       return "bg-green-100 text-green-800";
     case "pending":
     case "chờ xử lý":
@@ -22,11 +22,22 @@ const getStatusColor = (status: string | null | undefined) => {
     case "cancelled":
     case "đã hủy":
       return "bg-red-100 text-red-800";
-    case "processing":
-    case "đang xử lý":
-      return "bg-blue-100 text-blue-800";
     default:
       return "bg-gray-100 text-gray-800";
+  }
+};
+
+// Translate status to Vietnamese
+const getStatusLabel = (status: string | null | undefined) => {
+  switch (status?.toLowerCase()) {
+    case "paid":
+      return "Đã thanh toán";
+    case "pending":
+      return "Chờ xử lý";
+    case "cancelled":
+      return "Đã hủy";
+    default:
+      return status || "N/A";
   }
 };
 
@@ -86,7 +97,7 @@ export default function OrderDetailModal({ open, order, onClose }: Props) {
                 order.status
               )}`}
             >
-              {order.status || "N/A"}
+              {getStatusLabel(order.status)}
             </span>
           </div>
         </div>

@@ -15,6 +15,7 @@ import {
   faTruckField,
   faUsers,
   faCircleUser,
+  faPerson,
 } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "@/app/lib/auth/auth-context";
 
@@ -29,6 +30,7 @@ const items: NavItem[] = [
   { label: "Sản phẩm", href: "/products", icon: faUtensils },
   { label: "Nhà cung cấp", href: "/suppliers", icon: faTruckField },
   { label: "Nhân viên", href: "/staff", icon: faUsers },
+  { label: "Khách hàng", href: "/customers", icon: faPerson },
 ];
 
 export default function Sidebar({
