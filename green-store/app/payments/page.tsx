@@ -33,6 +33,18 @@ export default function PaymentPage() {
   const [isProcessing, setIsProcessing] = useState(false);
   const [manualBarcode, setManualBarcode] = useState("");
   
+  // Customer lookup states
+  const [phoneNumber, setPhoneNumber] = useState("");
+  const [customer, setCustomer] = useState<any>(null);
+  const [isLookingUpCustomer, setIsLookingUpCustomer] = useState(false);
+  const [hasSearchedCustomer, setHasSearchedCustomer] = useState(false);
+  
+  // Promotion code states
+  const [availablePromotions, setAvailablePromotions] = useState<any[]>([]);
+  const [selectedPromotionId, setSelectedPromotionId] = useState<string>("");
+  const [appliedPromotion, setAppliedPromotion] = useState<any>(null);
+  const [isLoadingPromotions, setIsLoadingPromotions] = useState(false);
+  
   // Lấy thông tin user từ auth context
   const { user } = useAuth();
   
@@ -49,7 +61,94 @@ export default function PaymentPage() {
 
   // Calculate totals
   const subtotal = cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  const total = subtotal;
+  const discount = appliedPromotion ? (appliedPromotion.discountType === "Percentage" ? subtotal * (appliedPromotion.discountValue / 100) : appliedPromotion.discountValue) : 0;
+  const total = subtotal - discount;
+
+  // Auto-fetch promotions when subtotal changes
+  React.useEffect(() => {
+    const fetchPromotions = async () => {
+      if (subtotal === 0) {
+        setAvailablePromotions([]);
+        setAppliedPromotion(null);
+        setSelectedPromotionId("");
+        return;
+      }
+
+      try {
+        setIsLoadingPromotions(true);
+        const response = await apis.promotions.getAllPromotions({ minOrderAmount: subtotal });
+        const rawData: any = response?.data;
+        const promotions: any[] = rawData?.data ?? rawData;
+
+        setAvailablePromotions(promotions || []);
+        
+        // Remove applied promotion if it's no longer valid
+        if (appliedPromotion && !promotions?.find((p: any) => p.promoId === appliedPromotion.promoId)) {
+          setAppliedPromotion(null);
+          setSelectedPromotionId("");
+          toast.info("Mã khuyến mãi không còn hợp lệ với đơn hàng hiện tại");
+        }
+      } catch (err: any) {
+        console.error(err);
+        setAvailablePromotions([]);
+      } finally {
+        setIsLoadingPromotions(false);
+      }
+    };
+
+    fetchPromotions();
+  }, [subtotal]);
+
+  // Lookup customer by phone
+  const lookupCustomer = async () => {
+    if (!phoneNumber.trim()) {
+      toast.error("Vui lòng nhập số điện thoại");
+      return;
+    }
+
+    try {
+      setIsLookingUpCustomer(true);
+      const response = await apis.customers.getCustomerByPhone({ phone: phoneNumber });
+      const rawData: any = response?.data;
+      const customerData: any = rawData?.data ?? rawData;
+
+      if (customerData && customerData.customerId) {
+        setCustomer(customerData);
+        toast.success(`Tìm thấy khách hàng: ${customerData.name}`);
+      } else {
+        setCustomer(null);
+        toast.warning("Chưa có đăng ký thành viên");
+      }
+    } catch (err: any) {
+      console.error(err);
+      setCustomer(null);
+      toast.warning("Chưa có đăng ký thành viên");
+    } finally {
+      setIsLookingUpCustomer(false);
+      setHasSearchedCustomer(true);
+    }
+  };
+
+  // Apply selected promotion
+  const applyPromotion = () => {
+    if (!selectedPromotionId) {
+      toast.error("Vui lòng chọn mã khuyến mãi");
+      return;
+    }
+
+    const promotion = availablePromotions.find((p: any) => p.promoId.toString() === selectedPromotionId);
+    if (promotion) {
+      setAppliedPromotion(promotion);
+      toast.success(`Áp dụng mã khuyến mãi: ${promotion.description}`);
+    }
+  };
+
+  // Remove applied promotion
+  const removePromotion = () => {
+    setAppliedPromotion(null);
+    setSelectedPromotionId("");
+    toast.info("Đã xóa mã khuyến mãi");
+  };
 
   // Add product by barcode - sử dụng ref để tránh dependency
   const addProductByBarcode = useCallback(async (barcode: string) => {
@@ -152,16 +251,21 @@ export default function PaymentPage() {
       return;
     }
 
+    if (!user?.userId) {
+      toast.error("Vui lòng đăng nhập để thực hiện thanh toán");
+      return;
+    }
+
     try {
       const orderData = {
         paymentMethod,
         totalAmount: total,
-        discountAmount: 0,
+        discountAmount: discount,
         date: new Date().toISOString(),
         orderStatus: OrderStatus.NUMBER_0, // Pending
-        userId: user?.userId,
-        customerId: null,
-        promotionId: null,
+        userId: user.userId,
+        customerId: customer?.customerId ?? null,
+        promotionId: appliedPromotion?.promoId ?? null,
         listItems: cartItems.map((item) => ({
           productId: item.productId,
           quantity: item.quantity,
@@ -174,6 +278,12 @@ export default function PaymentPage() {
         await createOrder(orderData);
         toast.success("Thanh toán thành công!");
         clearCart();
+        setCustomer(null);
+        setPhoneNumber("");
+        setHasSearchedCustomer(false);
+        setAppliedPromotion(null);
+        setSelectedPromotionId("");
+        setAvailablePromotions([]);
       } 
       // Chuyển khoản - dùng VNPay
       else {
@@ -337,6 +447,48 @@ export default function PaymentPage() {
               </div>
             )}
           </div>
+
+          {/* Customer Lookup Section */}
+          <div className="bg-white p-4 rounded-lg shadow-sm">
+            <h2 className="text-lg font-medium mb-4">Thông tin khách hàng</h2>
+            <div className="flex gap-3">
+              <input
+                type="text"
+                value={phoneNumber}
+                onChange={(e) => {
+                  setPhoneNumber(e.target.value);
+                  if (e.target.value === "") {
+                    setHasSearchedCustomer(false);
+                    setCustomer(null);
+                  }
+                }}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    lookupCustomer();
+                  }
+                }}
+                placeholder="Nhập số điện thoại khách hàng..."
+                className="flex-1 border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500"
+              />
+              <button
+                onClick={lookupCustomer}
+                disabled={isLookingUpCustomer}
+                className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+              >
+                {isLookingUpCustomer ? "Đang tìm..." : "Tìm kiếm"}
+              </button>
+            </div>
+            {customer ? (
+              <div className="mt-3 p-3 bg-green-50 rounded-lg border border-green-200">
+                <p className="text-green-700 font-medium">✓ Khách hàng: {customer.name}</p>
+                <p className="text-sm text-green-600">Email: {customer.email || "N/A"}</p>
+              </div>
+            ) : hasSearchedCustomer && phoneNumber && (
+              <div className="mt-3 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+                <p className="text-yellow-700 text-sm">⚠ Chưa có đăng ký thành viên</p>
+              </div>
+            )}
+          </div>
         </div>
 
         {/* Right: Order Summary */}
@@ -344,11 +496,99 @@ export default function PaymentPage() {
           <div className="bg-white p-4 rounded-lg shadow-sm sticky top-6">
             <h2 className="text-lg font-medium mb-4">Tổng đơn hàng</h2>
 
+            {/* Cart Items Summary */}
+            {cartItems.length > 0 && (
+              <div className="mb-4 pb-4 border-b max-h-60 overflow-y-auto">
+                <h3 className="text-sm font-medium text-gray-700 mb-3">Sản phẩm ({cartItems.length})</h3>
+                <div className="space-y-2">
+                  {cartItems.map((item) => (
+                    <div key={item.productId} className="flex justify-between items-start text-sm">
+                      <div className="flex-1 min-w-0">
+                        <p className="text-gray-900 truncate">{item.productName}</p>
+                        <p className="text-gray-500 text-xs">
+                          {formatCurrency(item.price)} x {item.quantity}
+                        </p>
+                      </div>
+                      <p className="text-gray-900 font-medium ml-2">
+                        {formatCurrency(item.price * item.quantity)}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Promotion Code Section */}
+            <div className="mb-4 pb-4 border-b">
+              <div className="flex items-center justify-between mb-3">
+                <h3 className="text-sm font-medium text-gray-700">Mã khuyến mãi</h3>
+                {isLoadingPromotions && (
+                  <span className="text-xs text-blue-600">Đang tải...</span>
+                )}
+              </div>
+              {availablePromotions.length > 0 && !appliedPromotion && (
+                <div className="space-y-2">
+                  <select
+                    value={selectedPromotionId}
+                    onChange={(e) => setSelectedPromotionId(e.target.value)}
+                    className="w-full border border-gray-300 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-green-500"
+                  >
+                    <option value="">-- Chọn mã khuyến mãi --</option>
+                    {availablePromotions.map((promo: any) => (
+                      <option key={promo.promoId} value={promo.promoId}>
+                        {promo.promoCode} - {promo.description} ({promo.discountType === "Percentage" 
+                          ? `${promo.discountValue}%` 
+                          : formatCurrency(promo.discountValue)})
+                      </option>
+                    ))}
+                  </select>
+                  <button
+                    onClick={applyPromotion}
+                    disabled={!selectedPromotionId}
+                    className="w-full px-3 py-2 bg-green-600 text-white text-sm rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed"
+                  >
+                    Áp dụng
+                  </button>
+                </div>
+              )}
+              {availablePromotions.length === 0 && subtotal > 0 && !isLoadingPromotions && (
+                <p className="text-xs text-gray-500">Không có mã khuyến mãi phù hợp</p>
+              )}
+              {subtotal === 0 && (
+                <p className="text-xs text-gray-500">Thêm sản phẩm để xem mã khuyến mãi</p>
+              )}
+              {appliedPromotion && (
+                <div className="p-3 bg-green-50 rounded-lg border border-green-200">
+                  <div className="flex justify-between items-start mb-1">
+                    <p className="text-sm text-green-700 font-medium">✓ {appliedPromotion.promoCode}</p>
+                    <button
+                      onClick={removePromotion}
+                      className="text-red-600 hover:text-red-700 text-xs"
+                    >
+                      Xóa
+                    </button>
+                  </div>
+                  <p className="text-xs text-green-600">{appliedPromotion.description}</p>
+                  <p className="text-xs text-green-600">
+                    Giảm: {appliedPromotion.discountType === "Percentage" 
+                      ? `${appliedPromotion.discountValue}%` 
+                      : formatCurrency(appliedPromotion.discountValue)}
+                  </p>
+                </div>
+              )}
+            </div>
+
             <div className="space-y-3 mb-6">
               <div className="flex justify-between">
                 <span className="text-gray-600">Tạm tính:</span>
                 <span>{formatCurrency(subtotal)}</span>
               </div>
+              {discount > 0 && (
+                <div className="flex justify-between text-green-600">
+                  <span>Giảm giá:</span>
+                  <span>-{formatCurrency(discount)}</span>
+                </div>
+              )}
               <div className="border-t pt-3 flex justify-between text-lg font-semibold">
                 <span>Tổng cộng:</span>
                 <span className="text-green-600">{formatCurrency(total)}</span>

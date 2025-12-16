@@ -108,6 +108,42 @@ export const OrderApiAxiosParamCreator = function (configuration?: Configuration
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        createOrderReturnOrder: async (orderRequest?: OrderRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
+            const localVarPath = `/api/Order/create-order-with-data-response`;
+            // use dummy base URL string because the URL constructor only accepts absolute URLs.
+            const localVarUrlObj = new URL(localVarPath, DUMMY_BASE_URL);
+            let baseOptions;
+            if (configuration) {
+                baseOptions = configuration.baseOptions;
+            }
+
+            const localVarRequestOptions = { method: 'POST', ...baseOptions, ...options};
+            const localVarHeaderParameter = {} as any;
+            const localVarQueryParameter = {} as any;
+
+            // authentication Bearer required
+            await setApiKeyToObject(localVarHeaderParameter, "Authorization", configuration)
+
+
+    
+            localVarHeaderParameter['Content-Type'] = 'application/json';
+
+            setSearchParams(localVarUrlObj, localVarQueryParameter);
+            let headersFromBaseOptions = baseOptions && baseOptions.headers ? baseOptions.headers : {};
+            localVarRequestOptions.headers = {...localVarHeaderParameter, ...headersFromBaseOptions, ...options.headers};
+            localVarRequestOptions.data = serializeDataIfNeeded(orderRequest, localVarRequestOptions, configuration)
+
+            return {
+                url: toPathString(localVarUrlObj),
+                options: localVarRequestOptions,
+            };
+        },
+        /**
+         * 
+         * @param {OrderRequest} [orderRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         createVnpayOrder: async (orderRequest?: OrderRequest, options: RawAxiosRequestConfig = {}): Promise<RequestArgs> => {
             const localVarPath = `/api/Order/vnpay`;
             // use dummy base URL string because the URL constructor only accepts absolute URLs.
@@ -299,6 +335,18 @@ export const OrderApiFp = function(configuration?: Configuration) {
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
          */
+        async createOrderReturnOrder(orderRequest?: OrderRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseObject>> {
+            const localVarAxiosArgs = await localVarAxiosParamCreator.createOrderReturnOrder(orderRequest, options);
+            const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
+            const localVarOperationServerBasePath = operationServerMap['OrderApi.createOrderReturnOrder']?.[localVarOperationServerIndex]?.url;
+            return (axios, basePath) => createRequestFunction(localVarAxiosArgs, globalAxios, BASE_PATH, configuration)(axios, localVarOperationServerBasePath || basePath);
+        },
+        /**
+         * 
+         * @param {OrderRequest} [orderRequest] 
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
         async createVnpayOrder(orderRequest?: OrderRequest, options?: RawAxiosRequestConfig): Promise<(axios?: AxiosInstance, basePath?: string) => AxiosPromise<ResponseOrderRedirectResponse>> {
             const localVarAxiosArgs = await localVarAxiosParamCreator.createVnpayOrder(orderRequest, options);
             const localVarOperationServerIndex = configuration?.serverIndex ?? 0;
@@ -366,6 +414,15 @@ export const OrderApiFactory = function (configuration?: Configuration, basePath
         },
         /**
          * 
+         * @param {OrderApiCreateOrderReturnOrderRequest} requestParameters Request parameters.
+         * @param {*} [options] Override http request option.
+         * @throws {RequiredError}
+         */
+        createOrderReturnOrder(requestParameters: OrderApiCreateOrderReturnOrderRequest = {}, options?: RawAxiosRequestConfig): AxiosPromise<ResponseObject> {
+            return localVarFp.createOrderReturnOrder(requestParameters.orderRequest, options).then((request) => request(axios, basePath));
+        },
+        /**
+         * 
          * @param {OrderApiCreateVnpayOrderRequest} requestParameters Request parameters.
          * @param {*} [options] Override http request option.
          * @throws {RequiredError}
@@ -398,6 +455,13 @@ export const OrderApiFactory = function (configuration?: Configuration, basePath
  * Request parameters for createOrder operation in OrderApi.
  */
 export interface OrderApiCreateOrderRequest {
+    readonly orderRequest?: OrderRequest
+}
+
+/**
+ * Request parameters for createOrderReturnOrder operation in OrderApi.
+ */
+export interface OrderApiCreateOrderReturnOrderRequest {
     readonly orderRequest?: OrderRequest
 }
 
@@ -461,6 +525,16 @@ export class OrderApi extends BaseAPI {
      */
     public createOrder(requestParameters: OrderApiCreateOrderRequest = {}, options?: RawAxiosRequestConfig) {
         return OrderApiFp(this.configuration).createOrder(requestParameters.orderRequest, options).then((request) => request(this.axios, this.basePath));
+    }
+
+    /**
+     * 
+     * @param {OrderApiCreateOrderReturnOrderRequest} requestParameters Request parameters.
+     * @param {*} [options] Override http request option.
+     * @throws {RequiredError}
+     */
+    public createOrderReturnOrder(requestParameters: OrderApiCreateOrderReturnOrderRequest = {}, options?: RawAxiosRequestConfig) {
+        return OrderApiFp(this.configuration).createOrderReturnOrder(requestParameters.orderRequest, options).then((request) => request(this.axios, this.basePath));
     }
 
     /**

@@ -1445,6 +1445,55 @@
         }
       }
     },
+    "/api/Order/create-order-with-data-response": {
+      "post": {
+        "tags": [
+          "Order"
+        ],
+        "operationId": "CreateOrderReturnOrder",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderRequest"
+              }
+            },
+            "text/json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderRequest"
+              }
+            },
+            "application/*+json": {
+              "schema": {
+                "$ref": "#/components/schemas/OrderRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_Object"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_Object"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_Object"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/api/Order/vnpay": {
       "post": {
         "tags": [
@@ -2138,6 +2187,47 @@
               "text/json": {
                 "schema": {
                   "$ref": "#/components/schemas/Response_ProductResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/Promotion": {
+      "get": {
+        "tags": [
+          "Promotion"
+        ],
+        "operationId": "GetAllPromotions",
+        "parameters": [
+          {
+            "name": "minOrderAmount",
+            "in": "query",
+            "schema": {
+              "type": "integer",
+              "format": "int64",
+              "default": 0
+            }
+          }
+        ],
+        "responses": {
+          "default": {
+            "description": "Error",
+            "content": {
+              "text/plain": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_IEnumerable_PromotionResponse"
+                }
+              },
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_IEnumerable_PromotionResponse"
+                }
+              },
+              "text/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Response_IEnumerable_PromotionResponse"
                 }
               }
             }
@@ -3600,6 +3690,32 @@
         },
         "additionalProperties": false
       },
+      "PromotionResponse": {
+        "type": "object",
+        "properties": {
+          "promoId": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "promoCode": {
+            "type": "string",
+            "nullable": true
+          },
+          "description": {
+            "type": "string",
+            "nullable": true
+          },
+          "discountType": {
+            "type": "string",
+            "nullable": true
+          },
+          "discountValue": {
+            "type": "number",
+            "format": "double"
+          }
+        },
+        "additionalProperties": false
+      },
       "Response_AuthResponseDto": {
         "type": "object",
         "properties": {
@@ -3680,6 +3796,23 @@
             "type": "array",
             "items": {
               "$ref": "#/components/schemas/InventoryResponse"
+            },
+            "nullable": true
+          }
+        },
+        "additionalProperties": false
+      },
+      "Response_IEnumerable_PromotionResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "nullable": true
+          },
+          "data": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/PromotionResponse"
             },
             "nullable": true
           }

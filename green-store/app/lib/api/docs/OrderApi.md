@@ -6,6 +6,7 @@ All URIs are relative to *http://localhost*
 |------------- | ------------- | -------------|
 |[**callback**](#callback) | **GET** /api/vnpay/check-result/callback | |
 |[**createOrder**](#createorder) | **POST** /api/Order | |
+|[**createOrderReturnOrder**](#createorderreturnorder) | **POST** /api/Order/create-order-with-data-response | |
 |[**createVnpayOrder**](#createvnpayorder) | **POST** /api/Order/vnpay | |
 |[**filterOrders**](#filterorders) | **GET** /api/Order/filter | |
 |[**getAllOrders**](#getallorders) | **GET** /api/Order | |
@@ -72,6 +73,57 @@ const apiInstance = new OrderApi(configuration);
 let orderRequest: OrderRequest; // (optional)
 
 const { status, data } = await apiInstance.createOrder(
+    orderRequest
+);
+```
+
+### Parameters
+
+|Name | Type | Description  | Notes|
+|------------- | ------------- | ------------- | -------------|
+| **orderRequest** | **OrderRequest**|  | |
+
+
+### Return type
+
+**ResponseObject**
+
+### Authorization
+
+[Bearer](../README.md#Bearer)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json, text/json, application/*+json
+ - **Accept**: text/plain, application/json, text/json
+
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+|**0** | Error |  -  |
+
+[[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
+
+# **createOrderReturnOrder**
+> ResponseObject createOrderReturnOrder()
+
+
+### Example
+
+```typescript
+import {
+    OrderApi,
+    Configuration,
+    OrderRequest
+} from './api';
+
+const configuration = new Configuration();
+const apiInstance = new OrderApi(configuration);
+
+let orderRequest: OrderRequest; // (optional)
+
+const { status, data } = await apiInstance.createOrderReturnOrder(
     orderRequest
 );
 ```

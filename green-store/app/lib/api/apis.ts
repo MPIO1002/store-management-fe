@@ -6,6 +6,7 @@ import {
   OrderApi,
   PaymentApi,
   ProductApi,
+  PromotionApi,
   SupplierApi,
   UsersApi,
 } from "./api";
@@ -41,6 +42,9 @@ export const apis = {
   },
   get products() {
     return new ProductApi(getConfiguration());
+  },
+  get promotions() {
+    return new PromotionApi(getConfiguration());
   },
   get suppliers() {
     return new SupplierApi(getConfiguration());

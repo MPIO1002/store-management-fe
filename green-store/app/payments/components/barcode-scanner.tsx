@@ -64,7 +64,7 @@ export default function BarcodeScanner({ onScanSuccess, onClose }: Props) {
             if (isScannedRef.current) return;
             isScannedRef.current = true;
             
-            console.log("✅ Scanned:", decodedText);
+            console.log("Scanned:", decodedText);
             await stopScanner();
             onScanSuccess(decodedText);
           },
@@ -74,7 +74,7 @@ export default function BarcodeScanner({ onScanSuccess, onClose }: Props) {
         );
         
         isRunningRef.current = true;
-        console.log("🎥 Scanner started and running");
+        console.log("Scanner started and running");
       } catch (err: any) {
         console.error("Scanner error:", err);
         if (isMountedRef.current) {
