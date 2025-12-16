@@ -17,5 +17,6 @@
 export interface InventoryRequest {
     'productId'?: number;
     'quantity'?: number;
+    'supplierId'?: number;
 }
 

@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { InventoryRequest } from "@/app/lib/api";
-import { useCreateInventoryMutation, useSearchProducts } from "../hooks/inventory-hooks";
+import { useCreateInventoryMutation, useSearchProducts, useGetAllSuppliers } from "../hooks/inventory-hooks";
 import { toast } from "sonner";
 import z from "zod";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -11,6 +11,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 const createInventorySchema = z.object({
   productId: z.number().min(1, "Vui lòng chọn sản phẩm"),
   quantity: z.number().min(0, "Số lượng phải lớn hơn 0"),
+  supplierId: z.number().min(1, "Vui lòng chọn nhà cung cấp"),
 });
 
 type CreateInventoryData = z.infer<typeof createInventorySchema>;
@@ -23,6 +24,7 @@ type Props = {
 const defaultValues = {
   productId: 0,
   quantity: 0,
+  supplierId: 0,
 };
 
 export default function CreateInventoryModal({ open, onClose }: Props) {
@@ -44,6 +46,7 @@ export default function CreateInventoryModal({ open, onClose }: Props) {
 
   // Use API search instead of client-side filter
   const { data: products = [], isLoading: isSearching } = useSearchProducts(debouncedSearch);
+  const { data: suppliers = [] } = useGetAllSuppliers();
 
   const { register, handleSubmit, formState, reset, setValue } = useForm<CreateInventoryData>({
     resolver: zodResolver(createInventorySchema),
@@ -104,6 +107,7 @@ export default function CreateInventoryModal({ open, onClose }: Props) {
     const payload: InventoryRequest = {
       productId: values.productId || 0,
       quantity: values.quantity || 0,
+      supplierId: values.supplierId || 0,
     };
 
     mutate(payload, {
@@ -216,6 +220,28 @@ export default function CreateInventoryModal({ open, onClose }: Props) {
         />
         {!!formState.errors?.quantity && (
           <p className="text-xs text-red-600">{formState.errors?.quantity?.message}</p>
+        )}
+
+        <label className="block mb-2 text-sm font-medium text-gray-700 mt-3">
+          Nhà cung cấp <span className="text-red-500">*</span>
+        </label>
+        <select
+          className={`w-full border rounded px-3 py-2 mb-1 ${
+            formState.errors?.supplierId
+              ? "border-red-600 focus:ring-red-500"
+              : "border-gray-300"
+          }`}
+          {...register("supplierId", { valueAsNumber: true })}
+        >
+          <option value={0}>-- Chọn nhà cung cấp --</option>
+          {suppliers.map((supplier: any) => (
+            <option key={supplier.supplierId} value={supplier.supplierId}>
+              {supplier.name}
+            </option>
+          ))}
+        </select>
+        {!!formState.errors?.supplierId && (
+          <p className="text-xs text-red-600 mb-2">{formState.errors?.supplierId?.message}</p>
         )}
 
         <div className="flex justify-end gap-2">

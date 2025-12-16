@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetInventoryQuery } from "../hooks/inventory-hooks";
+import { useGetInventoryQuery, useGetAllSuppliers } from "../hooks/inventory-hooks";
 
 type Props = {
   open: boolean;
@@ -12,12 +12,18 @@ export default function InventoryDetailModal({ open, id, onClose }: Props) {
   const { data: response, isLoading: isLoadingModel, isError } = useGetInventoryQuery(
     id as any
   );
+  const { data: suppliers = [] } = useGetAllSuppliers();
 
   if (!open || !id) return null;
   if (isLoadingModel) return null;
   if (isError) return null;
 
   const inventory = response?.data;
+  
+  // Get supplier name from supplier ID
+  const supplierName = inventory?.supplierId 
+    ? suppliers.find((s: any) => s.supplierId === inventory.supplierId)?.name 
+    : null;
 
   const formatDate = (dateString: string | undefined) => {
     if (!dateString) return "N/A";
@@ -65,6 +71,15 @@ export default function InventoryDetailModal({ open, id, onClose }: Props) {
             </label>
             <div className="w-full border rounded px-3 py-2 bg-gray-50 text-gray-700">
               {formatDate(inventory?.updatedAt)}
+            </div>
+          </div>
+
+          <div>
+            <label className="block mb-2 text-sm font-medium text-gray-700">
+              Nhà cung cấp
+            </label>
+            <div className="w-full border rounded px-3 py-2 bg-gray-50 text-gray-700">
+              {supplierName || "N/A"}
             </div>
           </div>
         </div>

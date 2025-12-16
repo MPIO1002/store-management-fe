@@ -7,6 +7,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **productId** | **number** |  | [optional] [default to undefined]
 **quantity** | **number** |  | [optional] [default to undefined]
+**supplierId** | **number** |  | [optional] [default to undefined]
 
 ## Example
 
@@ -16,6 +17,7 @@ import { InventoryRequest } from './api';
 const instance: InventoryRequest = {
     productId,
     quantity,
+    supplierId,
 };
 ```
 

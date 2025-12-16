@@ -3103,6 +3103,10 @@
           "quantity": {
             "type": "integer",
             "format": "int32"
+          },
+          "supplierId": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false
@@ -3129,6 +3133,10 @@
           "updatedAt": {
             "type": "string",
             "format": "date-time"
+          },
+          "supplierId": {
+            "type": "integer",
+            "format": "int32"
           }
         },
         "additionalProperties": false

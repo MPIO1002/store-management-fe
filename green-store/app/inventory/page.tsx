@@ -14,6 +14,7 @@ import { faEye } from "@fortawesome/free-solid-svg-icons/faEye";
 import {
   useFilterInventoryQuery,
   useDeleteInventoryMutation,
+  useGetAllSuppliers,
 } from "./hooks/inventory-hooks";
 import { InventoryResponse } from "../lib/api";
 import { toast } from "sonner";
@@ -36,6 +37,16 @@ export default function InventoryPage() {
   });
   const { mutateAsync: deleteInventoryAsync, isPending: isDeleting } =
     useDeleteInventoryMutation();
+  const { data: suppliers = [] } = useGetAllSuppliers();
+
+  // Create a map of supplierId -> supplier name for quick lookup
+  const supplierMap = React.useMemo(() => {
+    const map: Record<number, string> = {};
+    suppliers.forEach((supplier: any) => {
+      map[supplier.supplierId] = supplier.name;
+    });
+    return map;
+  }, [suppliers]);
 
   const columns = [
     {
@@ -44,6 +55,10 @@ export default function InventoryPage() {
       accessor: "productName",
     },
     { header: "SỐ LƯỢNG", accessor: "quantity" },
+    { 
+      header: "NHÀ CUNG CẤP", 
+      render: (row: InventoryResponse) => row.supplierId ? (supplierMap[row.supplierId] || `ID: ${row.supplierId}`) : "N/A"
+    },
     {
       header: "HÀNH ĐỘNG",
       render: (row: InventoryResponse) => (

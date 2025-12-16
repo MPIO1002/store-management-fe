@@ -15,6 +15,26 @@ export const productKeys = {
     lists: () => [...productKeys.all, "list"] as const,
 };
 
+export const supplierKeys = {
+    all: ["suppliers"] as const,
+    lists: () => [...supplierKeys.all, "list"] as const,
+};
+
+export const useGetAllSuppliers = () => {
+    return useQuery({
+        queryKey: supplierKeys.lists(),
+        queryFn: () =>
+            apis.suppliers.filterSuppliers({ pageNumber: 1, pageSize: 9999 }),
+        select: (response: any) => {
+            const payload = response?.data;
+            const body = payload?.data ?? payload;
+            const arr: any[] = Array.isArray(body) ? body : (body?.items ?? []);
+            return arr;
+        },
+        staleTime: 5 * 60 * 1000,
+    });
+};
+
 export const useGetAllProducts = () => {
     return useQuery({
         queryKey: productKeys.lists(),

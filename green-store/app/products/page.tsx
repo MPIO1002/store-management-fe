@@ -72,7 +72,6 @@ export default function ProductPage() {
     },
     { header: "TÊN SẢN PHẨM", accessor: "productName" },
     { header: "DANH MỤC", accessor: "categoryName" },
-    { header: "NHÀ CUNG CẤP", accessor: "supplierName" },
     { header: "BARCODE", accessor: "barcode" },
     {
       header: "GIÁ",
@@ -81,7 +80,6 @@ export default function ProductPage() {
       ),
     },
     { header: "ĐƠN VỊ", accessor: "unit" },
-    { header: "TỒN KHO", accessor: "stockQuantity" },
     {
       header: "HÀNH ĐỘNG",
       render: (row: ProductResponse) => (

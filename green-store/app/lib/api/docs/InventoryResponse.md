@@ -10,6 +10,7 @@ Name | Type | Description | Notes
 **productName** | **string** |  | [optional] [default to undefined]
 **quantity** | **number** |  | [optional] [default to undefined]
 **updatedAt** | **string** |  | [optional] [default to undefined]
+**supplierId** | **number** |  | [optional] [default to undefined]
 
 ## Example
 
@@ -22,6 +23,7 @@ const instance: InventoryResponse = {
     productName,
     quantity,
     updatedAt,
+    supplierId,
 };
 ```
 

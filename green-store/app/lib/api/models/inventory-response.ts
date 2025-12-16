@@ -20,5 +20,6 @@ export interface InventoryResponse {
     'productName'?: string | null;
     'quantity'?: number;
     'updatedAt'?: string;
+    'supplierId'?: number;
 }
 
