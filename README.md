@@ -89,6 +89,7 @@ green-store/
 - Supplier association for each inventory item
 - Automatic timestamp with timezone correction
 - Bulk operations (delete multiple items)
+<img width="1919" height="1199" alt="image" src="https://github.com/user-attachments/assets/204a045e-1a15-499b-a87e-5e8e4a7ee43f" />
 
 ### 2. **Point of Sale (POS)**
 - Barcode scanner integration (camera-based)
@@ -101,6 +102,8 @@ green-store/
   - Card (VNPay integration)
   - Bank Transfer
 - Order summary with itemized breakdown
+<img width="1919" height="1199" alt="image" src="https://github.com/user-attachments/assets/f8e8829b-a749-4392-8a4d-74a8fe64887a" />
+
 
 ### 3. **Customer Management**
 - Customer registration with contact details
@@ -108,6 +111,8 @@ green-store/
 - Order count statistics
 - Quick customer lookup during checkout
 - Membership status display
+<img width="1919" height="1199" alt="image" src="https://github.com/user-attachments/assets/c3d58489-df8f-4ee4-b056-c2b5e9deba62" />
+
 
 ### 4. **Product Catalog**
 - Comprehensive product information (name, barcode, price, unit, images)
@@ -115,6 +120,8 @@ green-store/
 - Bulk import/export capabilities
 - Image upload support
 - Search by name or barcode
+<img width="1919" height="1199" alt="image" src="https://github.com/user-attachments/assets/93f038de-17e6-42ff-983c-357275e6fa4b" />
+
 
 ### 5. **Order Tracking**
 - Complete order history
@@ -122,16 +129,22 @@ green-store/
 - Detailed order view with line items
 - Customer and employee information
 - Discount and promotion tracking
+<img width="1919" height="1199" alt="image" src="https://github.com/user-attachments/assets/a5bd75a8-d7f5-4352-83fa-ab5eb077a4a1" />
+
 
 ### 6. **Supplier Management**
 - Supplier contact information
 - Product association
 - Filter products by supplier
+<img width="1919" height="1199" alt="image" src="https://github.com/user-attachments/assets/dc41b80f-5898-4030-b875-2070a15e5693" />
+
 
 ### 7. **Staff Management**
 - Employee accounts
 - Role-based access (future enhancement)
 - Activity tracking
+<img width="1919" height="1199" alt="image" src="https://github.com/user-attachments/assets/9ac875d0-6019-4a66-97e4-e93ed099b9f6" />
+
 
 ## 🎯 Architectural Advantages
 
@@ -291,14 +304,6 @@ This project follows standard Git workflow:
 2. Make changes
 3. Test thoroughly
 4. Submit pull request
-
-## 📄 License
-
-[Add your license information here]
-
-## 👥 Authors
-
-[Add author information here]
 
 ---
 
